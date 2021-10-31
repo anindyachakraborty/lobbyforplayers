@@ -34,7 +34,7 @@ export class DetailsComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IDetails): number {
+  trackId(index: number, item: IDetails): string {
     return item.id!;
   }
 

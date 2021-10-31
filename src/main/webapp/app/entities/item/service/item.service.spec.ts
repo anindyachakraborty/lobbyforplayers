@@ -20,7 +20,7 @@ describe('Item Service', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     elemDefault = {
-      id: 0,
+      id: 'AAAAAAA',
       description: 'AAAAAAA',
       views: 0,
       sellerName: 'AAAAAAA',
@@ -39,7 +39,7 @@ describe('Item Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign({}, elemDefault);
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -49,7 +49,7 @@ describe('Item Service', () => {
     it('should create a Item', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
+          id: 'ID',
         },
         elemDefault
       );
@@ -66,7 +66,7 @@ describe('Item Service', () => {
     it('should update a Item', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           description: 'BBBBBB',
           views: 1,
           sellerName: 'BBBBBB',
@@ -119,7 +119,7 @@ describe('Item Service', () => {
     it('should return a list of Item', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           description: 'BBBBBB',
           views: 1,
           sellerName: 'BBBBBB',
@@ -146,7 +146,7 @@ describe('Item Service', () => {
     });
 
     it('should delete a Item', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -155,42 +155,42 @@ describe('Item Service', () => {
 
     describe('addItemToCollectionIfMissing', () => {
       it('should add a Item to an empty array', () => {
-        const item: IItem = { id: 123 };
+        const item: IItem = { id: 'ABC' };
         expectedResult = service.addItemToCollectionIfMissing([], item);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(item);
       });
 
       it('should not add a Item to an array that contains it', () => {
-        const item: IItem = { id: 123 };
+        const item: IItem = { id: 'ABC' };
         const itemCollection: IItem[] = [
           {
             ...item,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addItemToCollectionIfMissing(itemCollection, item);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Item to an array that doesn't contain it", () => {
-        const item: IItem = { id: 123 };
-        const itemCollection: IItem[] = [{ id: 456 }];
+        const item: IItem = { id: 'ABC' };
+        const itemCollection: IItem[] = [{ id: 'CBA' }];
         expectedResult = service.addItemToCollectionIfMissing(itemCollection, item);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(item);
       });
 
       it('should add only unique Item to an array', () => {
-        const itemArray: IItem[] = [{ id: 123 }, { id: 456 }, { id: 27534 }];
-        const itemCollection: IItem[] = [{ id: 123 }];
+        const itemArray: IItem[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '431770f5-bc13-491b-ad24-7c285baf3a97' }];
+        const itemCollection: IItem[] = [{ id: 'ABC' }];
         expectedResult = service.addItemToCollectionIfMissing(itemCollection, ...itemArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const item: IItem = { id: 123 };
-        const item2: IItem = { id: 456 };
+        const item: IItem = { id: 'ABC' };
+        const item2: IItem = { id: 'CBA' };
         expectedResult = service.addItemToCollectionIfMissing([], item, item2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(item);
@@ -198,14 +198,14 @@ describe('Item Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const item: IItem = { id: 123 };
+        const item: IItem = { id: 'ABC' };
         expectedResult = service.addItemToCollectionIfMissing([], null, item, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(item);
       });
 
       it('should return initial array if no Item is added', () => {
-        const itemCollection: IItem[] = [{ id: 123 }];
+        const itemCollection: IItem[] = [{ id: 'ABC' }];
         expectedResult = service.addItemToCollectionIfMissing(itemCollection, undefined, null);
         expect(expectedResult).toEqual(itemCollection);
       });

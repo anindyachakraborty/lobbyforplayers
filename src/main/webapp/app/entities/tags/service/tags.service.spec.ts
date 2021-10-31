@@ -20,7 +20,7 @@ describe('Tags Service', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     elemDefault = {
-      id: 0,
+      id: 'AAAAAAA',
       tag: 'AAAAAAA',
       language: 'AAAAAAA',
     };
@@ -30,7 +30,7 @@ describe('Tags Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign({}, elemDefault);
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -40,7 +40,7 @@ describe('Tags Service', () => {
     it('should create a Tags', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
+          id: 'ID',
         },
         elemDefault
       );
@@ -57,7 +57,7 @@ describe('Tags Service', () => {
     it('should update a Tags', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           tag: 'BBBBBB',
           language: 'BBBBBB',
         },
@@ -95,7 +95,7 @@ describe('Tags Service', () => {
     it('should return a list of Tags', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           tag: 'BBBBBB',
           language: 'BBBBBB',
         },
@@ -113,7 +113,7 @@ describe('Tags Service', () => {
     });
 
     it('should delete a Tags', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -122,42 +122,42 @@ describe('Tags Service', () => {
 
     describe('addTagsToCollectionIfMissing', () => {
       it('should add a Tags to an empty array', () => {
-        const tags: ITags = { id: 123 };
+        const tags: ITags = { id: 'ABC' };
         expectedResult = service.addTagsToCollectionIfMissing([], tags);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(tags);
       });
 
       it('should not add a Tags to an array that contains it', () => {
-        const tags: ITags = { id: 123 };
+        const tags: ITags = { id: 'ABC' };
         const tagsCollection: ITags[] = [
           {
             ...tags,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addTagsToCollectionIfMissing(tagsCollection, tags);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Tags to an array that doesn't contain it", () => {
-        const tags: ITags = { id: 123 };
-        const tagsCollection: ITags[] = [{ id: 456 }];
+        const tags: ITags = { id: 'ABC' };
+        const tagsCollection: ITags[] = [{ id: 'CBA' }];
         expectedResult = service.addTagsToCollectionIfMissing(tagsCollection, tags);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(tags);
       });
 
       it('should add only unique Tags to an array', () => {
-        const tagsArray: ITags[] = [{ id: 123 }, { id: 456 }, { id: 1879 }];
-        const tagsCollection: ITags[] = [{ id: 123 }];
+        const tagsArray: ITags[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '0c2caaf5-2fed-4c80-b5f8-75306fcf615f' }];
+        const tagsCollection: ITags[] = [{ id: 'ABC' }];
         expectedResult = service.addTagsToCollectionIfMissing(tagsCollection, ...tagsArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const tags: ITags = { id: 123 };
-        const tags2: ITags = { id: 456 };
+        const tags: ITags = { id: 'ABC' };
+        const tags2: ITags = { id: 'CBA' };
         expectedResult = service.addTagsToCollectionIfMissing([], tags, tags2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(tags);
@@ -165,14 +165,14 @@ describe('Tags Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const tags: ITags = { id: 123 };
+        const tags: ITags = { id: 'ABC' };
         expectedResult = service.addTagsToCollectionIfMissing([], null, tags, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(tags);
       });
 
       it('should return initial array if no Tags is added', () => {
-        const tagsCollection: ITags[] = [{ id: 123 }];
+        const tagsCollection: ITags[] = [{ id: 'ABC' }];
         expectedResult = service.addTagsToCollectionIfMissing(tagsCollection, undefined, null);
         expect(expectedResult).toEqual(tagsCollection);
       });

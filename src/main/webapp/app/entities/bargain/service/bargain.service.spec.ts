@@ -20,7 +20,7 @@ describe('Bargain Service', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     elemDefault = {
-      id: 0,
+      id: 'AAAAAAA',
       bargainPrice: 0,
       itemId: 'AAAAAAA',
       sellerApproved: false,
@@ -34,7 +34,7 @@ describe('Bargain Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign({}, elemDefault);
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -44,7 +44,7 @@ describe('Bargain Service', () => {
     it('should create a Bargain', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
+          id: 'ID',
         },
         elemDefault
       );
@@ -61,7 +61,7 @@ describe('Bargain Service', () => {
     it('should update a Bargain', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           bargainPrice: 1,
           itemId: 'BBBBBB',
           sellerApproved: true,
@@ -104,7 +104,7 @@ describe('Bargain Service', () => {
     it('should return a list of Bargain', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           bargainPrice: 1,
           itemId: 'BBBBBB',
           sellerApproved: true,
@@ -126,7 +126,7 @@ describe('Bargain Service', () => {
     });
 
     it('should delete a Bargain', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -135,42 +135,42 @@ describe('Bargain Service', () => {
 
     describe('addBargainToCollectionIfMissing', () => {
       it('should add a Bargain to an empty array', () => {
-        const bargain: IBargain = { id: 123 };
+        const bargain: IBargain = { id: 'ABC' };
         expectedResult = service.addBargainToCollectionIfMissing([], bargain);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(bargain);
       });
 
       it('should not add a Bargain to an array that contains it', () => {
-        const bargain: IBargain = { id: 123 };
+        const bargain: IBargain = { id: 'ABC' };
         const bargainCollection: IBargain[] = [
           {
             ...bargain,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addBargainToCollectionIfMissing(bargainCollection, bargain);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Bargain to an array that doesn't contain it", () => {
-        const bargain: IBargain = { id: 123 };
-        const bargainCollection: IBargain[] = [{ id: 456 }];
+        const bargain: IBargain = { id: 'ABC' };
+        const bargainCollection: IBargain[] = [{ id: 'CBA' }];
         expectedResult = service.addBargainToCollectionIfMissing(bargainCollection, bargain);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(bargain);
       });
 
       it('should add only unique Bargain to an array', () => {
-        const bargainArray: IBargain[] = [{ id: 123 }, { id: 456 }, { id: 97819 }];
-        const bargainCollection: IBargain[] = [{ id: 123 }];
+        const bargainArray: IBargain[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: 'ff3e9653-53ee-4d73-a11e-42ca28bd777f' }];
+        const bargainCollection: IBargain[] = [{ id: 'ABC' }];
         expectedResult = service.addBargainToCollectionIfMissing(bargainCollection, ...bargainArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const bargain: IBargain = { id: 123 };
-        const bargain2: IBargain = { id: 456 };
+        const bargain: IBargain = { id: 'ABC' };
+        const bargain2: IBargain = { id: 'CBA' };
         expectedResult = service.addBargainToCollectionIfMissing([], bargain, bargain2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(bargain);
@@ -178,14 +178,14 @@ describe('Bargain Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const bargain: IBargain = { id: 123 };
+        const bargain: IBargain = { id: 'ABC' };
         expectedResult = service.addBargainToCollectionIfMissing([], null, bargain, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(bargain);
       });
 
       it('should return initial array if no Bargain is added', () => {
-        const bargainCollection: IBargain[] = [{ id: 123 }];
+        const bargainCollection: IBargain[] = [{ id: 'ABC' }];
         expectedResult = service.addBargainToCollectionIfMissing(bargainCollection, undefined, null);
         expect(expectedResult).toEqual(bargainCollection);
       });

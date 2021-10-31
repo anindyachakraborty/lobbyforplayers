@@ -2,6 +2,7 @@ package com.lobbyforplayers.web.rest;
 
 import com.lobbyforplayers.domain.Tags;
 import com.lobbyforplayers.repository.TagsRepository;
+import com.lobbyforplayers.service.TagsService;
 import com.lobbyforplayers.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +24,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class TagsResource {
 
     private final Logger log = LoggerFactory.getLogger(TagsResource.class);
@@ -34,9 +33,12 @@ public class TagsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final TagsService tagsService;
+
     private final TagsRepository tagsRepository;
 
-    public TagsResource(TagsRepository tagsRepository) {
+    public TagsResource(TagsService tagsService, TagsRepository tagsRepository) {
+        this.tagsService = tagsService;
         this.tagsRepository = tagsRepository;
     }
 
@@ -53,10 +55,10 @@ public class TagsResource {
         if (tags.getId() != null) {
             throw new BadRequestAlertException("A new tags cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Tags result = tagsRepository.save(tags);
+        Tags result = tagsService.save(tags);
         return ResponseEntity
             .created(new URI("/api/tags/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -85,10 +87,10 @@ public class TagsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Tags result = tagsRepository.save(tags);
+        Tags result = tagsService.save(tags);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tags.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tags.getId()))
             .body(result);
     }
 
@@ -120,24 +122,9 @@ public class TagsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Tags> result = tagsRepository
-            .findById(tags.getId())
-            .map(existingTags -> {
-                if (tags.getTag() != null) {
-                    existingTags.setTag(tags.getTag());
-                }
-                if (tags.getLanguage() != null) {
-                    existingTags.setLanguage(tags.getLanguage());
-                }
+        Optional<Tags> result = tagsService.partialUpdate(tags);
 
-                return existingTags;
-            })
-            .map(tagsRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tags.getId().toString())
-        );
+        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tags.getId()));
     }
 
     /**
@@ -148,7 +135,7 @@ public class TagsResource {
     @GetMapping("/tags")
     public List<Tags> getAllTags() {
         log.debug("REST request to get all Tags");
-        return tagsRepository.findAll();
+        return tagsService.findAll();
     }
 
     /**
@@ -160,7 +147,7 @@ public class TagsResource {
     @GetMapping("/tags/{id}")
     public ResponseEntity<Tags> getTags(@PathVariable String id) {
         log.debug("REST request to get Tags : {}", id);
-        Optional<Tags> tags = tagsRepository.findById(id);
+        Optional<Tags> tags = tagsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(tags);
     }
 
@@ -173,10 +160,7 @@ public class TagsResource {
     @DeleteMapping("/tags/{id}")
     public ResponseEntity<Void> deleteTags(@PathVariable String id) {
         log.debug("REST request to delete Tags : {}", id);
-        tagsRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        tagsService.delete(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

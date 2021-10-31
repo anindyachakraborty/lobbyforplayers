@@ -4,30 +4,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Tags.
  */
-@Document(collection = "TAGS")
+@Document(collection = "tags")
 public class Tags implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
     @NotNull
     @Size(min = 3)
+    @Field("tag")
     private String tag;
 
     @NotNull
     @Size(min = 2, max = 10)
+    @Field("language")
     private String language;
 
-    // @ManyToMany(mappedBy = "tags")
-    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @DBRef
+    @Field("sentries")
     @JsonIgnoreProperties(value = { "order", "bargains", "tags" }, allowSetters = true)
     private Set<Item> sentries = new HashSet<>();
 

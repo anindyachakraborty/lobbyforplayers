@@ -21,14 +21,14 @@ export class ItemService {
   }
 
   update(item: IItem): Observable<EntityResponseType> {
-    return this.http.put<IItem>(`${this.resourceUrl}/${getItemIdentifier(item) as number}`, item, { observe: 'response' });
+    return this.http.put<IItem>(`${this.resourceUrl}/${getItemIdentifier(item) as string}`, item, { observe: 'response' });
   }
 
   partialUpdate(item: IItem): Observable<EntityResponseType> {
-    return this.http.patch<IItem>(`${this.resourceUrl}/${getItemIdentifier(item) as number}`, item, { observe: 'response' });
+    return this.http.patch<IItem>(`${this.resourceUrl}/${getItemIdentifier(item) as string}`, item, { observe: 'response' });
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http.get<IItem>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -37,7 +37,7 @@ export class ItemService {
     return this.http.get<IItem[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 

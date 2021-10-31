@@ -14,7 +14,7 @@ describe('Bargain Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ bargain: { id: 123 } }) },
+          useValue: { data: of({ bargain: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Bargain Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.bargain).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.bargain).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

@@ -36,7 +36,7 @@ describe('Chats Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const chats: IChats = { id: 456 };
+      const chats: IChats = { id: 'CBA' };
 
       activatedRoute.data = of({ chats });
       comp.ngOnInit();
@@ -49,7 +49,7 @@ describe('Chats Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Chats>>();
-      const chats = { id: 123 };
+      const chats = { id: 'ABC' };
       jest.spyOn(chatsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ chats });
@@ -91,7 +91,7 @@ describe('Chats Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Chats>>();
-      const chats = { id: 123 };
+      const chats = { id: 'ABC' };
       jest.spyOn(chatsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ chats });

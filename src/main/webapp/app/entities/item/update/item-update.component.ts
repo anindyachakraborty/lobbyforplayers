@@ -69,11 +69,11 @@ export class ItemUpdateComponent implements OnInit {
     }
   }
 
-  trackOrderById(index: number, item: IOrder): number {
+  trackOrderById(index: number, item: IOrder): string {
     return item.id!;
   }
 
-  trackTagsById(index: number, item: ITags): number {
+  trackTagsById(index: number, item: ITags): string {
     return item.id!;
   }
 

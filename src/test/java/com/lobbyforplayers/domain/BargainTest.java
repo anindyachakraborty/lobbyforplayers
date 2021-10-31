@@ -11,11 +11,11 @@ class BargainTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Bargain.class);
         Bargain bargain1 = new Bargain();
-        bargain1.setId("ABC");
+        bargain1.setId("id1");
         Bargain bargain2 = new Bargain();
         bargain2.setId(bargain1.getId());
         assertThat(bargain1).isEqualTo(bargain2);
-        bargain2.setId("XYZ");
+        bargain2.setId("id2");
         assertThat(bargain1).isNotEqualTo(bargain2);
         bargain1.setId(null);
         assertThat(bargain1).isNotEqualTo(bargain2);

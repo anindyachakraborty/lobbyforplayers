@@ -14,7 +14,7 @@ describe('Order Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ order: { id: 123 } }) },
+          useValue: { data: of({ order: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Order Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.order).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.order).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

@@ -16,7 +16,7 @@ export class ChatsDeleteDialogComponent {
     this.activeModal.dismiss();
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: string): void {
     this.chatsService.delete(id).subscribe(() => {
       this.activeModal.close('deleted');
     });

@@ -68,7 +68,7 @@ export class ChatsComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IChats): number {
+  trackId(index: number, item: IChats): string {
     return item.id!;
   }
 

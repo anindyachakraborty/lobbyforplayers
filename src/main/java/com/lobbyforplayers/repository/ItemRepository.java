@@ -25,5 +25,5 @@ public interface ItemRepository extends MongoRepository<Item, String> {
     List<Item> findAllWithEagerRelationships();
 
     @Query("select item from Item item left join fetch item.tags where item.id =:id")
-    Optional<Item> findOneWithEagerRelationships(@Param("id") Long id);
+    Optional<Item> findOneWithEagerRelationships(@Param("id") String id);
 }

@@ -2,16 +2,15 @@ package com.lobbyforplayers.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Chats.
  */
-@Document(collection = "CHATS")
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "chats")
 public class Chats implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,20 +19,25 @@ public class Chats implements Serializable {
     private String id;
 
     @NotNull
+    @Field("from_user_id")
     private String fromUserId;
 
     @NotNull
+    @Field("to_user_id")
     private String toUserId;
 
     @NotNull
+    @Field("time_stamp")
     private Instant timeStamp;
 
     @NotNull
     @Size(min = 1, max = 256)
+    @Field("message")
     private String message;
 
     @NotNull
     @Size(min = 2, max = 10)
+    @Field("language")
     private String language;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

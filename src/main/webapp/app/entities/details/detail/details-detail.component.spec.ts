@@ -14,7 +14,7 @@ describe('Details Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ details: { id: 123 } }) },
+          useValue: { data: of({ details: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Details Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.details).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.details).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

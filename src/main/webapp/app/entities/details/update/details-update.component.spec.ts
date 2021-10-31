@@ -36,7 +36,7 @@ describe('Details Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const details: IDetails = { id: 456 };
+      const details: IDetails = { id: 'CBA' };
 
       activatedRoute.data = of({ details });
       comp.ngOnInit();
@@ -49,7 +49,7 @@ describe('Details Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Details>>();
-      const details = { id: 123 };
+      const details = { id: 'ABC' };
       jest.spyOn(detailsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ details });
@@ -91,7 +91,7 @@ describe('Details Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Details>>();
-      const details = { id: 123 };
+      const details = { id: 'ABC' };
       jest.spyOn(detailsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ details });

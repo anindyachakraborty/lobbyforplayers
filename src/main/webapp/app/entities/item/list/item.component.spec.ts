@@ -28,7 +28,7 @@ describe('Item Management Component', () => {
     jest.spyOn(service, 'query').mockReturnValue(
       of(
         new HttpResponse({
-          body: [{ id: 123 }],
+          body: [{ id: 'ABC' }],
           headers,
         })
       )
@@ -41,7 +41,7 @@ describe('Item Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 123 }));
+    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
   });
 
   it('should load a page', () => {
@@ -50,7 +50,7 @@ describe('Item Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 123 }));
+    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
   });
 
   it('should calculate the sort attribute for an id', () => {
@@ -83,6 +83,6 @@ describe('Item Management Component', () => {
     // THEN
     expect(comp.page).toEqual(0);
     expect(service.query).toHaveBeenCalledTimes(2);
-    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 123 }));
+    expect(comp.items[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
   });
 });

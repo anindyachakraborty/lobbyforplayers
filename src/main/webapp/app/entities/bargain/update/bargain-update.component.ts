@@ -59,7 +59,7 @@ export class BargainUpdateComponent implements OnInit {
     }
   }
 
-  trackItemById(index: number, item: IItem): number {
+  trackItemById(index: number, item: IItem): string {
     return item.id!;
   }
 

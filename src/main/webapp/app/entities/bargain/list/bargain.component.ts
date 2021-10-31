@@ -34,7 +34,7 @@ export class BargainComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IBargain): number {
+  trackId(index: number, item: IBargain): string {
     return item.id!;
   }
 

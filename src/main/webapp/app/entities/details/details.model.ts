@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs';
 
 export interface IDetails {
-  id?: number;
+  id?: string;
   loginName?: string;
   password?: string;
   lastName?: string | null;
@@ -17,7 +17,7 @@ export interface IDetails {
 
 export class Details implements IDetails {
   constructor(
-    public id?: number,
+    public id?: string,
     public loginName?: string,
     public password?: string,
     public lastName?: string | null,
@@ -32,6 +32,6 @@ export class Details implements IDetails {
   ) {}
 }
 
-export function getDetailsIdentifier(details: IDetails): number | undefined {
+export function getDetailsIdentifier(details: IDetails): string | undefined {
   return details.id;
 }

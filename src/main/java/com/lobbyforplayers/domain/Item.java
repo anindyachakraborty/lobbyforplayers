@@ -6,13 +6,14 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Item.
  */
-@Document(collection = "ITEM")
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "item")
 public class Item implements Serializable {
 
     @Id
@@ -20,51 +21,60 @@ public class Item implements Serializable {
 
     @NotNull
     @Size(max = 256)
+    @Field("description")
     private String description;
 
     @NotNull
+    @Field("views")
     private Integer views;
 
     @NotNull
+    @Field("seller_name")
     private String sellerName;
 
     @NotNull
+    @Field("seller_id")
     private String sellerId;
 
     @NotNull
+    @Field("listed_flag")
     private Boolean listedFlag;
 
     @NotNull
+    @Field("price")
     private Double price;
 
     @Size(max = 256)
+    @Field("pictures_path")
     private String picturesPath;
 
+    @Field("level")
     private String level;
 
     @NotNull
+    @Field("fixed_price")
     private Boolean fixedPrice;
 
     @NotNull
+    @Field("game_name")
     private String gameName;
 
     @NotNull
     @Size(min = 2, max = 10)
+    @Field("language")
     private String language;
 
-    @JsonIgnoreProperties(value = { "item" }, allowSetters = true)
-    // @OneToOne
-    // @JoinColumn(unique = true)
+    @DBRef
+    @Field("order")
     private Order order;
 
-    // @OneToMany(mappedBy = "item")
-    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "ITEM" }, allowSetters = true)
+    @DBRef
+    @Field("bargain")
+    @JsonIgnoreProperties(value = { "item" }, allowSetters = true)
     private Set<Bargain> bargains = new HashSet<>();
 
-    // @ManyToMany
-    // @JoinTable(name = "rel_item__tags", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "tags_id"))
-    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @DBRef
+    @Field("tags")
     @JsonIgnoreProperties(value = { "sentries" }, allowSetters = true)
     private Set<Tags> tags = new HashSet<>();
 

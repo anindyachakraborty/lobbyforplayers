@@ -2,14 +2,16 @@ package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Order.
  */
-@Document(collection = "ORDER")
+@Document(collection = "order")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,22 +20,26 @@ public class Order implements Serializable {
     private String id;
 
     @NotNull
+    @Field("seller_name")
     private String sellerName;
 
     @NotNull
+    @Field("buyer_name")
     private String buyerName;
 
     @NotNull
+    @Field("price_settled")
     private Double priceSettled;
 
     @NotNull
+    @Field("status")
     private String status;
 
     @NotNull
+    @Field("completed")
     private Boolean completed;
 
-    @JsonIgnoreProperties(value = { "ORDER", "bargains", "tags" }, allowSetters = true)
-    // @OneToOne(mappedBy = "order")
+    @DBRef
     private Item item;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

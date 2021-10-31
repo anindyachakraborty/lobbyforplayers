@@ -21,14 +21,14 @@ export class OrderService {
   }
 
   update(order: IOrder): Observable<EntityResponseType> {
-    return this.http.put<IOrder>(`${this.resourceUrl}/${getOrderIdentifier(order) as number}`, order, { observe: 'response' });
+    return this.http.put<IOrder>(`${this.resourceUrl}/${getOrderIdentifier(order) as string}`, order, { observe: 'response' });
   }
 
   partialUpdate(order: IOrder): Observable<EntityResponseType> {
-    return this.http.patch<IOrder>(`${this.resourceUrl}/${getOrderIdentifier(order) as number}`, order, { observe: 'response' });
+    return this.http.patch<IOrder>(`${this.resourceUrl}/${getOrderIdentifier(order) as string}`, order, { observe: 'response' });
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http.get<IOrder>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -37,7 +37,7 @@ export class OrderService {
     return this.http.get<IOrder[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 

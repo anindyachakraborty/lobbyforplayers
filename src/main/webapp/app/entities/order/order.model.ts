@@ -1,7 +1,7 @@
 import { IItem } from 'app/entities/item/item.model';
 
 export interface IOrder {
-  id?: number;
+  id?: string;
   sellerName?: string;
   buyerName?: string;
   priceSettled?: number;
@@ -12,7 +12,7 @@ export interface IOrder {
 
 export class Order implements IOrder {
   constructor(
-    public id?: number,
+    public id?: string,
     public sellerName?: string,
     public buyerName?: string,
     public priceSettled?: number,
@@ -24,6 +24,6 @@ export class Order implements IOrder {
   }
 }
 
-export function getOrderIdentifier(order: IOrder): number | undefined {
+export function getOrderIdentifier(order: IOrder): string | undefined {
   return order.id;
 }

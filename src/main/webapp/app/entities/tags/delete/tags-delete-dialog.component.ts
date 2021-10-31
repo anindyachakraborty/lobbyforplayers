@@ -16,7 +16,7 @@ export class TagsDeleteDialogComponent {
     this.activeModal.dismiss();
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: string): void {
     this.tagsService.delete(id).subscribe(() => {
       this.activeModal.close('deleted');
     });

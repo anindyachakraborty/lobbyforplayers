@@ -2,6 +2,7 @@ package com.lobbyforplayers.web.rest;
 
 import com.lobbyforplayers.domain.Bargain;
 import com.lobbyforplayers.repository.BargainRepository;
+import com.lobbyforplayers.service.BargainService;
 import com.lobbyforplayers.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +24,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class BargainResource {
 
     private final Logger log = LoggerFactory.getLogger(BargainResource.class);
@@ -34,9 +33,12 @@ public class BargainResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final BargainService bargainService;
+
     private final BargainRepository bargainRepository;
 
-    public BargainResource(BargainRepository bargainRepository) {
+    public BargainResource(BargainService bargainService, BargainRepository bargainRepository) {
+        this.bargainService = bargainService;
         this.bargainRepository = bargainRepository;
     }
 
@@ -53,10 +55,10 @@ public class BargainResource {
         if (bargain.getId() != null) {
             throw new BadRequestAlertException("A new bargain cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Bargain result = bargainRepository.save(bargain);
+        Bargain result = bargainService.save(bargain);
         return ResponseEntity
             .created(new URI("/api/bargains/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -87,10 +89,10 @@ public class BargainResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Bargain result = bargainRepository.save(bargain);
+        Bargain result = bargainService.save(bargain);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bargain.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bargain.getId()))
             .body(result);
     }
 
@@ -122,36 +124,9 @@ public class BargainResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Bargain> result = bargainRepository
-            .findById(bargain.getId())
-            .map(existingBargain -> {
-                if (bargain.getBargainPrice() != null) {
-                    existingBargain.setBargainPrice(bargain.getBargainPrice());
-                }
-                if (bargain.getItemId() != null) {
-                    existingBargain.setItemId(bargain.getItemId());
-                }
-                if (bargain.getSellerApproved() != null) {
-                    existingBargain.setSellerApproved(bargain.getSellerApproved());
-                }
-                if (bargain.getBuyerApproved() != null) {
-                    existingBargain.setBuyerApproved(bargain.getBuyerApproved());
-                }
-                if (bargain.getSellerId() != null) {
-                    existingBargain.setSellerId(bargain.getSellerId());
-                }
-                if (bargain.getBuyerId() != null) {
-                    existingBargain.setBuyerId(bargain.getBuyerId());
-                }
+        Optional<Bargain> result = bargainService.partialUpdate(bargain);
 
-                return existingBargain;
-            })
-            .map(bargainRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bargain.getId().toString())
-        );
+        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bargain.getId()));
     }
 
     /**
@@ -162,7 +137,7 @@ public class BargainResource {
     @GetMapping("/bargains")
     public List<Bargain> getAllBargains() {
         log.debug("REST request to get all Bargains");
-        return bargainRepository.findAll();
+        return bargainService.findAll();
     }
 
     /**
@@ -174,7 +149,7 @@ public class BargainResource {
     @GetMapping("/bargains/{id}")
     public ResponseEntity<Bargain> getBargain(@PathVariable String id) {
         log.debug("REST request to get Bargain : {}", id);
-        Optional<Bargain> bargain = bargainRepository.findById(id);
+        Optional<Bargain> bargain = bargainService.findOne(id);
         return ResponseUtil.wrapOrNotFound(bargain);
     }
 
@@ -187,10 +162,7 @@ public class BargainResource {
     @DeleteMapping("/bargains/{id}")
     public ResponseEntity<Void> deleteBargain(@PathVariable String id) {
         log.debug("REST request to delete Bargain : {}", id);
-        bargainRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        bargainService.delete(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

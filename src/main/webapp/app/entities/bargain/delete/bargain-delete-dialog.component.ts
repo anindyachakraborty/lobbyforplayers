@@ -16,7 +16,7 @@ export class BargainDeleteDialogComponent {
     this.activeModal.dismiss();
   }
 
-  confirmDelete(id: number): void {
+  confirmDelete(id: string): void {
     this.bargainService.delete(id).subscribe(() => {
       this.activeModal.close('deleted');
     });

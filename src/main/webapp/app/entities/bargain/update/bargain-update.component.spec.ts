@@ -40,11 +40,11 @@ describe('Bargain Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should call Item query and add missing value', () => {
-      const bargain: IBargain = { id: 456 };
-      const item: IItem = { id: 25972 };
+      const bargain: IBargain = { id: 'CBA' };
+      const item: IItem = { id: '4a9943ae-5813-4c26-af02-7c39ada564dd' };
       bargain.item = item;
 
-      const itemCollection: IItem[] = [{ id: 66153 }];
+      const itemCollection: IItem[] = [{ id: 'b89a0cbf-c228-41cd-a8bc-ccdc03acc057' }];
       jest.spyOn(itemService, 'query').mockReturnValue(of(new HttpResponse({ body: itemCollection })));
       const additionalItems = [item];
       const expectedCollection: IItem[] = [...additionalItems, ...itemCollection];
@@ -59,8 +59,8 @@ describe('Bargain Management Update Component', () => {
     });
 
     it('Should update editForm', () => {
-      const bargain: IBargain = { id: 456 };
-      const item: IItem = { id: 57805 };
+      const bargain: IBargain = { id: 'CBA' };
+      const item: IItem = { id: '079c0611-b531-4b82-adc9-2b9172d3f82f' };
       bargain.item = item;
 
       activatedRoute.data = of({ bargain });
@@ -75,7 +75,7 @@ describe('Bargain Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Bargain>>();
-      const bargain = { id: 123 };
+      const bargain = { id: 'ABC' };
       jest.spyOn(bargainService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ bargain });
@@ -117,7 +117,7 @@ describe('Bargain Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Bargain>>();
-      const bargain = { id: 123 };
+      const bargain = { id: 'ABC' };
       jest.spyOn(bargainService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ bargain });
@@ -138,7 +138,7 @@ describe('Bargain Management Update Component', () => {
   describe('Tracking relationships identifiers', () => {
     describe('trackItemById', () => {
       it('Should return tracked Item primary key', () => {
-        const entity = { id: 123 };
+        const entity = { id: 'ABC' };
         const trackResult = comp.trackItemById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });

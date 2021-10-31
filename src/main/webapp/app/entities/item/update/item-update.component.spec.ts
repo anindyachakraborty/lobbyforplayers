@@ -44,11 +44,11 @@ describe('Item Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should call order query and add missing value', () => {
-      const item: IItem = { id: 456 };
-      const order: IOrder = { id: 29849 };
+      const item: IItem = { id: 'CBA' };
+      const order: IOrder = { id: '45eecd66-0a04-4b6a-a29c-480f124a31df' };
       item.order = order;
 
-      const orderCollection: IOrder[] = [{ id: 33806 }];
+      const orderCollection: IOrder[] = [{ id: '4093b527-8654-443a-8676-59612def9d3f' }];
       jest.spyOn(orderService, 'query').mockReturnValue(of(new HttpResponse({ body: orderCollection })));
       const expectedCollection: IOrder[] = [order, ...orderCollection];
       jest.spyOn(orderService, 'addOrderToCollectionIfMissing').mockReturnValue(expectedCollection);
@@ -62,11 +62,11 @@ describe('Item Management Update Component', () => {
     });
 
     it('Should call Tags query and add missing value', () => {
-      const item: IItem = { id: 456 };
-      const tags: ITags[] = [{ id: 1474 }];
+      const item: IItem = { id: 'CBA' };
+      const tags: ITags[] = [{ id: '0b3efd4d-3ecd-4310-8fb3-9903d88ee024' }];
       item.tags = tags;
 
-      const tagsCollection: ITags[] = [{ id: 70548 }];
+      const tagsCollection: ITags[] = [{ id: 'e6a665cb-2733-4b99-9c6d-5bf6b2cc62e6' }];
       jest.spyOn(tagsService, 'query').mockReturnValue(of(new HttpResponse({ body: tagsCollection })));
       const additionalTags = [...tags];
       const expectedCollection: ITags[] = [...additionalTags, ...tagsCollection];
@@ -81,10 +81,10 @@ describe('Item Management Update Component', () => {
     });
 
     it('Should update editForm', () => {
-      const item: IItem = { id: 456 };
-      const order: IOrder = { id: 92370 };
+      const item: IItem = { id: 'CBA' };
+      const order: IOrder = { id: 'dc1066ea-e649-41b4-b199-e9284b9678f3' };
       item.order = order;
-      const tags: ITags = { id: 19539 };
+      const tags: ITags = { id: 'fbf37d61-97a6-42bf-92ee-04ca9df89525' };
       item.tags = [tags];
 
       activatedRoute.data = of({ item });
@@ -100,7 +100,7 @@ describe('Item Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Item>>();
-      const item = { id: 123 };
+      const item = { id: 'ABC' };
       jest.spyOn(itemService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ item });
@@ -142,7 +142,7 @@ describe('Item Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Item>>();
-      const item = { id: 123 };
+      const item = { id: 'ABC' };
       jest.spyOn(itemService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ item });
@@ -163,7 +163,7 @@ describe('Item Management Update Component', () => {
   describe('Tracking relationships identifiers', () => {
     describe('trackOrderById', () => {
       it('Should return tracked Order primary key', () => {
-        const entity = { id: 123 };
+        const entity = { id: 'ABC' };
         const trackResult = comp.trackOrderById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
@@ -171,7 +171,7 @@ describe('Item Management Update Component', () => {
 
     describe('trackTagsById', () => {
       it('Should return tracked Tags primary key', () => {
-        const entity = { id: 123 };
+        const entity = { id: 'ABC' };
         const trackResult = comp.trackTagsById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
@@ -181,15 +181,15 @@ describe('Item Management Update Component', () => {
   describe('Getting selected relationships', () => {
     describe('getSelectedTags', () => {
       it('Should return option if no Tags is selected', () => {
-        const option = { id: 123 };
+        const option = { id: 'ABC' };
         const result = comp.getSelectedTags(option);
         expect(result === option).toEqual(true);
       });
 
       it('Should return selected Tags for according option', () => {
-        const option = { id: 123 };
-        const selected = { id: 123 };
-        const selected2 = { id: 456 };
+        const option = { id: 'ABC' };
+        const selected = { id: 'ABC' };
+        const selected2 = { id: 'CBA' };
         const result = comp.getSelectedTags(option, [selected2, selected]);
         expect(result === selected).toEqual(true);
         expect(result === selected2).toEqual(false);
@@ -197,8 +197,8 @@ describe('Item Management Update Component', () => {
       });
 
       it('Should return option if this Tags is not selected', () => {
-        const option = { id: 123 };
-        const selected = { id: 456 };
+        const option = { id: 'ABC' };
+        const selected = { id: 'CBA' };
         const result = comp.getSelectedTags(option, [selected]);
         expect(result === option).toEqual(true);
         expect(result === selected).toEqual(false);

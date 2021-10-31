@@ -1,14 +1,4 @@
 
-application {
-  config {
-    baseName lobbyforplayers,
-    applicationType monolith,
-    packageName com.lobbyforplayers,
-    authenticationType jwt,
-    clientFramework angular
-  }
-  entities *
-}
 
 entity Item {
 description String required maxlength(256)
@@ -71,6 +61,11 @@ language String required minlength(2) maxlength(10)
 paginate Item with infinite-scroll
 paginate Chats with infinite-scroll
 service Order with serviceImpl
+service Item with serviceImpl
+service Chats with serviceImpl
+service Details with serviceImpl
+service Bargain with serviceImpl
+service Tags with serviceImpl
 
 relationship ManyToMany {
   Item{tags(name)} to Tags{sentry}

@@ -1,0 +1,28 @@
+{
+  "lobbyforplayersApp": {
+    "chats": {
+      "home": {
+        "title": "Chats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Chats बनाएँ",
+        "createOrEditLabel": "Chats बनाएँ या संपादित करें",
+        "notFound": "No Chats found"
+      },
+      "created": "एक नया Chats [identifier: {{ param }}] तैयार है",
+      "updated": "एक Chats [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Chats [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Chats [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Chats"
+      },
+      "id": "ID",
+      "fromUserId": "From User Id",
+      "toUserId": "To User Id",
+      "timeStamp": "Time Stamp",
+      "message": "Message",
+      "language": "Language"
+    }
+  }
+}

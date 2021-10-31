@@ -1,7 +1,7 @@
 import { IItem } from 'app/entities/item/item.model';
 
 export interface IBargain {
-  id?: number;
+  id?: string;
   bargainPrice?: number;
   itemId?: string;
   sellerApproved?: boolean;
@@ -13,7 +13,7 @@ export interface IBargain {
 
 export class Bargain implements IBargain {
   constructor(
-    public id?: number,
+    public id?: string,
     public bargainPrice?: number,
     public itemId?: string,
     public sellerApproved?: boolean,
@@ -27,6 +27,6 @@ export class Bargain implements IBargain {
   }
 }
 
-export function getBargainIdentifier(bargain: IBargain): number | undefined {
+export function getBargainIdentifier(bargain: IBargain): string | undefined {
   return bargain.id;
 }

@@ -14,7 +14,7 @@ describe('Tags Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ tags: { id: 123 } }) },
+          useValue: { data: of({ tags: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Tags Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.tags).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.tags).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

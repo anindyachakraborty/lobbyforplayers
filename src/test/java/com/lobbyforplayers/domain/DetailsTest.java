@@ -11,11 +11,11 @@ class DetailsTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Details.class);
         Details details1 = new Details();
-        details1.setId("ABC");
+        details1.setId("id1");
         Details details2 = new Details();
         details2.setId(details1.getId());
         assertThat(details1).isEqualTo(details2);
-        details2.setId("XYZ");
+        details2.setId("id2");
         assertThat(details1).isNotEqualTo(details2);
         details1.setId(null);
         assertThat(details1).isNotEqualTo(details2);

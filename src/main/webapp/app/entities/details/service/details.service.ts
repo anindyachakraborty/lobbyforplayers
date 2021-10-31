@@ -29,18 +29,18 @@ export class DetailsService {
   update(details: IDetails): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(details);
     return this.http
-      .put<IDetails>(`${this.resourceUrl}/${getDetailsIdentifier(details) as number}`, copy, { observe: 'response' })
+      .put<IDetails>(`${this.resourceUrl}/${getDetailsIdentifier(details) as string}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   partialUpdate(details: IDetails): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(details);
     return this.http
-      .patch<IDetails>(`${this.resourceUrl}/${getDetailsIdentifier(details) as number}`, copy, { observe: 'response' })
+      .patch<IDetails>(`${this.resourceUrl}/${getDetailsIdentifier(details) as string}`, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http
       .get<IDetails>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
@@ -53,7 +53,7 @@ export class DetailsService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 

@@ -35,11 +35,11 @@
   "entityTableName": "chats",
   "dto": "no",
   "pagination": "infinite-scroll",
-  "service": "no",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,
-  "applications": ["lobbyforplayers"],
+  "applications": "*",
   "changelogDate": "20211031103456"
 }

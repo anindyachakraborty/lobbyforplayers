@@ -3,7 +3,7 @@ import { IBargain } from 'app/entities/bargain/bargain.model';
 import { ITags } from 'app/entities/tags/tags.model';
 
 export interface IItem {
-  id?: number;
+  id?: string;
   description?: string;
   views?: number;
   sellerName?: string;
@@ -22,7 +22,7 @@ export interface IItem {
 
 export class Item implements IItem {
   constructor(
-    public id?: number,
+    public id?: string,
     public description?: string,
     public views?: number,
     public sellerName?: string,
@@ -43,6 +43,6 @@ export class Item implements IItem {
   }
 }
 
-export function getItemIdentifier(item: IItem): number | undefined {
+export function getItemIdentifier(item: IItem): string | undefined {
   return item.id;
 }

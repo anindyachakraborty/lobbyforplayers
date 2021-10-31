@@ -1,0 +1,30 @@
+{
+  "lobbyforplayersApp": {
+    "bargain": {
+      "home": {
+        "title": "Bargains",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Bargain बनाएँ",
+        "createOrEditLabel": "Bargain बनाएँ या संपादित करें",
+        "notFound": "No Bargains found"
+      },
+      "created": "एक नया Bargain [identifier: {{ param }}] तैयार है",
+      "updated": "एक Bargain [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Bargain [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Bargain [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Bargain"
+      },
+      "id": "ID",
+      "bargainPrice": "Bargain Price",
+      "itemId": "Item Id",
+      "sellerApproved": "Seller Approved",
+      "buyerApproved": "Buyer Approved",
+      "sellerId": "Seller Id",
+      "buyerId": "Buyer Id",
+      "item": "Item"
+    }
+  }
+}

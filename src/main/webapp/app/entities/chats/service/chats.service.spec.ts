@@ -24,7 +24,7 @@ describe('Chats Service', () => {
     currentDate = dayjs();
 
     elemDefault = {
-      id: 0,
+      id: 'AAAAAAA',
       fromUserId: 'AAAAAAA',
       toUserId: 'AAAAAAA',
       timeStamp: currentDate,
@@ -42,7 +42,7 @@ describe('Chats Service', () => {
         elemDefault
       );
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -52,7 +52,7 @@ describe('Chats Service', () => {
     it('should create a Chats', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
+          id: 'ID',
           timeStamp: currentDate.format(DATE_TIME_FORMAT),
         },
         elemDefault
@@ -75,7 +75,7 @@ describe('Chats Service', () => {
     it('should update a Chats', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           fromUserId: 'BBBBBB',
           toUserId: 'BBBBBB',
           timeStamp: currentDate.format(DATE_TIME_FORMAT),
@@ -126,7 +126,7 @@ describe('Chats Service', () => {
     it('should return a list of Chats', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           fromUserId: 'BBBBBB',
           toUserId: 'BBBBBB',
           timeStamp: currentDate.format(DATE_TIME_FORMAT),
@@ -152,7 +152,7 @@ describe('Chats Service', () => {
     });
 
     it('should delete a Chats', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -161,42 +161,42 @@ describe('Chats Service', () => {
 
     describe('addChatsToCollectionIfMissing', () => {
       it('should add a Chats to an empty array', () => {
-        const chats: IChats = { id: 123 };
+        const chats: IChats = { id: 'ABC' };
         expectedResult = service.addChatsToCollectionIfMissing([], chats);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(chats);
       });
 
       it('should not add a Chats to an array that contains it', () => {
-        const chats: IChats = { id: 123 };
+        const chats: IChats = { id: 'ABC' };
         const chatsCollection: IChats[] = [
           {
             ...chats,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addChatsToCollectionIfMissing(chatsCollection, chats);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Chats to an array that doesn't contain it", () => {
-        const chats: IChats = { id: 123 };
-        const chatsCollection: IChats[] = [{ id: 456 }];
+        const chats: IChats = { id: 'ABC' };
+        const chatsCollection: IChats[] = [{ id: 'CBA' }];
         expectedResult = service.addChatsToCollectionIfMissing(chatsCollection, chats);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(chats);
       });
 
       it('should add only unique Chats to an array', () => {
-        const chatsArray: IChats[] = [{ id: 123 }, { id: 456 }, { id: 28394 }];
-        const chatsCollection: IChats[] = [{ id: 123 }];
+        const chatsArray: IChats[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '4adf37ce-6514-4c4a-ba0d-ac2bd05881af' }];
+        const chatsCollection: IChats[] = [{ id: 'ABC' }];
         expectedResult = service.addChatsToCollectionIfMissing(chatsCollection, ...chatsArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const chats: IChats = { id: 123 };
-        const chats2: IChats = { id: 456 };
+        const chats: IChats = { id: 'ABC' };
+        const chats2: IChats = { id: 'CBA' };
         expectedResult = service.addChatsToCollectionIfMissing([], chats, chats2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(chats);
@@ -204,14 +204,14 @@ describe('Chats Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const chats: IChats = { id: 123 };
+        const chats: IChats = { id: 'ABC' };
         expectedResult = service.addChatsToCollectionIfMissing([], null, chats, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(chats);
       });
 
       it('should return initial array if no Chats is added', () => {
-        const chatsCollection: IChats[] = [{ id: 123 }];
+        const chatsCollection: IChats[] = [{ id: 'ABC' }];
         expectedResult = service.addChatsToCollectionIfMissing(chatsCollection, undefined, null);
         expect(expectedResult).toEqual(chatsCollection);
       });

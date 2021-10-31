@@ -34,7 +34,7 @@ export class TagsComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: ITags): number {
+  trackId(index: number, item: ITags): string {
     return item.id!;
   }
 

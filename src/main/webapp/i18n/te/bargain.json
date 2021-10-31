@@ -1,0 +1,30 @@
+{
+  "lobbyforplayersApp": {
+    "bargain": {
+      "home": {
+        "title": "Bargains",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Bargain  సృష్టించండి",
+        "createOrEditLabel": "Bargain సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Bargains found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Bargain సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Bargain సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Bargain తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Bargain {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Bargain"
+      },
+      "id": "ID",
+      "bargainPrice": "Bargain Price",
+      "itemId": "Item Id",
+      "sellerApproved": "Seller Approved",
+      "buyerApproved": "Buyer Approved",
+      "sellerId": "Seller Id",
+      "buyerId": "Buyer Id",
+      "item": "Item"
+    }
+  }
+}

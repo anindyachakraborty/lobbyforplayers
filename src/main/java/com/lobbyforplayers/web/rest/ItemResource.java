@@ -2,6 +2,7 @@ package com.lobbyforplayers.web.rest;
 
 import com.lobbyforplayers.domain.Item;
 import com.lobbyforplayers.repository.ItemRepository;
+import com.lobbyforplayers.service.ItemService;
 import com.lobbyforplayers.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -30,7 +30,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ItemResource {
 
     private final Logger log = LoggerFactory.getLogger(ItemResource.class);
@@ -40,9 +39,12 @@ public class ItemResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ItemService itemService;
+
     private final ItemRepository itemRepository;
 
-    public ItemResource(ItemRepository itemRepository) {
+    public ItemResource(ItemService itemService, ItemRepository itemRepository) {
+        this.itemService = itemService;
         this.itemRepository = itemRepository;
     }
 
@@ -59,10 +61,10 @@ public class ItemResource {
         if (item.getId() != null) {
             throw new BadRequestAlertException("A new item cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Item result = itemRepository.save(item);
+        Item result = itemService.save(item);
         return ResponseEntity
             .created(new URI("/api/items/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -91,10 +93,10 @@ public class ItemResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Item result = itemRepository.save(item);
+        Item result = itemService.save(item);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, item.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, item.getId()))
             .body(result);
     }
 
@@ -126,51 +128,9 @@ public class ItemResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Item> result = itemRepository
-            .findById(item.getId())
-            .map(existingItem -> {
-                if (item.getDescription() != null) {
-                    existingItem.setDescription(item.getDescription());
-                }
-                if (item.getViews() != null) {
-                    existingItem.setViews(item.getViews());
-                }
-                if (item.getSellerName() != null) {
-                    existingItem.setSellerName(item.getSellerName());
-                }
-                if (item.getSellerId() != null) {
-                    existingItem.setSellerId(item.getSellerId());
-                }
-                if (item.getListedFlag() != null) {
-                    existingItem.setListedFlag(item.getListedFlag());
-                }
-                if (item.getPrice() != null) {
-                    existingItem.setPrice(item.getPrice());
-                }
-                if (item.getPicturesPath() != null) {
-                    existingItem.setPicturesPath(item.getPicturesPath());
-                }
-                if (item.getLevel() != null) {
-                    existingItem.setLevel(item.getLevel());
-                }
-                if (item.getFixedPrice() != null) {
-                    existingItem.setFixedPrice(item.getFixedPrice());
-                }
-                if (item.getGameName() != null) {
-                    existingItem.setGameName(item.getGameName());
-                }
-                if (item.getLanguage() != null) {
-                    existingItem.setLanguage(item.getLanguage());
-                }
+        Optional<Item> result = itemService.partialUpdate(item);
 
-                return existingItem;
-            })
-            .map(itemRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, item.getId().toString())
-        );
+        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, item.getId()));
     }
 
     /**
@@ -188,9 +148,9 @@ public class ItemResource {
         log.debug("REST request to get a page of Items");
         Page<Item> page;
         if (eagerload) {
-            page = itemRepository.findAllWithEagerRelationships(pageable);
+            page = itemService.findAllWithEagerRelationships(pageable);
         } else {
-            page = itemRepository.findAll(pageable);
+            page = itemService.findAll(pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -203,9 +163,9 @@ public class ItemResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the item, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/items/{id}")
-    public ResponseEntity<Item> getItem(@PathVariable Long id) {
+    public ResponseEntity<Item> getItem(@PathVariable String id) {
         log.debug("REST request to get Item : {}", id);
-        Optional<Item> item = itemRepository.findOneWithEagerRelationships(id);
+        Optional<Item> item = itemService.findOne(id);
         return ResponseUtil.wrapOrNotFound(item);
     }
 
@@ -218,10 +178,7 @@ public class ItemResource {
     @DeleteMapping("/items/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable String id) {
         log.debug("REST request to delete Item : {}", id);
-        itemRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        itemService.delete(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

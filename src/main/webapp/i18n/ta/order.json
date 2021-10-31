@@ -1,0 +1,29 @@
+{
+  "lobbyforplayersApp": {
+    "order": {
+      "home": {
+        "title": "Orders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Order-ஐ உருவாக்கு",
+        "createOrEditLabel": "Order -ஐ மாற்று (அ) உருவாக்கு",
+        "notFound": "No Orders found"
+      },
+      "created": "Order புதிதாக உருவாக்கப்பட்டது, அடையாளம் {{ param }}",
+      "updated": "Order மாற்றப்பட்டது, அடையாளம்  {{ param }}",
+      "deleted": "A Order நீக்கப்பட்டது, அடையாளம {{ param }}",
+      "delete": {
+        "question": "நீக்குவதற்கு உறுதி செய் Order {{ id }}?"
+      },
+      "detail": {
+        "title": "Order"
+      },
+      "id": "ID",
+      "sellerName": "Seller Name",
+      "buyerName": "Buyer Name",
+      "priceSettled": "Price Settled",
+      "status": "Status",
+      "completed": "Completed",
+      "item": "Item"
+    }
+  }
+}

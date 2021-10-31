@@ -36,7 +36,7 @@
       "ownerSide": false
     }
   ],
-  "entityTableName": "jhi_order",
+  "entityTableName": "order",
   "dto": "no",
   "pagination": "no",
   "service": "serviceImpl",
@@ -44,6 +44,6 @@
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,
-  "applications": ["lobbyforplayers"],
+  "applications": "*",
   "changelogDate": "20211031103452"
 }

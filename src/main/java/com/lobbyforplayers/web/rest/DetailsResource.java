@@ -2,6 +2,7 @@ package com.lobbyforplayers.web.rest;
 
 import com.lobbyforplayers.domain.Details;
 import com.lobbyforplayers.repository.DetailsRepository;
+import com.lobbyforplayers.service.DetailsService;
 import com.lobbyforplayers.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +24,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DetailsResource {
 
     private final Logger log = LoggerFactory.getLogger(DetailsResource.class);
@@ -34,9 +33,12 @@ public class DetailsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final DetailsService detailsService;
+
     private final DetailsRepository detailsRepository;
 
-    public DetailsResource(DetailsRepository detailsRepository) {
+    public DetailsResource(DetailsService detailsService, DetailsRepository detailsRepository) {
+        this.detailsService = detailsService;
         this.detailsRepository = detailsRepository;
     }
 
@@ -53,10 +55,10 @@ public class DetailsResource {
         if (details.getId() != null) {
             throw new BadRequestAlertException("A new details cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Details result = detailsRepository.save(details);
+        Details result = detailsService.save(details);
         return ResponseEntity
             .created(new URI("/api/details/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
@@ -87,10 +89,10 @@ public class DetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Details result = detailsRepository.save(details);
+        Details result = detailsService.save(details);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, details.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, details.getId()))
             .body(result);
     }
 
@@ -122,51 +124,9 @@ public class DetailsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Details> result = detailsRepository
-            .findById(details.getId())
-            .map(existingDetails -> {
-                if (details.getLoginName() != null) {
-                    existingDetails.setLoginName(details.getLoginName());
-                }
-                if (details.getPassword() != null) {
-                    existingDetails.setPassword(details.getPassword());
-                }
-                if (details.getLastName() != null) {
-                    existingDetails.setLastName(details.getLastName());
-                }
-                if (details.getFirstName() != null) {
-                    existingDetails.setFirstName(details.getFirstName());
-                }
-                if (details.getSecurtiyQuestion() != null) {
-                    existingDetails.setSecurtiyQuestion(details.getSecurtiyQuestion());
-                }
-                if (details.getSecurityAnswer() != null) {
-                    existingDetails.setSecurityAnswer(details.getSecurityAnswer());
-                }
-                if (details.getParentalPassword() != null) {
-                    existingDetails.setParentalPassword(details.getParentalPassword());
-                }
-                if (details.getFirstCdKey() != null) {
-                    existingDetails.setFirstCdKey(details.getFirstCdKey());
-                }
-                if (details.getOtherInformation() != null) {
-                    existingDetails.setOtherInformation(details.getOtherInformation());
-                }
-                if (details.getEnteredDate() != null) {
-                    existingDetails.setEnteredDate(details.getEnteredDate());
-                }
-                if (details.getOrderDate() != null) {
-                    existingDetails.setOrderDate(details.getOrderDate());
-                }
+        Optional<Details> result = detailsService.partialUpdate(details);
 
-                return existingDetails;
-            })
-            .map(detailsRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, details.getId().toString())
-        );
+        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, details.getId()));
     }
 
     /**
@@ -177,7 +137,7 @@ public class DetailsResource {
     @GetMapping("/details")
     public List<Details> getAllDetails() {
         log.debug("REST request to get all Details");
-        return detailsRepository.findAll();
+        return detailsService.findAll();
     }
 
     /**
@@ -189,7 +149,7 @@ public class DetailsResource {
     @GetMapping("/details/{id}")
     public ResponseEntity<Details> getDetails(@PathVariable String id) {
         log.debug("REST request to get Details : {}", id);
-        Optional<Details> details = detailsRepository.findById(id);
+        Optional<Details> details = detailsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(details);
     }
 
@@ -202,10 +162,7 @@ public class DetailsResource {
     @DeleteMapping("/details/{id}")
     public ResponseEntity<Void> deleteDetails(@PathVariable String id) {
         log.debug("REST request to delete Details : {}", id);
-        detailsRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        detailsService.delete(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

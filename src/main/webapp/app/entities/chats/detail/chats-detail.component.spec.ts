@@ -14,7 +14,7 @@ describe('Chats Management Detail Component', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ chats: { id: 123 } }) },
+          useValue: { data: of({ chats: { id: 'ABC' } }) },
         },
       ],
     })
@@ -30,7 +30,7 @@ describe('Chats Management Detail Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.chats).toEqual(expect.objectContaining({ id: 123 }));
+      expect(comp.chats).toEqual(expect.objectContaining({ id: 'ABC' }));
     });
   });
 });

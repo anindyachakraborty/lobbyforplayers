@@ -34,7 +34,7 @@ export class OrderComponent implements OnInit {
     this.loadAll();
   }
 
-  trackId(index: number, item: IOrder): number {
+  trackId(index: number, item: IOrder): string {
     return item.id!;
   }
 

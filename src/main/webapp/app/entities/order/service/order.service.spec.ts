@@ -20,7 +20,7 @@ describe('Order Service', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     elemDefault = {
-      id: 0,
+      id: 'AAAAAAA',
       sellerName: 'AAAAAAA',
       buyerName: 'AAAAAAA',
       priceSettled: 0,
@@ -33,7 +33,7 @@ describe('Order Service', () => {
     it('should find an element', () => {
       const returnedFromService = Object.assign({}, elemDefault);
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -43,7 +43,7 @@ describe('Order Service', () => {
     it('should create a Order', () => {
       const returnedFromService = Object.assign(
         {
-          id: 0,
+          id: 'ID',
         },
         elemDefault
       );
@@ -60,7 +60,7 @@ describe('Order Service', () => {
     it('should update a Order', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           sellerName: 'BBBBBB',
           buyerName: 'BBBBBB',
           priceSettled: 1,
@@ -103,7 +103,7 @@ describe('Order Service', () => {
     it('should return a list of Order', () => {
       const returnedFromService = Object.assign(
         {
-          id: 1,
+          id: 'BBBBBB',
           sellerName: 'BBBBBB',
           buyerName: 'BBBBBB',
           priceSettled: 1,
@@ -124,7 +124,7 @@ describe('Order Service', () => {
     });
 
     it('should delete a Order', () => {
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -133,42 +133,42 @@ describe('Order Service', () => {
 
     describe('addOrderToCollectionIfMissing', () => {
       it('should add a Order to an empty array', () => {
-        const order: IOrder = { id: 123 };
+        const order: IOrder = { id: 'ABC' };
         expectedResult = service.addOrderToCollectionIfMissing([], order);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(order);
       });
 
       it('should not add a Order to an array that contains it', () => {
-        const order: IOrder = { id: 123 };
+        const order: IOrder = { id: 'ABC' };
         const orderCollection: IOrder[] = [
           {
             ...order,
           },
-          { id: 456 },
+          { id: 'CBA' },
         ];
         expectedResult = service.addOrderToCollectionIfMissing(orderCollection, order);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Order to an array that doesn't contain it", () => {
-        const order: IOrder = { id: 123 };
-        const orderCollection: IOrder[] = [{ id: 456 }];
+        const order: IOrder = { id: 'ABC' };
+        const orderCollection: IOrder[] = [{ id: 'CBA' }];
         expectedResult = service.addOrderToCollectionIfMissing(orderCollection, order);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(order);
       });
 
       it('should add only unique Order to an array', () => {
-        const orderArray: IOrder[] = [{ id: 123 }, { id: 456 }, { id: 49409 }];
-        const orderCollection: IOrder[] = [{ id: 123 }];
+        const orderArray: IOrder[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '765fd2b9-1700-4309-80e7-3e5080dcb6b7' }];
+        const orderCollection: IOrder[] = [{ id: 'ABC' }];
         expectedResult = service.addOrderToCollectionIfMissing(orderCollection, ...orderArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const order: IOrder = { id: 123 };
-        const order2: IOrder = { id: 456 };
+        const order: IOrder = { id: 'ABC' };
+        const order2: IOrder = { id: 'CBA' };
         expectedResult = service.addOrderToCollectionIfMissing([], order, order2);
         expect(expectedResult).toHaveLength(2);
         expect(expectedResult).toContain(order);
@@ -176,14 +176,14 @@ describe('Order Service', () => {
       });
 
       it('should accept null and undefined values', () => {
-        const order: IOrder = { id: 123 };
+        const order: IOrder = { id: 'ABC' };
         expectedResult = service.addOrderToCollectionIfMissing([], null, order, undefined);
         expect(expectedResult).toHaveLength(1);
         expect(expectedResult).toContain(order);
       });
 
       it('should return initial array if no Order is added', () => {
-        const orderCollection: IOrder[] = [{ id: 123 }];
+        const orderCollection: IOrder[] = [{ id: 'ABC' }];
         expectedResult = service.addOrderToCollectionIfMissing(orderCollection, undefined, null);
         expect(expectedResult).toEqual(orderCollection);
       });

@@ -28,7 +28,7 @@ describe('Bargain Management Component', () => {
     jest.spyOn(service, 'query').mockReturnValue(
       of(
         new HttpResponse({
-          body: [{ id: 123 }],
+          body: [{ id: 'ABC' }],
           headers,
         })
       )
@@ -41,6 +41,6 @@ describe('Bargain Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.bargains?.[0]).toEqual(expect.objectContaining({ id: 123 }));
+    expect(comp.bargains?.[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
   });
 });

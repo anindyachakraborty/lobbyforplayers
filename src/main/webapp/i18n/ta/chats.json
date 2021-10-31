@@ -1,0 +1,28 @@
+{
+  "lobbyforplayersApp": {
+    "chats": {
+      "home": {
+        "title": "Chats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Chats-ஐ உருவாக்கு",
+        "createOrEditLabel": "Chats -ஐ மாற்று (அ) உருவாக்கு",
+        "notFound": "No Chats found"
+      },
+      "created": "Chats புதிதாக உருவாக்கப்பட்டது, அடையாளம் {{ param }}",
+      "updated": "Chats மாற்றப்பட்டது, அடையாளம்  {{ param }}",
+      "deleted": "A Chats நீக்கப்பட்டது, அடையாளம {{ param }}",
+      "delete": {
+        "question": "நீக்குவதற்கு உறுதி செய் Chats {{ id }}?"
+      },
+      "detail": {
+        "title": "Chats"
+      },
+      "id": "ID",
+      "fromUserId": "From User Id",
+      "toUserId": "To User Id",
+      "timeStamp": "Time Stamp",
+      "message": "Message",
+      "language": "Language"
+    }
+  }
+}

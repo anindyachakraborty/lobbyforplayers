@@ -3,15 +3,15 @@ package com.lobbyforplayers.domain;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Details.
  */
-@Document(collection = "DETAILS")
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "details")
 public class Details implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,28 +20,39 @@ public class Details implements Serializable {
     private String id;
 
     @NotNull
+    @Field("login_name")
     private String loginName;
 
     @NotNull
+    @Field("password")
     private String password;
 
+    @Field("last_name")
     private String lastName;
 
+    @Field("first_name")
     private String firstName;
 
+    @Field("securtiy_question")
     private String securtiyQuestion;
 
+    @Field("security_answer")
     private String securityAnswer;
 
+    @Field("parental_password")
     private String parentalPassword;
 
+    @Field("first_cd_key")
     private String firstCdKey;
 
+    @Field("other_information")
     private String otherInformation;
 
     @NotNull
+    @Field("entered_date")
     private Instant enteredDate;
 
+    @Field("order_date")
     private LocalDate orderDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

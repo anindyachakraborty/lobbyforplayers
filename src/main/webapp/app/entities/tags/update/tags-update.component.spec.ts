@@ -36,7 +36,7 @@ describe('Tags Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const tags: ITags = { id: 456 };
+      const tags: ITags = { id: 'CBA' };
 
       activatedRoute.data = of({ tags });
       comp.ngOnInit();
@@ -49,7 +49,7 @@ describe('Tags Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Tags>>();
-      const tags = { id: 123 };
+      const tags = { id: 'ABC' };
       jest.spyOn(tagsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ tags });
@@ -91,7 +91,7 @@ describe('Tags Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Tags>>();
-      const tags = { id: 123 };
+      const tags = { id: 'ABC' };
       jest.spyOn(tagsService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ tags });

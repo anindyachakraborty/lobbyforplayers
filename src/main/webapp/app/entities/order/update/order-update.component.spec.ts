@@ -36,7 +36,7 @@ describe('Order Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const order: IOrder = { id: 456 };
+      const order: IOrder = { id: 'CBA' };
 
       activatedRoute.data = of({ order });
       comp.ngOnInit();
@@ -49,7 +49,7 @@ describe('Order Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Order>>();
-      const order = { id: 123 };
+      const order = { id: 'ABC' };
       jest.spyOn(orderService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ order });
@@ -91,7 +91,7 @@ describe('Order Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<Order>>();
-      const order = { id: 123 };
+      const order = { id: 'ABC' };
       jest.spyOn(orderService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ order });

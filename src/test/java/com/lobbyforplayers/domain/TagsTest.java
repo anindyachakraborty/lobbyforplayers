@@ -11,11 +11,11 @@ class TagsTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Tags.class);
         Tags tags1 = new Tags();
-        tags1.setId("ABC");
+        tags1.setId("id1");
         Tags tags2 = new Tags();
         tags2.setId(tags1.getId());
         assertThat(tags1).isEqualTo(tags2);
-        tags2.setId("XYZ");
+        tags2.setId("id2");
         assertThat(tags1).isNotEqualTo(tags2);
         tags1.setId(null);
         assertThat(tags1).isNotEqualTo(tags2);

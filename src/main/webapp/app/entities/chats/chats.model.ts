@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs';
 
 export interface IChats {
-  id?: number;
+  id?: string;
   fromUserId?: string;
   toUserId?: string;
   timeStamp?: dayjs.Dayjs;
@@ -11,7 +11,7 @@ export interface IChats {
 
 export class Chats implements IChats {
   constructor(
-    public id?: number,
+    public id?: string,
     public fromUserId?: string,
     public toUserId?: string,
     public timeStamp?: dayjs.Dayjs,
@@ -20,6 +20,6 @@ export class Chats implements IChats {
   ) {}
 }
 
-export function getChatsIdentifier(chats: IChats): number | undefined {
+export function getChatsIdentifier(chats: IChats): string | undefined {
   return chats.id;
 }

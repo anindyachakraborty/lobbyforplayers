@@ -21,14 +21,14 @@ export class BargainService {
   }
 
   update(bargain: IBargain): Observable<EntityResponseType> {
-    return this.http.put<IBargain>(`${this.resourceUrl}/${getBargainIdentifier(bargain) as number}`, bargain, { observe: 'response' });
+    return this.http.put<IBargain>(`${this.resourceUrl}/${getBargainIdentifier(bargain) as string}`, bargain, { observe: 'response' });
   }
 
   partialUpdate(bargain: IBargain): Observable<EntityResponseType> {
-    return this.http.patch<IBargain>(`${this.resourceUrl}/${getBargainIdentifier(bargain) as number}`, bargain, { observe: 'response' });
+    return this.http.patch<IBargain>(`${this.resourceUrl}/${getBargainIdentifier(bargain) as string}`, bargain, { observe: 'response' });
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http.get<IBargain>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -37,7 +37,7 @@ export class BargainService {
     return this.http.get<IBargain[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
