@@ -1,0 +1,30 @@
+{
+  "lobbyforplayersApp": {
+    "bargain": {
+      "home": {
+        "title": "Bargains",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bargain",
+        "createOrEditLabel": "Create or edit a Bargain",
+        "notFound": "No Bargains found"
+      },
+      "created": "A new Bargain is created with identifier {{ param }}",
+      "updated": "A Bargain is updated with identifier {{ param }}",
+      "deleted": "A Bargain is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bargain {{ id }}?"
+      },
+      "detail": {
+        "title": "Bargain"
+      },
+      "id": "ID",
+      "bargainPrice": "Bargain Price",
+      "itemId": "Item Id",
+      "sellerApproved": "Seller Approved",
+      "buyerApproved": "Buyer Approved",
+      "sellerId": "Seller Id",
+      "buyerId": "Buyer Id",
+      "item": "Item"
+    }
+  }
+}

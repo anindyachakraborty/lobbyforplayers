@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="chats">
+      <h2 data-cy="chatsDetailsHeading"><span jhiTranslate="lobbyforplayersApp.chats.detail.title">Chats</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ chats.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.chats.fromUserId">From User Id</span></dt>
+        <dd>
+          <span>{{ chats.fromUserId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.chats.toUserId">To User Id</span></dt>
+        <dd>
+          <span>{{ chats.toUserId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.chats.timeStamp">Time Stamp</span></dt>
+        <dd>
+          <span>{{ chats.timeStamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.chats.message">Message</span></dt>
+        <dd>
+          <span>{{ chats.message }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.chats.language">Language</span></dt>
+        <dd>
+          <span>{{ chats.language }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/chats', chats.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

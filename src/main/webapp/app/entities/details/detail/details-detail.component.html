@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="details">
+      <h2 data-cy="detailsDetailsHeading"><span jhiTranslate="lobbyforplayersApp.details.detail.title">Details</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ details.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.loginName">Login Name</span></dt>
+        <dd>
+          <span>{{ details.loginName }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.password">Password</span></dt>
+        <dd>
+          <span>{{ details.password }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ details.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ details.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.securtiyQuestion">Securtiy Question</span></dt>
+        <dd>
+          <span>{{ details.securtiyQuestion }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.securityAnswer">Security Answer</span></dt>
+        <dd>
+          <span>{{ details.securityAnswer }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.parentalPassword">Parental Password</span></dt>
+        <dd>
+          <span>{{ details.parentalPassword }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.firstCdKey">First Cd Key</span></dt>
+        <dd>
+          <span>{{ details.firstCdKey }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.otherInformation">Other Information</span></dt>
+        <dd>
+          <span>{{ details.otherInformation }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.enteredDate">Entered Date</span></dt>
+        <dd>
+          <span>{{ details.enteredDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.details.orderDate">Order Date</span></dt>
+        <dd>
+          <span>{{ details.orderDate | formatMediumDate }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/details', details.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

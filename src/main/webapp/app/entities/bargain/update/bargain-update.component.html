@@ -1,0 +1,171 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-bargain-heading" data-cy="BargainCreateUpdateHeading" jhiTranslate="lobbyforplayersApp.bargain.home.createOrEditLabel">
+        Create or edit a Bargain
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.bargainPrice" for="field_bargainPrice"
+            >Bargain Price</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="bargainPrice"
+            id="field_bargainPrice"
+            data-cy="bargainPrice"
+            formControlName="bargainPrice"
+          />
+          <div
+            *ngIf="editForm.get('bargainPrice')!.invalid && (editForm.get('bargainPrice')!.dirty || editForm.get('bargainPrice')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bargainPrice')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('bargainPrice')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.itemId" for="field_itemId">Item Id</label>
+          <input type="text" class="form-control" name="itemId" id="field_itemId" data-cy="itemId" formControlName="itemId" />
+          <div *ngIf="editForm.get('itemId')!.invalid && (editForm.get('itemId')!.dirty || editForm.get('itemId')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('itemId')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.sellerApproved" for="field_sellerApproved"
+            >Seller Approved</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="sellerApproved"
+            id="field_sellerApproved"
+            data-cy="sellerApproved"
+            formControlName="sellerApproved"
+          />
+          <div
+            *ngIf="
+              editForm.get('sellerApproved')!.invalid && (editForm.get('sellerApproved')!.dirty || editForm.get('sellerApproved')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sellerApproved')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.buyerApproved" for="field_buyerApproved"
+            >Buyer Approved</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="buyerApproved"
+            id="field_buyerApproved"
+            data-cy="buyerApproved"
+            formControlName="buyerApproved"
+          />
+          <div
+            *ngIf="
+              editForm.get('buyerApproved')!.invalid && (editForm.get('buyerApproved')!.dirty || editForm.get('buyerApproved')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buyerApproved')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.sellerId" for="field_sellerId">Seller Id</label>
+          <input type="text" class="form-control" name="sellerId" id="field_sellerId" data-cy="sellerId" formControlName="sellerId" />
+          <div *ngIf="editForm.get('sellerId')!.invalid && (editForm.get('sellerId')!.dirty || editForm.get('sellerId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sellerId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.buyerId" for="field_buyerId">Buyer Id</label>
+          <input type="text" class="form-control" name="buyerId" id="field_buyerId" data-cy="buyerId" formControlName="buyerId" />
+          <div *ngIf="editForm.get('buyerId')!.invalid && (editForm.get('buyerId')!.dirty || editForm.get('buyerId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buyerId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.bargain.item" for="field_item">Item</label>
+          <select class="form-control" id="field_item" data-cy="item" name="item" formControlName="item">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="itemOption.id === editForm.get('item')!.value?.id ? editForm.get('item')!.value : itemOption"
+              *ngFor="let itemOption of itemsSharedCollection; trackBy: trackItemById"
+            >
+              {{ itemOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

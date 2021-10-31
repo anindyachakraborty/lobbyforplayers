@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="bargain">
+      <h2 data-cy="bargainDetailsHeading"><span jhiTranslate="lobbyforplayersApp.bargain.detail.title">Bargain</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ bargain.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.bargainPrice">Bargain Price</span></dt>
+        <dd>
+          <span>{{ bargain.bargainPrice }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.itemId">Item Id</span></dt>
+        <dd>
+          <span>{{ bargain.itemId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.sellerApproved">Seller Approved</span></dt>
+        <dd>
+          <span>{{ bargain.sellerApproved }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.buyerApproved">Buyer Approved</span></dt>
+        <dd>
+          <span>{{ bargain.buyerApproved }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.sellerId">Seller Id</span></dt>
+        <dd>
+          <span>{{ bargain.sellerId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.buyerId">Buyer Id</span></dt>
+        <dd>
+          <span>{{ bargain.buyerId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.bargain.item">Item</span></dt>
+        <dd>
+          <div *ngIf="bargain.item">
+            <a [routerLink]="['/item', bargain.item?.id, 'view']">{{ bargain.item?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/bargain', bargain.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

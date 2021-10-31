@@ -1,0 +1,87 @@
+
+application {
+  config {
+    baseName lobbyforplayers,
+    applicationType monolith,
+    packageName com.lobbyforplayers,
+    authenticationType jwt,
+    clientFramework angular
+  }
+  entities *
+}
+
+entity Item {
+description String required maxlength(256)
+views Integer required 
+sellerName String required
+sellerId String required
+listedFlag Boolean required
+price Double required
+picturesPath String maxlength(256)
+level String
+fixedPrice Boolean required
+gameName String required
+language String required minlength(2) maxlength(10)
+}
+
+entity Order {
+sellerName String required
+buyerName String required
+priceSettled Double required
+status String required
+completed Boolean required
+}
+
+entity Bargain {
+bargainPrice Double required
+itemId String required
+sellerApproved Boolean required
+buyerApproved Boolean required
+sellerId String required
+buyerId String required
+}
+
+entity Details {
+loginName String required
+password String required
+lastName String 
+firstName String 
+securtiyQuestion String
+securityAnswer  String
+parentalPassword String
+firstCdKey String
+otherInformation String
+enteredDate Instant required
+orderDate LocalDate
+}
+
+entity Tags {
+tag String required minlength(3)
+language String required minlength(2) maxlength(10)
+}
+
+entity Chats {
+fromUserId String required
+toUserId String required
+timeStamp Instant required
+message String required minlength(1) maxlength(256)
+language String required minlength(2) maxlength(10)
+}
+
+paginate Item with infinite-scroll
+paginate Chats with infinite-scroll
+service Order with serviceImpl
+
+relationship ManyToMany {
+  Item{tags(name)} to Tags{sentry}
+}
+
+relationship OneToMany {
+	Item{bargain(itemId)} to Bargain
+}
+
+relationship OneToOne {
+	Item to Order
+}
+
+    

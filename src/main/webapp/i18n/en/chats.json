@@ -1,0 +1,28 @@
+{
+  "lobbyforplayersApp": {
+    "chats": {
+      "home": {
+        "title": "Chats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Chats",
+        "createOrEditLabel": "Create or edit a Chats",
+        "notFound": "No Chats found"
+      },
+      "created": "A new Chats is created with identifier {{ param }}",
+      "updated": "A Chats is updated with identifier {{ param }}",
+      "deleted": "A Chats is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Chats {{ id }}?"
+      },
+      "detail": {
+        "title": "Chats"
+      },
+      "id": "ID",
+      "fromUserId": "From User Id",
+      "toUserId": "To User Id",
+      "timeStamp": "Time Stamp",
+      "message": "Message",
+      "language": "Language"
+    }
+  }
+}

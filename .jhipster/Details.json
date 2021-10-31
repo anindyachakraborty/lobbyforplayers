@@ -1,0 +1,63 @@
+{
+  "name": "Details",
+  "fields": [
+    {
+      "fieldName": "loginName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "password",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "securtiyQuestion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "securityAnswer",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "parentalPassword",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firstCdKey",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "otherInformation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "enteredDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "orderDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "details",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["lobbyforplayers"],
+  "changelogDate": "20211031103454"
+}
