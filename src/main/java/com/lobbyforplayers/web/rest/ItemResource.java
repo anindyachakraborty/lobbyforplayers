@@ -77,7 +77,7 @@ public class ItemResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/items/{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Item item)
+    public ResponseEntity<Item> updateItem(@PathVariable(value = "id", required = false) final String id, @Valid @RequestBody Item item)
         throws URISyntaxException {
         log.debug("REST request to update Item : {}, {}", id, item);
         if (item.getId() == null) {
@@ -111,7 +111,7 @@ public class ItemResource {
      */
     @PatchMapping(value = "/items/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Item> partialUpdateItem(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Item item
     ) throws URISyntaxException {
         log.debug("REST request to partial update Item partially : {}, {}", id, item);
@@ -216,7 +216,7 @@ public class ItemResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/items/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable String id) {
         log.debug("REST request to delete Item : {}", id);
         itemRepository.deleteById(id);
         return ResponseEntity

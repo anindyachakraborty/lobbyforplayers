@@ -2,7 +2,6 @@ package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lobbyforplayers.config.Constants;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Locale;
@@ -14,13 +13,14 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A user.
  */
-@org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_user")
-public class User extends AbstractAuditingEntity implements Serializable {
+@Document(collection = "USER")
+public class User extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     @NotNull
-    @Size(min = 60, max = 60)
+    @Size(min = 8, max = 60)
     private String password;
 
     @Size(max = 50)

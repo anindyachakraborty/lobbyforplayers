@@ -3,45 +3,36 @@ package com.lobbyforplayers.repository.timezone;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "jhi_date_time_wrapper")
+@Document(collection = "DATETIMEWRAPPER")
 public class DateTimeWrapper implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    private String id;
 
-    @Column(name = "instant")
     private Instant instant;
 
-    @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
 
-    @Column(name = "offset_date_time")
     private OffsetDateTime offsetDateTime;
 
-    @Column(name = "zoned_date_time")
     private ZonedDateTime zonedDateTime;
 
-    @Column(name = "local_time")
     private LocalTime localTime;
 
-    @Column(name = "offset_time")
     private OffsetTime offsetTime;
 
-    @Column(name = "local_date")
     private LocalDate localDate;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -3,75 +3,59 @@ package com.lobbyforplayers.domain;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Details.
  */
-@Entity
-@Table(name = "details")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "DETAILS")
+// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Details implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "login_name", nullable = false)
     private String loginName;
 
     @NotNull
-    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "securtiy_question")
     private String securtiyQuestion;
 
-    @Column(name = "security_answer")
     private String securityAnswer;
 
-    @Column(name = "parental_password")
     private String parentalPassword;
 
-    @Column(name = "first_cd_key")
     private String firstCdKey;
 
-    @Column(name = "other_information")
     private String otherInformation;
 
     @NotNull
-    @Column(name = "entered_date", nullable = false)
     private Instant enteredDate;
 
-    @Column(name = "order_date")
     private LocalDate orderDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Details id(Long id) {
+    public Details id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

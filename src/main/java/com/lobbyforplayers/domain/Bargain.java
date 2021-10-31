@@ -2,67 +2,56 @@ package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Bargain.
  */
-@Entity
-@Table(name = "bargain")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "BARGAIN")
+// @Cacheable(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Bargain implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "bargain_price", nullable = false)
     private Double bargainPrice;
 
     @NotNull
-    @Column(name = "item_id", nullable = false)
     private String itemId;
 
     @NotNull
-    @Column(name = "seller_approved", nullable = false)
     private Boolean sellerApproved;
 
     @NotNull
-    @Column(name = "buyer_approved", nullable = false)
     private Boolean buyerApproved;
 
     @NotNull
-    @Column(name = "seller_id", nullable = false)
     private String sellerId;
 
     @NotNull
-    @Column(name = "buyer_id", nullable = false)
     private String buyerId;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "order", "bargains", "tags" }, allowSetters = true)
+    // @ManyToMany
+    @JsonIgnoreProperties(value = { "order", "BARGAIN", "tags" }, allowSetters = true)
     private Item item;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Bargain id(Long id) {
+    public Bargain id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -72,7 +72,7 @@ public class DetailsResource {
      */
     @PutMapping("/details/{id}")
     public ResponseEntity<Details> updateDetails(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @Valid @RequestBody Details details
     ) throws URISyntaxException {
         log.debug("REST request to update Details : {}, {}", id, details);
@@ -107,7 +107,7 @@ public class DetailsResource {
      */
     @PatchMapping(value = "/details/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Details> partialUpdateDetails(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Details details
     ) throws URISyntaxException {
         log.debug("REST request to partial update Details partially : {}, {}", id, details);
@@ -187,7 +187,7 @@ public class DetailsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the details, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/details/{id}")
-    public ResponseEntity<Details> getDetails(@PathVariable Long id) {
+    public ResponseEntity<Details> getDetails(@PathVariable String id) {
         log.debug("REST request to get Details : {}", id);
         Optional<Details> details = detailsRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(details);
@@ -200,7 +200,7 @@ public class DetailsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/details/{id}")
-    public ResponseEntity<Void> deleteDetails(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDetails(@PathVariable String id) {
         log.debug("REST request to delete Details : {}", id);
         detailsRepository.deleteById(id);
         return ResponseEntity

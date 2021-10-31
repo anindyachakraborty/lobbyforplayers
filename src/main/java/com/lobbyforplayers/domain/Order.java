@@ -2,63 +2,52 @@ package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Order.
  */
-@Entity
-@Table(name = "jhi_order")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "ORDER")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "seller_name", nullable = false)
     private String sellerName;
 
     @NotNull
-    @Column(name = "buyer_name", nullable = false)
     private String buyerName;
 
     @NotNull
-    @Column(name = "price_settled", nullable = false)
     private Double priceSettled;
 
     @NotNull
-    @Column(name = "status", nullable = false)
     private String status;
 
     @NotNull
-    @Column(name = "completed", nullable = false)
     private Boolean completed;
 
-    @JsonIgnoreProperties(value = { "order", "bargains", "tags" }, allowSetters = true)
-    @OneToOne(mappedBy = "order")
+    @JsonIgnoreProperties(value = { "ORDER", "bargains", "tags" }, allowSetters = true)
+    // @OneToOne(mappedBy = "order")
     private Item item;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Order id(Long id) {
+    public Order id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

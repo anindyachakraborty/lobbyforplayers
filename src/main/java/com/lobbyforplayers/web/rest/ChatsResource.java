@@ -77,8 +77,10 @@ public class ChatsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/chats/{id}")
-    public ResponseEntity<Chats> updateChats(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Chats chats)
-        throws URISyntaxException {
+    public ResponseEntity<Chats> updateChats(
+        @PathVariable(value = "id", required = false) final String id,
+        @Valid @RequestBody Chats chats
+    ) throws URISyntaxException {
         log.debug("REST request to update Chats : {}, {}", id, chats);
         if (chats.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -111,7 +113,7 @@ public class ChatsResource {
      */
     @PatchMapping(value = "/chats/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Chats> partialUpdateChats(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Chats chats
     ) throws URISyntaxException {
         log.debug("REST request to partial update Chats partially : {}, {}", id, chats);
@@ -176,7 +178,7 @@ public class ChatsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the chats, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/chats/{id}")
-    public ResponseEntity<Chats> getChats(@PathVariable Long id) {
+    public ResponseEntity<Chats> getChats(@PathVariable String id) {
         log.debug("REST request to get Chats : {}", id);
         Optional<Chats> chats = chatsRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(chats);
@@ -189,7 +191,7 @@ public class ChatsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/chats/{id}")
-    public ResponseEntity<Void> deleteChats(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteChats(@PathVariable String id) {
         log.debug("REST request to delete Chats : {}", id);
         chatsRepository.deleteById(id);
         return ResponseEntity

@@ -4,100 +4,82 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Item.
  */
-@Entity
-@Table(name = "item")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "ITEM")
+// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(max = 256)
-    @Column(name = "description", length = 256, nullable = false)
     private String description;
 
     @NotNull
-    @Column(name = "views", nullable = false)
     private Integer views;
 
     @NotNull
-    @Column(name = "seller_name", nullable = false)
     private String sellerName;
 
     @NotNull
-    @Column(name = "seller_id", nullable = false)
     private String sellerId;
 
     @NotNull
-    @Column(name = "listed_flag", nullable = false)
     private Boolean listedFlag;
 
     @NotNull
-    @Column(name = "price", nullable = false)
     private Double price;
 
     @Size(max = 256)
-    @Column(name = "pictures_path", length = 256)
     private String picturesPath;
 
-    @Column(name = "level")
     private String level;
 
     @NotNull
-    @Column(name = "fixed_price", nullable = false)
     private Boolean fixedPrice;
 
     @NotNull
-    @Column(name = "game_name", nullable = false)
     private String gameName;
 
     @NotNull
     @Size(min = 2, max = 10)
-    @Column(name = "language", length = 10, nullable = false)
     private String language;
 
     @JsonIgnoreProperties(value = { "item" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
+    // @OneToOne
+    // @JoinColumn(unique = true)
     private Order order;
 
-    @OneToMany(mappedBy = "item")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "item" }, allowSetters = true)
+    // @OneToMany(mappedBy = "item")
+    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "ITEM" }, allowSetters = true)
     private Set<Bargain> bargains = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "rel_item__tags", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "tags_id"))
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    // @ManyToMany
+    // @JoinTable(name = "rel_item__tags", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "tags_id"))
+    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "sentries" }, allowSetters = true)
     private Set<Tags> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Item id(Long id) {
+    public Item id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -67,7 +67,7 @@
         <dt><span jhiTranslate="lobbyforplayersApp.item.tags">Tags</span></dt>
         <dd>
           <span *ngFor="let tags of item.tags; let last = last">
-            <a [routerLink]="['/tags', tags?.id, 'view']">{{ tags.name }}</a
+            <a [routerLink]="['/tags', tags?.id, 'view']">{{ tags.tag }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>

@@ -71,7 +71,7 @@ public class TagsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/tags/{id}")
-    public ResponseEntity<Tags> updateTags(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Tags tags)
+    public ResponseEntity<Tags> updateTags(@PathVariable(value = "id", required = false) final String id, @Valid @RequestBody Tags tags)
         throws URISyntaxException {
         log.debug("REST request to update Tags : {}, {}", id, tags);
         if (tags.getId() == null) {
@@ -105,7 +105,7 @@ public class TagsResource {
      */
     @PatchMapping(value = "/tags/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Tags> partialUpdateTags(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Tags tags
     ) throws URISyntaxException {
         log.debug("REST request to partial update Tags partially : {}, {}", id, tags);
@@ -158,7 +158,7 @@ public class TagsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tags, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/tags/{id}")
-    public ResponseEntity<Tags> getTags(@PathVariable Long id) {
+    public ResponseEntity<Tags> getTags(@PathVariable String id) {
         log.debug("REST request to get Tags : {}", id);
         Optional<Tags> tags = tagsRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(tags);
@@ -171,7 +171,7 @@ public class TagsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/tags/{id}")
-    public ResponseEntity<Void> deleteTags(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTags(@PathVariable String id) {
         log.debug("REST request to delete Tags : {}", id);
         tagsRepository.deleteById(id);
         return ResponseEntity

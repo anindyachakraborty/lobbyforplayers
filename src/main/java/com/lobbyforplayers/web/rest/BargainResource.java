@@ -72,7 +72,7 @@ public class BargainResource {
      */
     @PutMapping("/bargains/{id}")
     public ResponseEntity<Bargain> updateBargain(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @Valid @RequestBody Bargain bargain
     ) throws URISyntaxException {
         log.debug("REST request to update Bargain : {}, {}", id, bargain);
@@ -107,7 +107,7 @@ public class BargainResource {
      */
     @PatchMapping(value = "/bargains/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Bargain> partialUpdateBargain(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Bargain bargain
     ) throws URISyntaxException {
         log.debug("REST request to partial update Bargain partially : {}, {}", id, bargain);
@@ -172,7 +172,7 @@ public class BargainResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bargain, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/bargains/{id}")
-    public ResponseEntity<Bargain> getBargain(@PathVariable Long id) {
+    public ResponseEntity<Bargain> getBargain(@PathVariable String id) {
         log.debug("REST request to get Bargain : {}", id);
         Optional<Bargain> bargain = bargainRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(bargain);
@@ -185,7 +185,7 @@ public class BargainResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/bargains/{id}")
-    public ResponseEntity<Void> deleteBargain(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBargain(@PathVariable String id) {
         log.debug("REST request to delete Bargain : {}", id);
         bargainRepository.deleteById(id);
         return ResponseEntity

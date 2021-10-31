@@ -83,13 +83,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Order> findOne(Long id) {
+    public Optional<Order> findOne(String id) {
         log.debug("Request to get Order : {}", id);
         return orderRepository.findById(id);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Order : {}", id);
         orderRepository.deleteById(id);
     }

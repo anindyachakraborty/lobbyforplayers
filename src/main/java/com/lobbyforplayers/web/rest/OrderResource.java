@@ -74,8 +74,10 @@ public class OrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/orders/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Order order)
-        throws URISyntaxException {
+    public ResponseEntity<Order> updateOrder(
+        @PathVariable(value = "id", required = false) final String id,
+        @Valid @RequestBody Order order
+    ) throws URISyntaxException {
         log.debug("REST request to update Order : {}, {}", id, order);
         if (order.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -108,7 +110,7 @@ public class OrderResource {
      */
     @PatchMapping(value = "/orders/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Order> partialUpdateOrder(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @NotNull @RequestBody Order order
     ) throws URISyntaxException {
         log.debug("REST request to partial update Order partially : {}, {}", id, order);
@@ -154,7 +156,7 @@ public class OrderResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the order, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/orders/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
+    public ResponseEntity<Order> getOrder(@PathVariable String id) {
         log.debug("REST request to get Order : {}", id);
         Optional<Order> order = orderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(order);
@@ -167,7 +169,7 @@ public class OrderResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/orders/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable String id) {
         log.debug("REST request to delete Order : {}", id);
         orderService.delete(id);
         return ResponseEntity

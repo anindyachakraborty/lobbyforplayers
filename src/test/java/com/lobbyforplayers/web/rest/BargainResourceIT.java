@@ -11,7 +11,7 @@ import com.lobbyforplayers.repository.BargainRepository;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
+// import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,510 +28,509 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @WithMockUser
 class BargainResourceIT {
-
-    private static final Double DEFAULT_BARGAIN_PRICE = 1D;
-    private static final Double UPDATED_BARGAIN_PRICE = 2D;
-
-    private static final String DEFAULT_ITEM_ID = "AAAAAAAAAA";
-    private static final String UPDATED_ITEM_ID = "BBBBBBBBBB";
-
-    private static final Boolean DEFAULT_SELLER_APPROVED = false;
-    private static final Boolean UPDATED_SELLER_APPROVED = true;
-
-    private static final Boolean DEFAULT_BUYER_APPROVED = false;
-    private static final Boolean UPDATED_BUYER_APPROVED = true;
-
-    private static final String DEFAULT_SELLER_ID = "AAAAAAAAAA";
-    private static final String UPDATED_SELLER_ID = "BBBBBBBBBB";
-
-    private static final String DEFAULT_BUYER_ID = "AAAAAAAAAA";
-    private static final String UPDATED_BUYER_ID = "BBBBBBBBBB";
-
-    private static final String ENTITY_API_URL = "/api/bargains";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
-
-    private static Random random = new Random();
-    private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
-
-    @Autowired
-    private BargainRepository bargainRepository;
-
-    @Autowired
-    private EntityManager em;
-
-    @Autowired
-    private MockMvc restBargainMockMvc;
-
-    private Bargain bargain;
-
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Bargain createEntity(EntityManager em) {
-        Bargain bargain = new Bargain()
-            .bargainPrice(DEFAULT_BARGAIN_PRICE)
-            .itemId(DEFAULT_ITEM_ID)
-            .sellerApproved(DEFAULT_SELLER_APPROVED)
-            .buyerApproved(DEFAULT_BUYER_APPROVED)
-            .sellerId(DEFAULT_SELLER_ID)
-            .buyerId(DEFAULT_BUYER_ID);
-        return bargain;
-    }
-
-    /**
-     * Create an updated entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Bargain createUpdatedEntity(EntityManager em) {
-        Bargain bargain = new Bargain()
-            .bargainPrice(UPDATED_BARGAIN_PRICE)
-            .itemId(UPDATED_ITEM_ID)
-            .sellerApproved(UPDATED_SELLER_APPROVED)
-            .buyerApproved(UPDATED_BUYER_APPROVED)
-            .sellerId(UPDATED_SELLER_ID)
-            .buyerId(UPDATED_BUYER_ID);
-        return bargain;
-    }
-
-    @BeforeEach
-    public void initTest() {
-        bargain = createEntity(em);
-    }
-
-    @Test
-    @Transactional
-    void createBargain() throws Exception {
-        int databaseSizeBeforeCreate = bargainRepository.findAll().size();
-        // Create the Bargain
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isCreated());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeCreate + 1);
-        Bargain testBargain = bargainList.get(bargainList.size() - 1);
-        assertThat(testBargain.getBargainPrice()).isEqualTo(DEFAULT_BARGAIN_PRICE);
-        assertThat(testBargain.getItemId()).isEqualTo(DEFAULT_ITEM_ID);
-        assertThat(testBargain.getSellerApproved()).isEqualTo(DEFAULT_SELLER_APPROVED);
-        assertThat(testBargain.getBuyerApproved()).isEqualTo(DEFAULT_BUYER_APPROVED);
-        assertThat(testBargain.getSellerId()).isEqualTo(DEFAULT_SELLER_ID);
-        assertThat(testBargain.getBuyerId()).isEqualTo(DEFAULT_BUYER_ID);
-    }
-
-    @Test
-    @Transactional
-    void createBargainWithExistingId() throws Exception {
-        // Create the Bargain with an existing ID
-        bargain.setId(1L);
-
-        int databaseSizeBeforeCreate = bargainRepository.findAll().size();
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkBargainPriceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setBargainPrice(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkItemIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setItemId(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkSellerApprovedIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setSellerApproved(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkBuyerApprovedIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setBuyerApproved(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkSellerIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setSellerId(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkBuyerIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bargainRepository.findAll().size();
-        // set the field null
-        bargain.setBuyerId(null);
-
-        // Create the Bargain, which fails.
-
-        restBargainMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isBadRequest());
-
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void getAllBargains() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        // Get all the bargainList
-        restBargainMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(bargain.getId().intValue())))
-            .andExpect(jsonPath("$.[*].bargainPrice").value(hasItem(DEFAULT_BARGAIN_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].itemId").value(hasItem(DEFAULT_ITEM_ID)))
-            .andExpect(jsonPath("$.[*].sellerApproved").value(hasItem(DEFAULT_SELLER_APPROVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].buyerApproved").value(hasItem(DEFAULT_BUYER_APPROVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].sellerId").value(hasItem(DEFAULT_SELLER_ID)))
-            .andExpect(jsonPath("$.[*].buyerId").value(hasItem(DEFAULT_BUYER_ID)));
-    }
-
-    @Test
-    @Transactional
-    void getBargain() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        // Get the bargain
-        restBargainMockMvc
-            .perform(get(ENTITY_API_URL_ID, bargain.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(bargain.getId().intValue()))
-            .andExpect(jsonPath("$.bargainPrice").value(DEFAULT_BARGAIN_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.itemId").value(DEFAULT_ITEM_ID))
-            .andExpect(jsonPath("$.sellerApproved").value(DEFAULT_SELLER_APPROVED.booleanValue()))
-            .andExpect(jsonPath("$.buyerApproved").value(DEFAULT_BUYER_APPROVED.booleanValue()))
-            .andExpect(jsonPath("$.sellerId").value(DEFAULT_SELLER_ID))
-            .andExpect(jsonPath("$.buyerId").value(DEFAULT_BUYER_ID));
-    }
-
-    @Test
-    @Transactional
-    void getNonExistingBargain() throws Exception {
-        // Get the bargain
-        restBargainMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    void putNewBargain() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-
-        // Update the bargain
-        Bargain updatedBargain = bargainRepository.findById(bargain.getId()).get();
-        // Disconnect from session so that the updates on updatedBargain are not directly saved in db
-        em.detach(updatedBargain);
-        updatedBargain
-            .bargainPrice(UPDATED_BARGAIN_PRICE)
-            .itemId(UPDATED_ITEM_ID)
-            .sellerApproved(UPDATED_SELLER_APPROVED)
-            .buyerApproved(UPDATED_BUYER_APPROVED)
-            .sellerId(UPDATED_SELLER_ID)
-            .buyerId(UPDATED_BUYER_ID);
-
-        restBargainMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedBargain.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedBargain))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-        Bargain testBargain = bargainList.get(bargainList.size() - 1);
-        assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
-        assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
-        assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
-        assertThat(testBargain.getBuyerApproved()).isEqualTo(UPDATED_BUYER_APPROVED);
-        assertThat(testBargain.getSellerId()).isEqualTo(UPDATED_SELLER_ID);
-        assertThat(testBargain.getBuyerId()).isEqualTo(UPDATED_BUYER_ID);
-    }
-
-    @Test
-    @Transactional
-    void putNonExistingBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, bargain.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bargain))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithIdMismatchBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bargain))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithMissingIdPathParamBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void partialUpdateBargainWithPatch() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-
-        // Update the bargain using partial update
-        Bargain partialUpdatedBargain = new Bargain();
-        partialUpdatedBargain.setId(bargain.getId());
-
-        partialUpdatedBargain.bargainPrice(UPDATED_BARGAIN_PRICE).itemId(UPDATED_ITEM_ID).sellerApproved(UPDATED_SELLER_APPROVED);
-
-        restBargainMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedBargain.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedBargain))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-        Bargain testBargain = bargainList.get(bargainList.size() - 1);
-        assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
-        assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
-        assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
-        assertThat(testBargain.getBuyerApproved()).isEqualTo(DEFAULT_BUYER_APPROVED);
-        assertThat(testBargain.getSellerId()).isEqualTo(DEFAULT_SELLER_ID);
-        assertThat(testBargain.getBuyerId()).isEqualTo(DEFAULT_BUYER_ID);
-    }
-
-    @Test
-    @Transactional
-    void fullUpdateBargainWithPatch() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-
-        // Update the bargain using partial update
-        Bargain partialUpdatedBargain = new Bargain();
-        partialUpdatedBargain.setId(bargain.getId());
-
-        partialUpdatedBargain
-            .bargainPrice(UPDATED_BARGAIN_PRICE)
-            .itemId(UPDATED_ITEM_ID)
-            .sellerApproved(UPDATED_SELLER_APPROVED)
-            .buyerApproved(UPDATED_BUYER_APPROVED)
-            .sellerId(UPDATED_SELLER_ID)
-            .buyerId(UPDATED_BUYER_ID);
-
-        restBargainMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedBargain.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedBargain))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-        Bargain testBargain = bargainList.get(bargainList.size() - 1);
-        assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
-        assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
-        assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
-        assertThat(testBargain.getBuyerApproved()).isEqualTo(UPDATED_BUYER_APPROVED);
-        assertThat(testBargain.getSellerId()).isEqualTo(UPDATED_SELLER_ID);
-        assertThat(testBargain.getBuyerId()).isEqualTo(UPDATED_BUYER_ID);
-    }
-
-    @Test
-    @Transactional
-    void patchNonExistingBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, bargain.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(bargain))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithIdMismatchBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, count.incrementAndGet())
-                    .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(bargain))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithMissingIdPathParamBargain() throws Exception {
-        int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
-        bargain.setId(count.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restBargainMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(bargain)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Bargain in the database
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void deleteBargain() throws Exception {
-        // Initialize the database
-        bargainRepository.saveAndFlush(bargain);
-
-        int databaseSizeBeforeDelete = bargainRepository.findAll().size();
-
-        // Delete the bargain
-        restBargainMockMvc
-            .perform(delete(ENTITY_API_URL_ID, bargain.getId()).accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<Bargain> bargainList = bargainRepository.findAll();
-        assertThat(bargainList).hasSize(databaseSizeBeforeDelete - 1);
-    }
+    // private static final Double DEFAULT_BARGAIN_PRICE = 1D;
+    // private static final Double UPDATED_BARGAIN_PRICE = 2D;
+
+    // private static final String DEFAULT_ITEM_ID = "AAAAAAAAAA";
+    // private static final String UPDATED_ITEM_ID = "BBBBBBBBBB";
+
+    // private static final Boolean DEFAULT_SELLER_APPROVED = false;
+    // private static final Boolean UPDATED_SELLER_APPROVED = true;
+
+    // private static final Boolean DEFAULT_BUYER_APPROVED = false;
+    // private static final Boolean UPDATED_BUYER_APPROVED = true;
+
+    // private static final String DEFAULT_SELLER_ID = "AAAAAAAAAA";
+    // private static final String UPDATED_SELLER_ID = "BBBBBBBBBB";
+
+    // private static final String DEFAULT_BUYER_ID = "AAAAAAAAAA";
+    // private static final String UPDATED_BUYER_ID = "BBBBBBBBBB";
+
+    // private static final String ENTITY_API_URL = "/api/bargains";
+    // private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+
+    // private static Random random = new Random();
+    // private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+
+    // @Autowired
+    // private BargainRepository bargainRepository;
+
+    // @Autowired
+    // private EntityManager em;
+
+    // @Autowired
+    // private MockMvc restBargainMockMvc;
+
+    // private Bargain bargain;
+
+    // /**
+    //  * Create an entity for this test.
+    //  *
+    //  * This is a static method, as tests for other entities might also need it,
+    //  * if they test an entity which requires the current entity.
+    //  */
+    // public static Bargain createEntity(EntityManager em) {
+    //     Bargain bargain = new Bargain()
+    //         .bargainPrice(DEFAULT_BARGAIN_PRICE)
+    //         .itemId(DEFAULT_ITEM_ID)
+    //         .sellerApproved(DEFAULT_SELLER_APPROVED)
+    //         .buyerApproved(DEFAULT_BUYER_APPROVED)
+    //         .sellerId(DEFAULT_SELLER_ID)
+    //         .buyerId(DEFAULT_BUYER_ID);
+    //     return bargain;
+    // }
+
+    // /**
+    //  * Create an updated entity for this test.
+    //  *
+    //  * This is a static method, as tests for other entities might also need it,
+    //  * if they test an entity which requires the current entity.
+    //  */
+    // public static Bargain createUpdatedEntity(EntityManager em) {
+    //     Bargain bargain = new Bargain()
+    //         .bargainPrice(UPDATED_BARGAIN_PRICE)
+    //         .itemId(UPDATED_ITEM_ID)
+    //         .sellerApproved(UPDATED_SELLER_APPROVED)
+    //         .buyerApproved(UPDATED_BUYER_APPROVED)
+    //         .sellerId(UPDATED_SELLER_ID)
+    //         .buyerId(UPDATED_BUYER_ID);
+    //     return bargain;
+    // }
+
+    // @BeforeEach
+    // public void initTest() {
+    //     bargain = createEntity(em);
+    // }
+
+    // @Test
+    // @Transactional
+    // void createBargain() throws Exception {
+    //     int databaseSizeBeforeCreate = bargainRepository.findAll().size();
+    //     // Create the Bargain
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isCreated());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeCreate + 1);
+    //     Bargain testBargain = bargainList.get(bargainList.size() - 1);
+    //     assertThat(testBargain.getBargainPrice()).isEqualTo(DEFAULT_BARGAIN_PRICE);
+    //     assertThat(testBargain.getItemId()).isEqualTo(DEFAULT_ITEM_ID);
+    //     assertThat(testBargain.getSellerApproved()).isEqualTo(DEFAULT_SELLER_APPROVED);
+    //     assertThat(testBargain.getBuyerApproved()).isEqualTo(DEFAULT_BUYER_APPROVED);
+    //     assertThat(testBargain.getSellerId()).isEqualTo(DEFAULT_SELLER_ID);
+    //     assertThat(testBargain.getBuyerId()).isEqualTo(DEFAULT_BUYER_ID);
+    // }
+
+    // @Test
+    // @Transactional
+    // void createBargainWithExistingId() throws Exception {
+    //     // Create the Bargain with an existing ID
+    //     bargain.setId("ABC");
+
+    //     int databaseSizeBeforeCreate = bargainRepository.findAll().size();
+
+    //     // An entity with an existing ID cannot be created, so this API call must fail
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeCreate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkBargainPriceIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setBargainPrice(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkItemIdIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setItemId(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkSellerApprovedIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setSellerApproved(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkBuyerApprovedIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setBuyerApproved(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkSellerIdIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setSellerId(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void checkBuyerIdIsRequired() throws Exception {
+    //     int databaseSizeBeforeTest = bargainRepository.findAll().size();
+    //     // set the field null
+    //     bargain.setBuyerId(null);
+
+    //     // Create the Bargain, which fails.
+
+    //     restBargainMockMvc
+    //         .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isBadRequest());
+
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeTest);
+    // }
+
+    // @Test
+    // @Transactional
+    // void getAllBargains() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     // Get all the bargainList
+    //     restBargainMockMvc
+    //         .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+    //         .andExpect(status().isOk())
+    //         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+    //         .andExpect(jsonPath("$.[*].id").value(hasItem(bargain.getId().intValue())))
+    //         .andExpect(jsonPath("$.[*].bargainPrice").value(hasItem(DEFAULT_BARGAIN_PRICE.doubleValue())))
+    //         .andExpect(jsonPath("$.[*].itemId").value(hasItem(DEFAULT_ITEM_ID)))
+    //         .andExpect(jsonPath("$.[*].sellerApproved").value(hasItem(DEFAULT_SELLER_APPROVED.booleanValue())))
+    //         .andExpect(jsonPath("$.[*].buyerApproved").value(hasItem(DEFAULT_BUYER_APPROVED.booleanValue())))
+    //         .andExpect(jsonPath("$.[*].sellerId").value(hasItem(DEFAULT_SELLER_ID)))
+    //         .andExpect(jsonPath("$.[*].buyerId").value(hasItem(DEFAULT_BUYER_ID)));
+    // }
+
+    // @Test
+    // @Transactional
+    // void getBargain() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     // Get the bargain
+    //     restBargainMockMvc
+    //         .perform(get(ENTITY_API_URL_ID, bargain.getId()))
+    //         .andExpect(status().isOk())
+    //         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+    //         .andExpect(jsonPath("$.id").value(bargain.getId().intValue()))
+    //         .andExpect(jsonPath("$.bargainPrice").value(DEFAULT_BARGAIN_PRICE.doubleValue()))
+    //         .andExpect(jsonPath("$.itemId").value(DEFAULT_ITEM_ID))
+    //         .andExpect(jsonPath("$.sellerApproved").value(DEFAULT_SELLER_APPROVED.booleanValue()))
+    //         .andExpect(jsonPath("$.buyerApproved").value(DEFAULT_BUYER_APPROVED.booleanValue()))
+    //         .andExpect(jsonPath("$.sellerId").value(DEFAULT_SELLER_ID))
+    //         .andExpect(jsonPath("$.buyerId").value(DEFAULT_BUYER_ID));
+    // }
+
+    // @Test
+    // @Transactional
+    // void getNonExistingBargain() throws Exception {
+    //     // Get the bargain
+    //     restBargainMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    // }
+
+    // @Test
+    // @Transactional
+    // void putNewBargain() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+
+    //     // Update the bargain
+    //     Bargain updatedBargain = bargainRepository.findById(bargain.getId()).get();
+    //     // Disconnect from session so that the updates on updatedBargain are not directly saved in db
+    //     em.detach(updatedBargain);
+    //     updatedBargain
+    //         .bargainPrice(UPDATED_BARGAIN_PRICE)
+    //         .itemId(UPDATED_ITEM_ID)
+    //         .sellerApproved(UPDATED_SELLER_APPROVED)
+    //         .buyerApproved(UPDATED_BUYER_APPROVED)
+    //         .sellerId(UPDATED_SELLER_ID)
+    //         .buyerId(UPDATED_BUYER_ID);
+
+    //     restBargainMockMvc
+    //         .perform(
+    //             put(ENTITY_API_URL_ID, updatedBargain.getId())
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(TestUtil.convertObjectToJsonBytes(updatedBargain))
+    //         )
+    //         .andExpect(status().isOk());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    //     Bargain testBargain = bargainList.get(bargainList.size() - 1);
+    //     assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
+    //     assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
+    //     assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
+    //     assertThat(testBargain.getBuyerApproved()).isEqualTo(UPDATED_BUYER_APPROVED);
+    //     assertThat(testBargain.getSellerId()).isEqualTo(UPDATED_SELLER_ID);
+    //     assertThat(testBargain.getBuyerId()).isEqualTo(UPDATED_BUYER_ID);
+    // }
+
+    // @Test
+    // @Transactional
+    // void putNonExistingBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If the entity doesn't have an ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(
+    //             put(ENTITY_API_URL_ID, bargain.getId())
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(TestUtil.convertObjectToJsonBytes(bargain))
+    //         )
+    //         .andExpect(status().isBadRequest());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void putWithIdMismatchBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(
+    //             put(ENTITY_API_URL_ID, count.incrementAndGet())
+    //                 .contentType(MediaType.APPLICATION_JSON)
+    //                 .content(TestUtil.convertObjectToJsonBytes(bargain))
+    //         )
+    //         .andExpect(status().isBadRequest());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void putWithMissingIdPathParamBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isMethodNotAllowed());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void partialUpdateBargainWithPatch() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+
+    //     // Update the bargain using partial update
+    //     Bargain partialUpdatedBargain = new Bargain();
+    //     partialUpdatedBargain.setId(bargain.getId());
+
+    //     partialUpdatedBargain.bargainPrice(UPDATED_BARGAIN_PRICE).itemId(UPDATED_ITEM_ID).sellerApproved(UPDATED_SELLER_APPROVED);
+
+    //     restBargainMockMvc
+    //         .perform(
+    //             patch(ENTITY_API_URL_ID, partialUpdatedBargain.getId())
+    //                 .contentType("application/merge-patch+json")
+    //                 .content(TestUtil.convertObjectToJsonBytes(partialUpdatedBargain))
+    //         )
+    //         .andExpect(status().isOk());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    //     Bargain testBargain = bargainList.get(bargainList.size() - 1);
+    //     assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
+    //     assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
+    //     assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
+    //     assertThat(testBargain.getBuyerApproved()).isEqualTo(DEFAULT_BUYER_APPROVED);
+    //     assertThat(testBargain.getSellerId()).isEqualTo(DEFAULT_SELLER_ID);
+    //     assertThat(testBargain.getBuyerId()).isEqualTo(DEFAULT_BUYER_ID);
+    // }
+
+    // @Test
+    // @Transactional
+    // void fullUpdateBargainWithPatch() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+
+    //     // Update the bargain using partial update
+    //     Bargain partialUpdatedBargain = new Bargain();
+    //     partialUpdatedBargain.setId(bargain.getId());
+
+    //     partialUpdatedBargain
+    //         .bargainPrice(UPDATED_BARGAIN_PRICE)
+    //         .itemId(UPDATED_ITEM_ID)
+    //         .sellerApproved(UPDATED_SELLER_APPROVED)
+    //         .buyerApproved(UPDATED_BUYER_APPROVED)
+    //         .sellerId(UPDATED_SELLER_ID)
+    //         .buyerId(UPDATED_BUYER_ID);
+
+    //     restBargainMockMvc
+    //         .perform(
+    //             patch(ENTITY_API_URL_ID, partialUpdatedBargain.getId())
+    //                 .contentType("application/merge-patch+json")
+    //                 .content(TestUtil.convertObjectToJsonBytes(partialUpdatedBargain))
+    //         )
+    //         .andExpect(status().isOk());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    //     Bargain testBargain = bargainList.get(bargainList.size() - 1);
+    //     assertThat(testBargain.getBargainPrice()).isEqualTo(UPDATED_BARGAIN_PRICE);
+    //     assertThat(testBargain.getItemId()).isEqualTo(UPDATED_ITEM_ID);
+    //     assertThat(testBargain.getSellerApproved()).isEqualTo(UPDATED_SELLER_APPROVED);
+    //     assertThat(testBargain.getBuyerApproved()).isEqualTo(UPDATED_BUYER_APPROVED);
+    //     assertThat(testBargain.getSellerId()).isEqualTo(UPDATED_SELLER_ID);
+    //     assertThat(testBargain.getBuyerId()).isEqualTo(UPDATED_BUYER_ID);
+    // }
+
+    // @Test
+    // @Transactional
+    // void patchNonExistingBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If the entity doesn't have an ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(
+    //             patch(ENTITY_API_URL_ID, bargain.getId())
+    //                 .contentType("application/merge-patch+json")
+    //                 .content(TestUtil.convertObjectToJsonBytes(bargain))
+    //         )
+    //         .andExpect(status().isBadRequest());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void patchWithIdMismatchBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(
+    //             patch(ENTITY_API_URL_ID, count.incrementAndGet())
+    //                 .contentType("application/merge-patch+json")
+    //                 .content(TestUtil.convertObjectToJsonBytes(bargain))
+    //         )
+    //         .andExpect(status().isBadRequest());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void patchWithMissingIdPathParamBargain() throws Exception {
+    //     int databaseSizeBeforeUpdate = bargainRepository.findAll().size();
+    //     bargain.setId(count.incrementAndGet());
+
+    //     // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+    //     restBargainMockMvc
+    //         .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(bargain)))
+    //         .andExpect(status().isMethodNotAllowed());
+
+    //     // Validate the Bargain in the database
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeUpdate);
+    // }
+
+    // @Test
+    // @Transactional
+    // void deleteBargain() throws Exception {
+    //     // Initialize the database
+    //     bargainRepository.saveAndFlush(bargain);
+
+    //     int databaseSizeBeforeDelete = bargainRepository.findAll().size();
+
+    //     // Delete the bargain
+    //     restBargainMockMvc
+    //         .perform(delete(ENTITY_API_URL_ID, bargain.getId()).accept(MediaType.APPLICATION_JSON))
+    //         .andExpect(status().isNoContent());
+
+    //     // Validate the database contains one less item
+    //     List<Bargain> bargainList = bargainRepository.findAll();
+    //     assertThat(bargainList).hasSize(databaseSizeBeforeDelete - 1);
+    // }
 }

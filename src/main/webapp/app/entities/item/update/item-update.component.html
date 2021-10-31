@@ -240,7 +240,7 @@
               [ngValue]="getSelectedTags(tagsOption, editForm.get('tags')!.value)"
               *ngFor="let tagsOption of tagsSharedCollection; trackBy: trackTagsById"
             >
-              {{ tagsOption.name }}
+              {{ tagsOption.tag }}
             </option>
           </select>
         </div>

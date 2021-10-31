@@ -4,54 +4,45 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Tags.
  */
-@Entity
-@Table(name = "tags")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Document(collection = "TAGS")
 public class Tags implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @NotNull
     @Size(min = 3)
-    @Column(name = "tag", nullable = false)
     private String tag;
 
     @NotNull
     @Size(min = 2, max = 10)
-    @Column(name = "language", length = 10, nullable = false)
     private String language;
 
-    @ManyToMany(mappedBy = "tags")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    // @ManyToMany(mappedBy = "tags")
+    // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "order", "bargains", "tags" }, allowSetters = true)
     private Set<Item> sentries = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public Tags id(Long id) {
+    public Tags id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -11,11 +11,11 @@ class ChatsTest {
     void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Chats.class);
         Chats chats1 = new Chats();
-        chats1.setId(1L);
+        chats1.setId("ABC");
         Chats chats2 = new Chats();
         chats2.setId(chats1.getId());
         assertThat(chats1).isEqualTo(chats2);
-        chats2.setId(2L);
+        chats2.setId("XYZ");
         assertThat(chats1).isNotEqualTo(chats2);
         chats1.setId(null);
         assertThat(chats1).isNotEqualTo(chats2);
