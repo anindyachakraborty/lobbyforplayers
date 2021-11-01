@@ -31,6 +31,7 @@ describe('Item Service', () => {
       level: 'AAAAAAA',
       fixedPrice: false,
       gameName: 'AAAAAAA',
+      platform: 'AAAAAAA',
       language: 'AAAAAAA',
     };
   });
@@ -77,6 +78,7 @@ describe('Item Service', () => {
           level: 'BBBBBB',
           fixedPrice: true,
           gameName: 'BBBBBB',
+          platform: 'BBBBBB',
           language: 'BBBBBB',
         },
         elemDefault
@@ -100,7 +102,7 @@ describe('Item Service', () => {
           level: 'BBBBBB',
           fixedPrice: true,
           gameName: 'BBBBBB',
-          language: 'BBBBBB',
+          platform: 'BBBBBB',
         },
         new Item()
       );
@@ -130,6 +132,7 @@ describe('Item Service', () => {
           level: 'BBBBBB',
           fixedPrice: true,
           gameName: 'BBBBBB',
+          platform: 'BBBBBB',
           language: 'BBBBBB',
         },
         elemDefault
@@ -182,7 +185,7 @@ describe('Item Service', () => {
       });
 
       it('should add only unique Item to an array', () => {
-        const itemArray: IItem[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '431770f5-bc13-491b-ad24-7c285baf3a97' }];
+        const itemArray: IItem[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '31770f5b-c139-41b2-9247-c285baf3a97c' }];
         const itemCollection: IItem[] = [{ id: 'ABC' }];
         expectedResult = service.addItemToCollectionIfMissing(itemCollection, ...itemArray);
         expect(expectedResult).toHaveLength(3);

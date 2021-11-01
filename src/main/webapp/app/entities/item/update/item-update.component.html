@@ -191,6 +191,20 @@
         </div>
 
         <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.item.platform" for="field_platform">Platform</label>
+          <input type="text" class="form-control" name="platform" id="field_platform" data-cy="platform" formControlName="platform" />
+          <div *ngIf="editForm.get('platform')!.invalid && (editForm.get('platform')!.dirty || editForm.get('platform')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('platform')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-control-label" jhiTranslate="lobbyforplayersApp.item.language" for="field_language">Language</label>
           <input type="text" class="form-control" name="language" id="field_language" data-cy="language" formControlName="language" />
           <div *ngIf="editForm.get('language')!.invalid && (editForm.get('language')!.dirty || editForm.get('language')!.touched)">

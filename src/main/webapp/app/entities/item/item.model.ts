@@ -14,6 +14,7 @@ export interface IItem {
   level?: string | null;
   fixedPrice?: boolean;
   gameName?: string;
+  platform?: string;
   language?: string;
   order?: IOrder | null;
   bargains?: IBargain[] | null;
@@ -33,6 +34,7 @@ export class Item implements IItem {
     public level?: string | null,
     public fixedPrice?: boolean,
     public gameName?: string,
+    public platform?: string,
     public language?: string,
     public order?: IOrder | null,
     public bargains?: IBargain[] | null,

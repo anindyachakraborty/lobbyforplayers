@@ -28,6 +28,7 @@
       "level": "Level",
       "fixedPrice": "Fixed Price",
       "gameName": "Game Name",
+      "platform": "Platform",
       "language": "Language",
       "order": "Order",
       "bargain": "Bargain",

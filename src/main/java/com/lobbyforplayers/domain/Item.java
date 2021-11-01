@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "item")
 public class Item implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     private String id;
 
@@ -58,6 +60,10 @@ public class Item implements Serializable {
     @NotNull
     @Field("game_name")
     private String gameName;
+
+    @NotNull
+    @Field("platform")
+    private String platform;
 
     @NotNull
     @Size(min = 2, max = 10)
@@ -223,6 +229,19 @@ public class Item implements Serializable {
         this.gameName = gameName;
     }
 
+    public String getPlatform() {
+        return this.platform;
+    }
+
+    public Item platform(String platform) {
+        this.setPlatform(platform);
+        return this;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
     public String getLanguage() {
         return this.language;
     }
@@ -339,6 +358,7 @@ public class Item implements Serializable {
             ", level='" + getLevel() + "'" +
             ", fixedPrice='" + getFixedPrice() + "'" +
             ", gameName='" + getGameName() + "'" +
+            ", platform='" + getPlatform() + "'" +
             ", language='" + getLanguage() + "'" +
             "}";
     }

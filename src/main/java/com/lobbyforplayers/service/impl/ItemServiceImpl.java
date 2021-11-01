@@ -67,6 +67,9 @@ public class ItemServiceImpl implements ItemService {
                 if (item.getGameName() != null) {
                     existingItem.setGameName(item.getGameName());
                 }
+                if (item.getPlatform() != null) {
+                    existingItem.setPlatform(item.getPlatform());
+                }
                 if (item.getLanguage() != null) {
                     existingItem.setLanguage(item.getLanguage());
                 }

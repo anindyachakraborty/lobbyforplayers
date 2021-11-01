@@ -53,6 +53,11 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "platform",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "language",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],

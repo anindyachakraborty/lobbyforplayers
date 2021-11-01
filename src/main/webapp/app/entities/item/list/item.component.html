@@ -63,6 +63,9 @@
           <th scope="col" jhiSortBy="gameName">
             <span jhiTranslate="lobbyforplayersApp.item.gameName">Game Name</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="platform">
+            <span jhiTranslate="lobbyforplayersApp.item.platform">Platform</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="language">
             <span jhiTranslate="lobbyforplayersApp.item.language">Language</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -87,6 +90,7 @@
           <td>{{ item.level }}</td>
           <td>{{ item.fixedPrice }}</td>
           <td>{{ item.gameName }}</td>
+          <td>{{ item.platform }}</td>
           <td>{{ item.language }}</td>
           <td>
             <div *ngIf="item.order">

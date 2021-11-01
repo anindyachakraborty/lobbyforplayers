@@ -65,6 +65,9 @@ class ItemResourceIT {
     private static final String DEFAULT_GAME_NAME = "AAAAAAAAAA";
     private static final String UPDATED_GAME_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_PLATFORM = "AAAAAAAAAA";
+    private static final String UPDATED_PLATFORM = "BBBBBBBBBB";
+
     private static final String DEFAULT_LANGUAGE = "AAAAAAAAAA";
     private static final String UPDATED_LANGUAGE = "BBBBBBBBBB";
 
@@ -103,6 +106,7 @@ class ItemResourceIT {
             .level(DEFAULT_LEVEL)
             .fixedPrice(DEFAULT_FIXED_PRICE)
             .gameName(DEFAULT_GAME_NAME)
+            .platform(DEFAULT_PLATFORM)
             .language(DEFAULT_LANGUAGE);
         return item;
     }
@@ -125,6 +129,7 @@ class ItemResourceIT {
             .level(UPDATED_LEVEL)
             .fixedPrice(UPDATED_FIXED_PRICE)
             .gameName(UPDATED_GAME_NAME)
+            .platform(UPDATED_PLATFORM)
             .language(UPDATED_LANGUAGE);
         return item;
     }
@@ -157,6 +162,7 @@ class ItemResourceIT {
         assertThat(testItem.getLevel()).isEqualTo(DEFAULT_LEVEL);
         assertThat(testItem.getFixedPrice()).isEqualTo(DEFAULT_FIXED_PRICE);
         assertThat(testItem.getGameName()).isEqualTo(DEFAULT_GAME_NAME);
+        assertThat(testItem.getPlatform()).isEqualTo(DEFAULT_PLATFORM);
         assertThat(testItem.getLanguage()).isEqualTo(DEFAULT_LANGUAGE);
     }
 
@@ -306,6 +312,22 @@ class ItemResourceIT {
     }
 
     @Test
+    void checkPlatformIsRequired() throws Exception {
+        int databaseSizeBeforeTest = itemRepository.findAll().size();
+        // set the field null
+        item.setPlatform(null);
+
+        // Create the Item, which fails.
+
+        restItemMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(item)))
+            .andExpect(status().isBadRequest());
+
+        List<Item> itemList = itemRepository.findAll();
+        assertThat(itemList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
     void checkLanguageIsRequired() throws Exception {
         int databaseSizeBeforeTest = itemRepository.findAll().size();
         // set the field null
@@ -342,6 +364,7 @@ class ItemResourceIT {
             .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL)))
             .andExpect(jsonPath("$.[*].fixedPrice").value(hasItem(DEFAULT_FIXED_PRICE.booleanValue())))
             .andExpect(jsonPath("$.[*].gameName").value(hasItem(DEFAULT_GAME_NAME)))
+            .andExpect(jsonPath("$.[*].platform").value(hasItem(DEFAULT_PLATFORM)))
             .andExpect(jsonPath("$.[*].language").value(hasItem(DEFAULT_LANGUAGE)));
     }
 
@@ -384,6 +407,7 @@ class ItemResourceIT {
             .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL))
             .andExpect(jsonPath("$.fixedPrice").value(DEFAULT_FIXED_PRICE.booleanValue()))
             .andExpect(jsonPath("$.gameName").value(DEFAULT_GAME_NAME))
+            .andExpect(jsonPath("$.platform").value(DEFAULT_PLATFORM))
             .andExpect(jsonPath("$.language").value(DEFAULT_LANGUAGE));
     }
 
@@ -413,6 +437,7 @@ class ItemResourceIT {
             .level(UPDATED_LEVEL)
             .fixedPrice(UPDATED_FIXED_PRICE)
             .gameName(UPDATED_GAME_NAME)
+            .platform(UPDATED_PLATFORM)
             .language(UPDATED_LANGUAGE);
 
         restItemMockMvc
@@ -437,6 +462,7 @@ class ItemResourceIT {
         assertThat(testItem.getLevel()).isEqualTo(UPDATED_LEVEL);
         assertThat(testItem.getFixedPrice()).isEqualTo(UPDATED_FIXED_PRICE);
         assertThat(testItem.getGameName()).isEqualTo(UPDATED_GAME_NAME);
+        assertThat(testItem.getPlatform()).isEqualTo(UPDATED_PLATFORM);
         assertThat(testItem.getLanguage()).isEqualTo(UPDATED_LANGUAGE);
     }
 
@@ -509,6 +535,7 @@ class ItemResourceIT {
             .level(UPDATED_LEVEL)
             .fixedPrice(UPDATED_FIXED_PRICE)
             .gameName(UPDATED_GAME_NAME)
+            .platform(UPDATED_PLATFORM)
             .language(UPDATED_LANGUAGE);
 
         restItemMockMvc
@@ -533,6 +560,7 @@ class ItemResourceIT {
         assertThat(testItem.getLevel()).isEqualTo(UPDATED_LEVEL);
         assertThat(testItem.getFixedPrice()).isEqualTo(UPDATED_FIXED_PRICE);
         assertThat(testItem.getGameName()).isEqualTo(UPDATED_GAME_NAME);
+        assertThat(testItem.getPlatform()).isEqualTo(UPDATED_PLATFORM);
         assertThat(testItem.getLanguage()).isEqualTo(UPDATED_LANGUAGE);
     }
 
@@ -558,6 +586,7 @@ class ItemResourceIT {
             .level(UPDATED_LEVEL)
             .fixedPrice(UPDATED_FIXED_PRICE)
             .gameName(UPDATED_GAME_NAME)
+            .platform(UPDATED_PLATFORM)
             .language(UPDATED_LANGUAGE);
 
         restItemMockMvc
@@ -582,6 +611,7 @@ class ItemResourceIT {
         assertThat(testItem.getLevel()).isEqualTo(UPDATED_LEVEL);
         assertThat(testItem.getFixedPrice()).isEqualTo(UPDATED_FIXED_PRICE);
         assertThat(testItem.getGameName()).isEqualTo(UPDATED_GAME_NAME);
+        assertThat(testItem.getPlatform()).isEqualTo(UPDATED_PLATFORM);
         assertThat(testItem.getLanguage()).isEqualTo(UPDATED_LANGUAGE);
     }
 

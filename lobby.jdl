@@ -11,6 +11,7 @@ picturesPath String maxlength(256)
 level String
 fixedPrice Boolean required
 gameName String required
+platform String required
 language String required minlength(2) maxlength(10)
 }
 
