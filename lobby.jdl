@@ -59,6 +59,31 @@ message String required minlength(1) maxlength(256)
 language String required minlength(2) maxlength(10)
 }
 
+entity Questionary {
+process String required
+questions String required
+}
+
+entity Reviews {
+question String required
+rating Long required
+username String required
+orderId String
+}
+
+entity Payments{
+buyerUserId String required
+sellerUserId String required
+sellerRecieved Boolean required
+buyerTransactionId String
+sellerTransactionId String
+orderId String required
+packageId String required
+amount Double required
+game String
+status String required
+}
+
 paginate Item with infinite-scroll
 paginate Chats with infinite-scroll
 service Order with serviceImpl
@@ -67,6 +92,9 @@ service Chats with serviceImpl
 service Details with serviceImpl
 service Bargain with serviceImpl
 service Tags with serviceImpl
+service Questionary with serviceImpl
+service Reviews with serviceImpl
+service Payments with serviceImpl
 
 relationship ManyToMany {
   Item{tags(name)} to Tags{sentry}

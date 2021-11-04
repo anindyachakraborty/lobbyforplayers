@@ -43,6 +43,7 @@
     "clientPackageManager": "npm",
     "languages": ["en", "hi", "ta", "te"],
     "enableGradleEnterprise": false,
-    "entities": ["Item", "Order", "Bargain", "Details", "Tags", "Chats"]
+    "entities": ["Item", "Order", "Bargain", "Details", "Tags", "Chats", "Questionary", "Reviews", "Payments"],
+    "lastLiquibaseTimestamp": 1636019265000
   }
 }

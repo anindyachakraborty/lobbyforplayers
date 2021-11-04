@@ -34,6 +34,21 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'lobbyforplayersApp.chats.home.title' },
         loadChildren: () => import('./chats/chats.module').then(m => m.ChatsModule),
       },
+      {
+        path: 'questionary',
+        data: { pageTitle: 'lobbyforplayersApp.questionary.home.title' },
+        loadChildren: () => import('./questionary/questionary.module').then(m => m.QuestionaryModule),
+      },
+      {
+        path: 'reviews',
+        data: { pageTitle: 'lobbyforplayersApp.reviews.home.title' },
+        loadChildren: () => import('./reviews/reviews.module').then(m => m.ReviewsModule),
+      },
+      {
+        path: 'payments',
+        data: { pageTitle: 'lobbyforplayersApp.payments.home.title' },
+        loadChildren: () => import('./payments/payments.module').then(m => m.PaymentsModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

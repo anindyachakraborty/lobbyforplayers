@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="payments">
+      <h2 data-cy="paymentsDetailsHeading"><span jhiTranslate="lobbyforplayersApp.payments.detail.title">Payments</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ payments.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.buyerUserId">Buyer User Id</span></dt>
+        <dd>
+          <span>{{ payments.buyerUserId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.sellerUserId">Seller User Id</span></dt>
+        <dd>
+          <span>{{ payments.sellerUserId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.sellerRecieved">Seller Recieved</span></dt>
+        <dd>
+          <span>{{ payments.sellerRecieved }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.buyerTransactionId">Buyer Transaction Id</span></dt>
+        <dd>
+          <span>{{ payments.buyerTransactionId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.sellerTransactionId">Seller Transaction Id</span></dt>
+        <dd>
+          <span>{{ payments.sellerTransactionId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.orderId">Order Id</span></dt>
+        <dd>
+          <span>{{ payments.orderId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.packageId">Package Id</span></dt>
+        <dd>
+          <span>{{ payments.packageId }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.amount">Amount</span></dt>
+        <dd>
+          <span>{{ payments.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.game">Game</span></dt>
+        <dd>
+          <span>{{ payments.game }}</span>
+        </dd>
+        <dt><span jhiTranslate="lobbyforplayersApp.payments.status">Status</span></dt>
+        <dd>
+          <span>{{ payments.status }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/payments', payments.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

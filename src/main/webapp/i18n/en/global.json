@@ -13,6 +13,9 @@
         "details": "Details",
         "tags": "Tags",
         "chats": "Chats",
+        "questionary": "Questionary",
+        "reviews": "Reviews",
+        "payments": "Payments",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

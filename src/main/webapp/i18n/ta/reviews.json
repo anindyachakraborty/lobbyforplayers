@@ -1,0 +1,27 @@
+{
+  "lobbyforplayersApp": {
+    "reviews": {
+      "home": {
+        "title": "Reviews",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Reviews-ஐ உருவாக்கு",
+        "createOrEditLabel": "Reviews -ஐ மாற்று (அ) உருவாக்கு",
+        "notFound": "No Reviews found"
+      },
+      "created": "Reviews புதிதாக உருவாக்கப்பட்டது, அடையாளம் {{ param }}",
+      "updated": "Reviews மாற்றப்பட்டது, அடையாளம்  {{ param }}",
+      "deleted": "A Reviews நீக்கப்பட்டது, அடையாளம {{ param }}",
+      "delete": {
+        "question": "நீக்குவதற்கு உறுதி செய் Reviews {{ id }}?"
+      },
+      "detail": {
+        "title": "Reviews"
+      },
+      "id": "ID",
+      "question": "Question",
+      "rating": "Rating",
+      "username": "Username",
+      "orderId": "Order Id"
+    }
+  }
+}
