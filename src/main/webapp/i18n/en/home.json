@@ -1,7 +1,8 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
-    "subtitle": "This is your homepage",
+    "title": "Welcome to Lobby For Players",
+    "subtitle": "Get your favorite game account at amazing prices",
+    "videotitle": "See how it works",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
