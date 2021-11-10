@@ -39,6 +39,8 @@ import {
   faWrench,
   faHandPointLeft,
   faHandPointRight,
+  faHandHoldingUsd,
+  faFilter,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -83,5 +85,7 @@ export const fontAwesomeIcons = [
   faWrench,
   faHandPointLeft,
   faHandPointRight,
+  faHandHoldingUsd,
+  faFilter,
   // jhipster-needle-add-icon-import
 ];

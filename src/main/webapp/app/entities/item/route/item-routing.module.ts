@@ -11,7 +11,7 @@ const itemRoute: Routes = [
   {
     path: '',
     component: ItemComponent,
-    canActivate: [UserRouteAccessService],
+    // canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -19,7 +19,7 @@ const itemRoute: Routes = [
     resolve: {
       item: ItemRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+    // canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',

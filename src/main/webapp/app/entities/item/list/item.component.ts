@@ -12,6 +12,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
 @Component({
   selector: 'jhi-item',
   templateUrl: './item.component.html',
+  // styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
   items: IItem[];
@@ -21,6 +22,7 @@ export class ItemComponent implements OnInit {
   page: number;
   predicate: string;
   ascending: boolean;
+  toggleFilter = true;
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
@@ -81,6 +83,10 @@ export class ItemComponent implements OnInit {
         this.reset();
       }
     });
+  }
+
+  toggleFilterForSmallScreen(): void {
+    this.toggleFilter = !this.toggleFilter;
   }
 
   protected sort(): string[] {

@@ -1,4 +1,112 @@
-<div>
+<div class="container-fluid row">
+  <div class="col-md-7 col-lg-8 mt-3">
+    <h1>Game Accounts</h1>
+  </div>
+  <div class="col-md-3 col-8 col-lg-2 mt-3">
+    <button type="button" class="btn btn-info btn-lg">
+      <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon>
+      &nbsp;&nbsp;Sell
+    </button>
+  </div>
+  <div class="col-md-2 col-4 d-md-block d-lg-none mt-3">
+    <button class="btn btn-primary" type="button" (click)="toggleFilterForSmallScreen()">
+      Filters
+      <fa-icon [icon]="['fas', 'filter']"></fa-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <!-- Sidebar filter section -->
+  <section class="col-lg-3 col-xl-2 col-md-12 filterColumn border-primary d-none d-lg-block mt-3" [ngClass]="{ 'd-none': toggleFilter }">
+    <p>Home | <b>All Breads</b></p>
+    <div class="border-bottom pb-2 ml-2">
+      <h4 id="burgundy">Filters</h4>
+    </div>
+    <div class="py-2 border-bottom ml-3">
+      <h6 class="font-weight-bold">Categories</h6>
+      <div id="orange"><span class="fa fa-minus"></span></div>
+      <form>
+        <div class="form-group"><input type="checkbox" id="artisan" /> <label for="artisan">Fresh Artisan Breads</label></div>
+        <div class="form-group"><input type="checkbox" id="breakfast" /> <label for="breakfast">Breakfast Breads</label></div>
+        <div class="form-group"><input type="checkbox" id="healthy" /> <label for="healthy">Healthy Breads</label></div>
+      </form>
+    </div>
+    <div class="py-2 border-bottom ml-3">
+      <h6 class="font-weight-bold">Accompainments</h6>
+      <div id="orange"><span class="fa fa-minus"></span></div>
+      <form>
+        <div class="form-group"><input type="checkbox" id="tea" /> <label for="tea">Tea Cakes</label></div>
+        <div class="form-group"><input type="checkbox" id="cookies" /> <label for="cookies">Cookies</label></div>
+        <div class="form-group"><input type="checkbox" id="pastries" /> <label for="pastries">Pastries</label></div>
+        <div class="form-group"><input type="checkbox" id="dough" /> <label for="dough">Cookie Dough</label></div>
+        <div class="form-group"><input type="checkbox" id="choco" /> <label for="choco">Chocolates</label></div>
+      </form>
+    </div>
+    <div class="py-2 ml-3">
+      <h6 class="font-weight-bold">Top Offers</h6>
+      <div id="orange"><span class="fa fa-minus"></span></div>
+      <form>
+        <div class="form-group"><input type="checkbox" id="25off" /> <label for="25">25% off</label></div>
+        <div class="form-group"><input type="checkbox" id="5off" /> <label for="5off" id="off">5% off on artisan breads</label></div>
+      </form>
+    </div>
+  </section>
+  <!-- products section -->
+  <section class="col-lg-9 col-xl-10 col-md-12">
+    <div class="container-fluid">
+      <div class="d-flex flex-row">
+        <div class="text-muted m-2" id="res">Showing 44 results</div>
+        <div class="ml-auto mr-lg-4">
+          <div id="sorting" class="border rounded p-1 m-1">
+            <span class="text-muted">Sort by</span>
+            <select name="sort" id="sort">
+              <option value="popularity"><b>Popularity</b></option>
+              <option value="prcie"><b>Price</b></option>
+              <option value="rating"><b>Rating</b></option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Card title</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Card title</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Card title</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- <div>
   <h2 id="page-heading" data-cy="ItemHeading">
     <span jhiTranslate="lobbyforplayersApp.item.home.title">Items</span>
 
@@ -119,4 +227,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->
