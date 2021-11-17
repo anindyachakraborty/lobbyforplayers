@@ -12,7 +12,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
 @Component({
   selector: 'jhi-item',
   templateUrl: './item.component.html',
-  // styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
 })
 export class ItemComponent implements OnInit {
   items: IItem[];
@@ -23,6 +23,17 @@ export class ItemComponent implements OnInit {
   predicate: string;
   ascending: boolean;
   toggleFilter = true;
+  someRange2config: any = {
+    behaviour: 'drag',
+    connect: true,
+    margin: 10,
+    start: [0, 100],
+    range: {
+      min: 0,
+      max: 100,
+    },
+    tooltips: true,
+  };
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
