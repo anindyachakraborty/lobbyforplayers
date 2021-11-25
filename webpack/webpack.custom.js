@@ -42,7 +42,7 @@ module.exports = async (config, options, targetOptions) => {
         extensions: ['js', 'ts'],
       }),
       new WebpackNotifierPlugin({
-        title: 'Lobbyforplayers',
+        title: 'Lobby For Players',
         contentImage: path.join(__dirname, 'logo-jhipster.png'),
       })
     );

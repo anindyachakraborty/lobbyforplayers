@@ -1,4 +1,4 @@
-<div class="container-xl">
+<div class="container-fluid">
   <div class="row">
     <!-- <div class="col-md-3">
     <span class="hipster img-fluid rounded"></span>
@@ -9,23 +9,23 @@
 
       <!-- take help from codeply for multiple cards -->
       <div class="row">
-        <div class="col-6">
+        <div class="col-8">
           <p class="lead" jhiTranslate="home.subtitle"></p>
         </div>
-        <div class="col-6 text-right">
-          <a class="btn btn-primary mb-3 mr-1" href="#gamesCarousel" role="button" data-slide="prev">
+        <div class="col-4 text-center">
+          <a class="btn btn-primary mb-3 mr-1" href="#gamesCarousel" role="button" data-bs-slide="prev">
             <fa-icon [icon]="['fas', 'hand-point-left']"></fa-icon>
           </a>
-          <a class="btn btn-primary mb-3" href="#gamesCarousel" role="button" data-slide="next">
+          <a class="btn btn-primary mb-3" href="#gamesCarousel" role="button" data-bs-slide="next">
             <fa-icon [icon]="['fas', 'hand-point-right']"></fa-icon>
           </a>
         </div>
 
         <div class="col-12">
-          <div id="gamesCarousel" class="carousel slide" data-ride="carousel">
+          <div id="gamesCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (36).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -35,7 +35,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (34).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -45,7 +45,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (38).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -55,7 +55,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (29).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (30).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -75,7 +75,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <div class="col-12 col-md-4" style="display: inline-block">
+                <div class="col-12 col-md-3" style="display: inline-block">
                   <div class="card mb-2">
                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/img (27).jpg" alt="Card image cap" />
                     <div class="card-body">
@@ -88,13 +88,13 @@
           </div>
         </div>
       </div>
-      <div class="card mb-3">
+      <div class="card my-3">
         <div class="text-white bg-info card-header" style="font-size: 120%">
           <span jhiTranslate="home.videotitle"></span>
         </div>
         <div class="card-body">
-          <div class="embed-responsive embed-responsive-16by9 seeHowVideo">
-            <iframe title="Demo Video" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+          <div class="ratio ratio-16x9 seeHowVideo">
+            <iframe title="Demo Video" src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
           </div>
         </div>
       </div>

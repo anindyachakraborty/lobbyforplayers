@@ -34,6 +34,7 @@ export class ItemComponent implements OnInit {
     },
     tooltips: true,
   };
+  filterText: Array<string> = ['Price: 20 to 80', 'Filter Text', 'Another One', 'Woooo hoooo'];
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
