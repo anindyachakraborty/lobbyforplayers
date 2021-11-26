@@ -1,0 +1,16 @@
+.filterText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 7vh;
+  display: inline-block;
+}
+
+.filterTags {
+  max-width: 11vh;
+}
+
+.maxFilters {
+  max-height: 4em;
+  line-height: 2em;
+  overflow: hidden;
+}

@@ -23,6 +23,7 @@ export class ItemComponent implements OnInit {
   predicate: string;
   ascending: boolean;
   toggleFilter = true;
+  fullFilters = true;
   someRange2config: any = {
     behaviour: 'drag',
     connect: true,
@@ -34,7 +35,16 @@ export class ItemComponent implements OnInit {
     },
     tooltips: true,
   };
-  filterText: Array<string> = ['Price: 20 to 80', 'Filter Text', 'Another One', 'Woooo hoooo'];
+  filterText: Array<string> = [
+    'Price: 20 to 80',
+    'Filter Text',
+    'Another One',
+    'Woooo hoooo',
+    'Price: 20 to 80',
+    'Filter Text',
+    'Another One',
+    'Woooo hoooo',
+  ];
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
@@ -86,6 +96,10 @@ export class ItemComponent implements OnInit {
     return item.id!;
   }
 
+  removeFilter(index: number): void {
+    this.filterText.splice(index, 1);
+  }
+
   delete(item: IItem): void {
     const modalRef = this.modalService.open(ItemDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.item = item;
@@ -99,6 +113,10 @@ export class ItemComponent implements OnInit {
 
   toggleFilterForSmallScreen(): void {
     this.toggleFilter = !this.toggleFilter;
+  }
+
+  toggleFullFilters(): void {
+    this.fullFilters = !this.fullFilters;
   }
 
   protected sort(): string[] {

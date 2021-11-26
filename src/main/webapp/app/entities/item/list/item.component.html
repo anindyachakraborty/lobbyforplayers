@@ -18,11 +18,24 @@
 <div class="row">
   <!-- Sidebar filter section -->
   <section class="col-lg-3 col-xl-2 col-md-12 filterColumn border-primary d-none d-lg-block mt-3" [ngClass]="{ 'd-none': toggleFilter }">
-    <div class="border-bottom pb-2 ml-2">
+    <div class="border-bottom ml-2">
       <h4 id="burgundy">Filters</h4>
     </div>
-    <div>
-      <span class="badge bg-info m-1" *ngFor="let filter of filterText"> {{ filter }}</span>
+    <div class="mt-2" [ngClass]="{ maxFilters: fullFilters }" #tagfilters>
+      <span
+        class="badge bg-info m-1 filterTags"
+        *ngFor="let filter of filterText; let index = index"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="{{ filter }}"
+      >
+        <span class="filterText">{{ filter }}</span>
+        <fa-icon class="mx-1 text-danger" [icon]="['fas', 'times']" (click)="removeFilter(index)"></fa-icon>
+      </span>
+    </div>
+    <div class="mt-1">
+      <a class="btn btn-link" *ngIf="fullFilters && filterText.length > 4" (click)="toggleFullFilters()"> Show More </a>
+      <a class="btn btn-link" *ngIf="!fullFilters && filterText.length > 4" (click)="toggleFullFilters()"> Show Less </a>
     </div>
     <div class="accordion mt-3">
       <div class="accordion-item">
