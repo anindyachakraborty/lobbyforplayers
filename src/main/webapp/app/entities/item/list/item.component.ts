@@ -45,6 +45,22 @@ export class ItemComponent implements OnInit {
     'Another One',
     'Woooo hoooo',
   ];
+  games = [
+    'PUBG',
+    'BGMI',
+    'Counter Strike',
+    'Call of Duty',
+    'Fifa',
+    'Cricket',
+    'Snake',
+    'GTA Vice City',
+    'Dota 2',
+    'Fortnite',
+    'PUBG Mobile',
+    'Fortnite Mobile',
+  ];
+  searchGames: string[] = [];
+  // gamesFilter: string;
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
@@ -59,7 +75,7 @@ export class ItemComponent implements OnInit {
 
   loadAll(): void {
     this.isLoading = true;
-
+    this.searchGames = this.games;
     this.itemService
       .query({
         page: this.page,
@@ -117,6 +133,9 @@ export class ItemComponent implements OnInit {
 
   toggleFullFilters(): void {
     this.fullFilters = !this.fullFilters;
+  }
+  onChangeGameName(value: any): void {
+    this.searchGames = this.games.filter(game => game.toLowerCase().indexOf(value.target.value.toLowerCase()) !== -1);
   }
 
   protected sort(): string[] {

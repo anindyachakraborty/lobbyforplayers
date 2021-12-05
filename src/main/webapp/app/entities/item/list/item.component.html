@@ -60,22 +60,27 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
           <button
-            class="accordion-button collapsed"
+            class="accordion-button"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#panelsStayOpen-collapseTwo"
             aria-expanded="false"
             aria-controls="panelsStayOpen-collapseTwo"
           >
-            Accordion Item #2
+            Game
           </button>
         </h2>
-        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
           <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
-            appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and
-            hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth
-            noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            <label for="typeahead-basic">Search for a game</label>
+            <input id="typeahead-basic" type="text" class="form-control" (input)="onChangeGameName($event)" />
+            <form>
+              <div class="filterGames mt-1">
+                <div class="form-group" *ngFor="let game of searchGames">
+                  <input type="checkbox" id="{{ game }}" /> <label for="{{ game }}">{{ game }}</label>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -101,34 +106,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="py-2 border-bottom ml-3">
-      <h6 class="font-weight-bold">Categories</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="artisan" /> <label for="artisan">Fresh Artisan Breads</label></div>
-        <div class="form-group"><input type="checkbox" id="breakfast" /> <label for="breakfast">Breakfast Breads</label></div>
-        <div class="form-group"><input type="checkbox" id="healthy" /> <label for="healthy">Healthy Breads</label></div>
-      </form>
-    </div>
-    <div class="py-2 border-bottom ml-3">
-      <h6 class="font-weight-bold">Accompainments</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="tea" /> <label for="tea">Tea Cakes</label></div>
-        <div class="form-group"><input type="checkbox" id="cookies" /> <label for="cookies">Cookies</label></div>
-        <div class="form-group"><input type="checkbox" id="pastries" /> <label for="pastries">Pastries</label></div>
-        <div class="form-group"><input type="checkbox" id="dough" /> <label for="dough">Cookie Dough</label></div>
-        <div class="form-group"><input type="checkbox" id="choco" /> <label for="choco">Chocolates</label></div>
-      </form>
-    </div>
-    <div class="py-2 ml-3">
-      <h6 class="font-weight-bold">Top Offers</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="25off" /> <label for="25">25% off</label></div>
-        <div class="form-group"><input type="checkbox" id="5off" /> <label for="5off" id="off">5% off on artisan breads</label></div>
-      </form>
     </div>
   </section>
   <!-- products section -->
