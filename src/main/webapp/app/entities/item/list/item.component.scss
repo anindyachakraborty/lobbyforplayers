@@ -19,3 +19,15 @@
   max-height: 6em;
   overflow: hidden auto;
 }
+
+.cardGameTitle {
+  // max-height: 2.4em;
+  // line-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardGameBody {
+  text-overflow: ellipsis;
+}
