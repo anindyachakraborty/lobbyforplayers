@@ -44,6 +44,14 @@
     "languages": ["en", "hi", "ta", "te"],
     "enableGradleEnterprise": false,
     "entities": ["Item", "Order", "Bargain", "Details", "Tags", "Chats", "Questionary", "Reviews", "Payments"],
-    "lastLiquibaseTimestamp": 1636019265000
+    "lastLiquibaseTimestamp": 1636019265000,
+    "gcpProjectId": "lobby-334210",
+    "gaeServiceName": "lobbyforplayers",
+    "gaeLocation": "us-east4",
+    "gaeInstanceClass": "F1",
+    "gaeScalingType": "automatic",
+    "gaeMinInstances": "1",
+    "gaeMaxInstances": "3",
+    "gaeCloudSQLInstanceNeeded": "N"
   }
 }
