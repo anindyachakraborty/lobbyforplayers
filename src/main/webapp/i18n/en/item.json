@@ -2,7 +2,7 @@
   "lobbyforplayersApp": {
     "item": {
       "home": {
-        "title": "Items",
+        "title": "Game Accounts",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Item",
         "createOrEditLabel": "Create or edit a Item",

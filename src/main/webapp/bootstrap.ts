@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+/* import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { DEBUG_INFO_ENABLED } from './app/app.constants';
@@ -13,4 +13,4 @@ platformBrowserDynamic()
   .bootstrapModule(AppModule, { preserveWhitespaces: true })
   // eslint-disable-next-line no-console
   .then(() => console.log('Application started'))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err)); */
