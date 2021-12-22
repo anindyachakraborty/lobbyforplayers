@@ -1,0 +1,38 @@
+{
+  "lobbyforplayersApp": {
+    "item": {
+      "home": {
+        "title": "Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Item बनाएँ",
+        "createOrEditLabel": "Item बनाएँ या संपादित करें",
+        "notFound": "No Items found"
+      },
+      "created": "एक नया Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Item"
+      },
+      "id": "ID",
+      "description": "Description",
+      "views": "Views",
+      "sellerName": "Seller Name",
+      "sellerId": "Seller Id",
+      "listedFlag": "Listed Flag",
+      "price": "Price",
+      "picturesPath": "Pictures Path",
+      "level": "Level",
+      "fixedPrice": "Fixed Price",
+      "gameName": "Game Name",
+      "platform": "Platform",
+      "language": "Language",
+      "order": "Order",
+      "bargain": "Bargain",
+      "tags": "Tags"
+    }
+  }
+}

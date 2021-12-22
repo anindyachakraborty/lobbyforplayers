@@ -1,0 +1,26 @@
+{
+  "lobbyforplayersApp": {
+    "tags": {
+      "home": {
+        "title": "Tags",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Tags  సృష్టించండి",
+        "createOrEditLabel": "Tags సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Tags found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Tags సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Tags సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Tags తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Tags {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Tags"
+      },
+      "id": "ID",
+      "tag": "Tag",
+      "language": "Language",
+      "sentry": "Sentry"
+    }
+  }
+}

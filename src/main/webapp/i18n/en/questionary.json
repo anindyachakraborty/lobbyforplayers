@@ -1,0 +1,25 @@
+{
+  "lobbyforplayersApp": {
+    "questionary": {
+      "home": {
+        "title": "Questionaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Questionary",
+        "createOrEditLabel": "Create or edit a Questionary",
+        "notFound": "No Questionaries found"
+      },
+      "created": "A new Questionary is created with identifier {{ param }}",
+      "updated": "A Questionary is updated with identifier {{ param }}",
+      "deleted": "A Questionary is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Questionary {{ id }}?"
+      },
+      "detail": {
+        "title": "Questionary"
+      },
+      "id": "ID",
+      "process": "Process",
+      "questions": "Questions"
+    }
+  }
+}

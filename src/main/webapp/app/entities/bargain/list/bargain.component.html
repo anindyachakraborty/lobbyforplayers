@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="BargainHeading">
+    <span jhiTranslate="lobbyforplayersApp.bargain.home.title">Bargains</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.bargain.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-bargain"
+        [routerLink]="['/bargain/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.bargain.home.createLabel"> Create a new Bargain </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="bargains?.length === 0">
+    <span jhiTranslate="lobbyforplayersApp.bargain.home.notFound">No bargains found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="bargains && bargains.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.bargainPrice">Bargain Price</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.itemId">Item Id</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.sellerApproved">Seller Approved</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.buyerApproved">Buyer Approved</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.sellerId">Seller Id</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.buyerId">Buyer Id</span></th>
+          <th scope="col"><span jhiTranslate="lobbyforplayersApp.bargain.item">Item</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bargain of bargains; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/bargain', bargain.id, 'view']">{{ bargain.id }}</a>
+          </td>
+          <td>{{ bargain.bargainPrice }}</td>
+          <td>{{ bargain.itemId }}</td>
+          <td>{{ bargain.sellerApproved }}</td>
+          <td>{{ bargain.buyerApproved }}</td>
+          <td>{{ bargain.sellerId }}</td>
+          <td>{{ bargain.buyerId }}</td>
+          <td>
+            <div *ngIf="bargain.item">
+              <a [routerLink]="['/item', bargain.item?.id, 'view']">{{ bargain.item?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/bargain', bargain.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/bargain', bargain.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(bargain)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

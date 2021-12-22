@@ -1,0 +1,33 @@
+{
+  "lobbyforplayersApp": {
+    "payments": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Payments",
+        "createOrEditLabel": "Create or edit a Payments",
+        "notFound": "No Payments found"
+      },
+      "created": "A new Payments is created with identifier {{ param }}",
+      "updated": "A Payments is updated with identifier {{ param }}",
+      "deleted": "A Payments is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Payments {{ id }}?"
+      },
+      "detail": {
+        "title": "Payments"
+      },
+      "id": "ID",
+      "buyerUserId": "Buyer User Id",
+      "sellerUserId": "Seller User Id",
+      "sellerRecieved": "Seller Recieved",
+      "buyerTransactionId": "Buyer Transaction Id",
+      "sellerTransactionId": "Seller Transaction Id",
+      "orderId": "Order Id",
+      "packageId": "Package Id",
+      "amount": "Amount",
+      "game": "Game",
+      "status": "Status"
+    }
+  }
+}

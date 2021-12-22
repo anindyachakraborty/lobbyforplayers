@@ -1,0 +1,33 @@
+{
+  "lobbyforplayersApp": {
+    "payments": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Payments  సృష్టించండి",
+        "createOrEditLabel": "Payments సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Payments found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Payments సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Payments సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Payments తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Payments {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Payments"
+      },
+      "id": "ID",
+      "buyerUserId": "Buyer User Id",
+      "sellerUserId": "Seller User Id",
+      "sellerRecieved": "Seller Recieved",
+      "buyerTransactionId": "Buyer Transaction Id",
+      "sellerTransactionId": "Seller Transaction Id",
+      "orderId": "Order Id",
+      "packageId": "Package Id",
+      "amount": "Amount",
+      "game": "Game",
+      "status": "Status"
+    }
+  }
+}

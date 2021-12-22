@@ -1,0 +1,194 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-details-heading" data-cy="DetailsCreateUpdateHeading" jhiTranslate="lobbyforplayersApp.details.home.createOrEditLabel">
+        Create or edit a Details
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.loginName" for="field_loginName">Login Name</label>
+          <input type="text" class="form-control" name="loginName" id="field_loginName" data-cy="loginName" formControlName="loginName" />
+          <div *ngIf="editForm.get('loginName')!.invalid && (editForm.get('loginName')!.dirty || editForm.get('loginName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('loginName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.password" for="field_password">Password</label>
+          <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
+          <div *ngIf="editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('password')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.lastName" for="field_lastName">Last Name</label>
+          <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.firstName" for="field_firstName">First Name</label>
+          <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.securtiyQuestion" for="field_securtiyQuestion"
+            >Securtiy Question</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="securtiyQuestion"
+            id="field_securtiyQuestion"
+            data-cy="securtiyQuestion"
+            formControlName="securtiyQuestion"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.securityAnswer" for="field_securityAnswer"
+            >Security Answer</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="securityAnswer"
+            id="field_securityAnswer"
+            data-cy="securityAnswer"
+            formControlName="securityAnswer"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.parentalPassword" for="field_parentalPassword"
+            >Parental Password</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="parentalPassword"
+            id="field_parentalPassword"
+            data-cy="parentalPassword"
+            formControlName="parentalPassword"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.firstCdKey" for="field_firstCdKey">First Cd Key</label>
+          <input
+            type="text"
+            class="form-control"
+            name="firstCdKey"
+            id="field_firstCdKey"
+            data-cy="firstCdKey"
+            formControlName="firstCdKey"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.otherInformation" for="field_otherInformation"
+            >Other Information</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="otherInformation"
+            id="field_otherInformation"
+            data-cy="otherInformation"
+            formControlName="otherInformation"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.enteredDate" for="field_enteredDate"
+            >Entered Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_enteredDate"
+              data-cy="enteredDate"
+              type="datetime-local"
+              class="form-control"
+              name="enteredDate"
+              formControlName="enteredDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('enteredDate')!.invalid && (editForm.get('enteredDate')!.dirty || editForm.get('enteredDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('enteredDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('enteredDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.details.orderDate" for="field_orderDate">Order Date</label>
+          <div class="input-group">
+            <input
+              id="field_orderDate"
+              data-cy="orderDate"
+              type="text"
+              class="form-control"
+              name="orderDate"
+              ngbDatepicker
+              #orderDateDp="ngbDatepicker"
+              formControlName="orderDate"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="orderDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

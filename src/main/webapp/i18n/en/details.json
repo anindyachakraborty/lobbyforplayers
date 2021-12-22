@@ -1,0 +1,34 @@
+{
+  "lobbyforplayersApp": {
+    "details": {
+      "home": {
+        "title": "Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Details",
+        "createOrEditLabel": "Create or edit a Details",
+        "notFound": "No Details found"
+      },
+      "created": "A new Details is created with identifier {{ param }}",
+      "updated": "A Details is updated with identifier {{ param }}",
+      "deleted": "A Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Details"
+      },
+      "id": "ID",
+      "loginName": "Login Name",
+      "password": "Password",
+      "lastName": "Last Name",
+      "firstName": "First Name",
+      "securtiyQuestion": "Securtiy Question",
+      "securityAnswer": "Security Answer",
+      "parentalPassword": "Parental Password",
+      "firstCdKey": "First Cd Key",
+      "otherInformation": "Other Information",
+      "enteredDate": "Entered Date",
+      "orderDate": "Order Date"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "lobbyforplayersApp": {
+    "questionary": {
+      "home": {
+        "title": "Questionaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Questionary  సృష్టించండి",
+        "createOrEditLabel": "Questionary సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Questionaries found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Questionary సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Questionary సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Questionary తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Questionary {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Questionary"
+      },
+      "id": "ID",
+      "process": "Process",
+      "questions": "Questions"
+    }
+  }
+}

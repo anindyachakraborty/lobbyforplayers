@@ -1,0 +1,38 @@
+{
+  "lobbyforplayersApp": {
+    "item": {
+      "home": {
+        "title": "Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Item-ஐ உருவாக்கு",
+        "createOrEditLabel": "Item -ஐ மாற்று (அ) உருவாக்கு",
+        "notFound": "No Items found"
+      },
+      "created": "Item புதிதாக உருவாக்கப்பட்டது, அடையாளம் {{ param }}",
+      "updated": "Item மாற்றப்பட்டது, அடையாளம்  {{ param }}",
+      "deleted": "A Item நீக்கப்பட்டது, அடையாளம {{ param }}",
+      "delete": {
+        "question": "நீக்குவதற்கு உறுதி செய் Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Item"
+      },
+      "id": "ID",
+      "description": "Description",
+      "views": "Views",
+      "sellerName": "Seller Name",
+      "sellerId": "Seller Id",
+      "listedFlag": "Listed Flag",
+      "price": "Price",
+      "picturesPath": "Pictures Path",
+      "level": "Level",
+      "fixedPrice": "Fixed Price",
+      "gameName": "Game Name",
+      "platform": "Platform",
+      "language": "Language",
+      "order": "Order",
+      "bargain": "Bargain",
+      "tags": "Tags"
+    }
+  }
+}

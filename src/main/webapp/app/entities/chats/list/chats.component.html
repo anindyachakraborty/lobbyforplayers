@@ -1,0 +1,86 @@
+<div>
+  <h2 id="page-heading" data-cy="ChatsHeading">
+    <span jhiTranslate="lobbyforplayersApp.chats.home.title">Chats</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.chats.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-chats"
+        [routerLink]="['/chats/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.chats.home.createLabel"> Create a new Chats </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="chats?.length === 0">
+    <span jhiTranslate="lobbyforplayersApp.chats.home.notFound">No chats found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="chats && chats.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="fromUserId">
+            <span jhiTranslate="lobbyforplayersApp.chats.fromUserId">From User Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="toUserId">
+            <span jhiTranslate="lobbyforplayersApp.chats.toUserId">To User Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="timeStamp">
+            <span jhiTranslate="lobbyforplayersApp.chats.timeStamp">Time Stamp</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="message">
+            <span jhiTranslate="lobbyforplayersApp.chats.message">Message</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="language">
+            <span jhiTranslate="lobbyforplayersApp.chats.language">Language</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let chats of chats; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/chats', chats.id, 'view']">{{ chats.id }}</a>
+          </td>
+          <td>{{ chats.fromUserId }}</td>
+          <td>{{ chats.toUserId }}</td>
+          <td>{{ chats.timeStamp | formatMediumDatetime }}</td>
+          <td>{{ chats.message }}</td>
+          <td>{{ chats.language }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/chats', chats.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/chats', chats.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(chats)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

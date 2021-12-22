@@ -1,0 +1,122 @@
+<div>
+  <h2 id="page-heading" data-cy="ItemHeading">
+    <span jhiTranslate="lobbyforplayersApp.item.home.title">Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.item.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-item"
+        [routerLink]="['/item/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="lobbyforplayersApp.item.home.createLabel"> Create a new Item </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="items?.length === 0">
+    <span jhiTranslate="lobbyforplayersApp.item.home.notFound">No items found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="items && items.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="description">
+            <span jhiTranslate="lobbyforplayersApp.item.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="views">
+            <span jhiTranslate="lobbyforplayersApp.item.views">Views</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sellerName">
+            <span jhiTranslate="lobbyforplayersApp.item.sellerName">Seller Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sellerId">
+            <span jhiTranslate="lobbyforplayersApp.item.sellerId">Seller Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="listedFlag">
+            <span jhiTranslate="lobbyforplayersApp.item.listedFlag">Listed Flag</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="price">
+            <span jhiTranslate="lobbyforplayersApp.item.price">Price</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="picturesPath">
+            <span jhiTranslate="lobbyforplayersApp.item.picturesPath">Pictures Path</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="level">
+            <span jhiTranslate="lobbyforplayersApp.item.level">Level</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="fixedPrice">
+            <span jhiTranslate="lobbyforplayersApp.item.fixedPrice">Fixed Price</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="gameName">
+            <span jhiTranslate="lobbyforplayersApp.item.gameName">Game Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="platform">
+            <span jhiTranslate="lobbyforplayersApp.item.platform">Platform</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="language">
+            <span jhiTranslate="lobbyforplayersApp.item.language">Language</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="order.id">
+            <span jhiTranslate="lobbyforplayersApp.item.order">Order</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let item of items; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/item', item.id, 'view']">{{ item.id }}</a>
+          </td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.views }}</td>
+          <td>{{ item.sellerName }}</td>
+          <td>{{ item.sellerId }}</td>
+          <td>{{ item.listedFlag }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.picturesPath }}</td>
+          <td>{{ item.level }}</td>
+          <td>{{ item.fixedPrice }}</td>
+          <td>{{ item.gameName }}</td>
+          <td>{{ item.platform }}</td>
+          <td>{{ item.language }}</td>
+          <td>
+            <div *ngIf="item.order">
+              <a [routerLink]="['/order', item.order?.id, 'view']">{{ item.order?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/item', item.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/item', item.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(item)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

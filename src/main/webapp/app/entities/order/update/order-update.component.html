@@ -1,0 +1,125 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-order-heading" data-cy="OrderCreateUpdateHeading" jhiTranslate="lobbyforplayersApp.order.home.createOrEditLabel">
+        Create or edit a Order
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.order.sellerName" for="field_sellerName">Seller Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sellerName"
+            id="field_sellerName"
+            data-cy="sellerName"
+            formControlName="sellerName"
+          />
+          <div *ngIf="editForm.get('sellerName')!.invalid && (editForm.get('sellerName')!.dirty || editForm.get('sellerName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sellerName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.order.buyerName" for="field_buyerName">Buyer Name</label>
+          <input type="text" class="form-control" name="buyerName" id="field_buyerName" data-cy="buyerName" formControlName="buyerName" />
+          <div *ngIf="editForm.get('buyerName')!.invalid && (editForm.get('buyerName')!.dirty || editForm.get('buyerName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('buyerName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.order.priceSettled" for="field_priceSettled"
+            >Price Settled</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="priceSettled"
+            id="field_priceSettled"
+            data-cy="priceSettled"
+            formControlName="priceSettled"
+          />
+          <div
+            *ngIf="editForm.get('priceSettled')!.invalid && (editForm.get('priceSettled')!.dirty || editForm.get('priceSettled')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('priceSettled')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('priceSettled')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.order.status" for="field_status">Status</label>
+          <input type="text" class="form-control" name="status" id="field_status" data-cy="status" formControlName="status" />
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.order.completed" for="field_completed">Completed</label>
+          <input type="checkbox" class="form-check" name="completed" id="field_completed" data-cy="completed" formControlName="completed" />
+          <div *ngIf="editForm.get('completed')!.invalid && (editForm.get('completed')!.dirty || editForm.get('completed')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('completed')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

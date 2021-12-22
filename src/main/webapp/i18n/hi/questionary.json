@@ -1,0 +1,25 @@
+{
+  "lobbyforplayersApp": {
+    "questionary": {
+      "home": {
+        "title": "Questionaries",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Questionary बनाएँ",
+        "createOrEditLabel": "Questionary बनाएँ या संपादित करें",
+        "notFound": "No Questionaries found"
+      },
+      "created": "एक नया Questionary [identifier: {{ param }}] तैयार है",
+      "updated": "एक Questionary [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Questionary [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Questionary [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Questionary"
+      },
+      "id": "ID",
+      "process": "Process",
+      "questions": "Questions"
+    }
+  }
+}

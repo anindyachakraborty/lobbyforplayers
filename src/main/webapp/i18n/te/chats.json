@@ -1,0 +1,28 @@
+{
+  "lobbyforplayersApp": {
+    "chats": {
+      "home": {
+        "title": "Chats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Chats  సృష్టించండి",
+        "createOrEditLabel": "Chats సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Chats found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Chats సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Chats సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Chats తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Chats {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Chats"
+      },
+      "id": "ID",
+      "fromUserId": "From User Id",
+      "toUserId": "To User Id",
+      "timeStamp": "Time Stamp",
+      "message": "Message",
+      "language": "Language"
+    }
+  }
+}

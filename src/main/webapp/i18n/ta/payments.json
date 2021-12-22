@@ -1,0 +1,33 @@
+{
+  "lobbyforplayersApp": {
+    "payments": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Payments-ஐ உருவாக்கு",
+        "createOrEditLabel": "Payments -ஐ மாற்று (அ) உருவாக்கு",
+        "notFound": "No Payments found"
+      },
+      "created": "Payments புதிதாக உருவாக்கப்பட்டது, அடையாளம் {{ param }}",
+      "updated": "Payments மாற்றப்பட்டது, அடையாளம்  {{ param }}",
+      "deleted": "A Payments நீக்கப்பட்டது, அடையாளம {{ param }}",
+      "delete": {
+        "question": "நீக்குவதற்கு உறுதி செய் Payments {{ id }}?"
+      },
+      "detail": {
+        "title": "Payments"
+      },
+      "id": "ID",
+      "buyerUserId": "Buyer User Id",
+      "sellerUserId": "Seller User Id",
+      "sellerRecieved": "Seller Recieved",
+      "buyerTransactionId": "Buyer Transaction Id",
+      "sellerTransactionId": "Seller Transaction Id",
+      "orderId": "Order Id",
+      "packageId": "Package Id",
+      "amount": "Amount",
+      "game": "Game",
+      "status": "Status"
+    }
+  }
+}

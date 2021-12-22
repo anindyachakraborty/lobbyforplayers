@@ -1,0 +1,33 @@
+{
+  "lobbyforplayersApp": {
+    "payments": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Payments बनाएँ",
+        "createOrEditLabel": "Payments बनाएँ या संपादित करें",
+        "notFound": "No Payments found"
+      },
+      "created": "एक नया Payments [identifier: {{ param }}] तैयार है",
+      "updated": "एक Payments [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Payments [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Payments [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Payments"
+      },
+      "id": "ID",
+      "buyerUserId": "Buyer User Id",
+      "sellerUserId": "Seller User Id",
+      "sellerRecieved": "Seller Recieved",
+      "buyerTransactionId": "Buyer Transaction Id",
+      "sellerTransactionId": "Seller Transaction Id",
+      "orderId": "Order Id",
+      "packageId": "Package Id",
+      "amount": "Amount",
+      "game": "Game",
+      "status": "Status"
+    }
+  }
+}

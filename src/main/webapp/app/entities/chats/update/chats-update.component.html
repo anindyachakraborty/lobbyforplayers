@@ -1,0 +1,160 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-chats-heading" data-cy="ChatsCreateUpdateHeading" jhiTranslate="lobbyforplayersApp.chats.home.createOrEditLabel">
+        Create or edit a Chats
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.chats.fromUserId" for="field_fromUserId">From User Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="fromUserId"
+            id="field_fromUserId"
+            data-cy="fromUserId"
+            formControlName="fromUserId"
+          />
+          <div *ngIf="editForm.get('fromUserId')!.invalid && (editForm.get('fromUserId')!.dirty || editForm.get('fromUserId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('fromUserId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.chats.toUserId" for="field_toUserId">To User Id</label>
+          <input type="text" class="form-control" name="toUserId" id="field_toUserId" data-cy="toUserId" formControlName="toUserId" />
+          <div *ngIf="editForm.get('toUserId')!.invalid && (editForm.get('toUserId')!.dirty || editForm.get('toUserId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('toUserId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.chats.timeStamp" for="field_timeStamp">Time Stamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timeStamp"
+              data-cy="timeStamp"
+              type="datetime-local"
+              class="form-control"
+              name="timeStamp"
+              formControlName="timeStamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('timeStamp')!.invalid && (editForm.get('timeStamp')!.dirty || editForm.get('timeStamp')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('timeStamp')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('timeStamp')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.chats.message" for="field_message">Message</label>
+          <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
+          <div *ngIf="editForm.get('message')!.invalid && (editForm.get('message')!.dirty || editForm.get('message')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('message')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('message')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('message')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 256 }"
+            >
+              This field cannot be longer than 256 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="lobbyforplayersApp.chats.language" for="field_language">Language</label>
+          <input type="text" class="form-control" name="language" id="field_language" data-cy="language" formControlName="language" />
+          <div *ngIf="editForm.get('language')!.invalid && (editForm.get('language')!.dirty || editForm.get('language')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('language')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('language')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 2 }"
+            >
+              This field is required to be at least 2 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('language')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              This field cannot be longer than 10 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

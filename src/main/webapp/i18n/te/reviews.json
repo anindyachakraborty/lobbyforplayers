@@ -1,0 +1,27 @@
+{
+  "lobbyforplayersApp": {
+    "reviews": {
+      "home": {
+        "title": "Reviews",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Reviews  సృష్టించండి",
+        "createOrEditLabel": "Reviews సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Reviews found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Reviews సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Reviews సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Reviews తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Reviews {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Reviews"
+      },
+      "id": "ID",
+      "question": "Question",
+      "rating": "Rating",
+      "username": "Username",
+      "orderId": "Order Id"
+    }
+  }
+}
