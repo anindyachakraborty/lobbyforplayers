@@ -3,6 +3,7 @@ package com.lobbyforplayers.service.impl;
 import com.lobbyforplayers.domain.Item;
 import com.lobbyforplayers.repository.ItemRepository;
 import com.lobbyforplayers.service.ItemService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,5 +100,11 @@ public class ItemServiceImpl implements ItemService {
     public void delete(String id) {
         log.debug("Request to delete Item : {}", id);
         itemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<String> findAllGameName() {
+        log.debug("Request to get All game names");
+        return itemRepository.findDistinctGameName();
     }
 }

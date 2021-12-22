@@ -1,6 +1,7 @@
 package com.lobbyforplayers.service;
 
 import com.lobbyforplayers.domain.Item;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,4 +56,10 @@ public interface ItemService {
      * @param id the id of the entity.
      */
     void delete(String id);
+
+    /**
+     * Get all Distinct Game Names
+     * @return list of Distinct Game Names
+     */
+    List<String> findAllGameName();
 }

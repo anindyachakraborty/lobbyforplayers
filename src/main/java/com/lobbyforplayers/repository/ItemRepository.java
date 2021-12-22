@@ -22,4 +22,7 @@ public interface ItemRepository extends MongoRepository<Item, String> {
 
     @Query("{'id': ?0}")
     Optional<Item> findOneWithEagerRelationships(String id);
+
+    // @Query("{'id': ?0}")
+    List<String> findDistinctGameName();
 }
