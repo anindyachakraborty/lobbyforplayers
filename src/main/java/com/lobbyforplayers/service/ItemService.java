@@ -62,4 +62,24 @@ public interface ItemService {
      * @return list of Distinct Game Names
      */
     List<String> findAllGameName();
+
+    /**
+     * Get minimum price of an item
+     * @param list of game names
+     */
+    Double getMinimumPriceForGames(List<String> games);
+
+    /**
+     * Get maximum price of an item
+     * @param list of game names
+     */
+    Double getMaximumPriceForGames(List<String> games);
+    /**
+     * Get all Items for a given game and price range (inclusive)
+     * @param list of games
+     * @param minimum price of the user
+     * @param maximum price of the user
+     * @return all the items
+     */
+    Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, Pageable pageable);
 }

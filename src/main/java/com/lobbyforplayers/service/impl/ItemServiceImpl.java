@@ -8,7 +8,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -106,5 +108,31 @@ public class ItemServiceImpl implements ItemService {
     public List<String> findAllGameName() {
         log.debug("Request to get All game names");
         return itemRepository.findDistinctGameName();
+    }
+
+    @Override
+    public Double getMinimumPriceForGames(List<String> games) {
+        log.debug("Request to get minimum price for games : {}", games);
+        return itemRepository
+            .findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "price")))
+            .getContent()
+            .get(0)
+            .getPrice();
+    }
+
+    @Override
+    public Double getMaximumPriceForGames(List<String> games) {
+        log.debug("Request to get maximum price for games: {}", games);
+        return itemRepository
+            .findMaxPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "price")))
+            .getContent()
+            .get(0)
+            .getPrice();
+    }
+
+    @Override
+    public Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, Pageable pageable) {
+        log.debug("Request to get maximum price for games: {} price between {} and  {}", games, minPrice, maxPrice);
+        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, pageable);
     }
 }
