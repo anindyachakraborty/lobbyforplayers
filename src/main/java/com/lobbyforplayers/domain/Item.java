@@ -1,7 +1,6 @@
 package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.*;
@@ -14,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * A Item.
  */
 @Document(collection = "item")
-public class Item implements Serializable {
+public class Item extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 

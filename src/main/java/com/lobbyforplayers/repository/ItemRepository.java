@@ -35,6 +35,12 @@ public interface ItemRepository extends MongoRepository<Item, String> {
     @Query("{'game_name': { $in:?0 } }")
     Page<Item> findMaxPriceForGames(List<String> gameName, Pageable pageable);
 
-    @Query("{'game_name': {$in: ?0},'price': {$gte: ?1, $lte: ?2}}")
-    Page<Item> findAllbyGameNameAndPriceRange(List<String> gameName, Double minPrice, Double maxPrice, Pageable pageable);
+    @Query("{'game_name': {$in: ?0},'price': {$gte: ?1, $lte: ?2}, 'description' : {$regex : ?3, $options : 'i'}, 'listed_flag' : true}")
+    Page<Item> findAllbyGameNameAndPriceRange(
+        List<String> gameName,
+        Double minPrice,
+        Double maxPrice,
+        String description,
+        Pageable pageable
+    );
 }

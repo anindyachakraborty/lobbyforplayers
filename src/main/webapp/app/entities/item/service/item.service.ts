@@ -37,6 +37,27 @@ export class ItemService {
     return this.http.get<IItem[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  getGames(): Observable<HttpResponse<string[]>> {
+    return this.http.get<string[]>(`${this.resourceUrl}/list/games`, { observe: 'response' });
+  }
+
+  minPrice(games: string[]): Observable<HttpResponse<number>> {
+    return this.http.request<number>('GET', `${this.resourceUrl}/minimum/price`, {
+      body: JSON.stringify(games),
+      headers: { 'Content-Type': 'application/json' },
+      observe: 'response',
+    });
+  }
+
+  maxPrice(games: string[]): Observable<HttpResponse<number>> {
+    return this.http.request<number>('GET', `${this.resourceUrl}/maximum/price`, { body: JSON.stringify(games), observe: 'response' });
+  }
+
+  filtered(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IItem[]>(`${this.resourceUrl}/filtered`, { params: options, observe: 'response' });
+  }
+
   delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

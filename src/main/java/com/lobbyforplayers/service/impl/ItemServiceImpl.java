@@ -113,26 +113,32 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Double getMinimumPriceForGames(List<String> games) {
         log.debug("Request to get minimum price for games : {}", games);
-        return itemRepository
-            .findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "price")))
-            .getContent()
-            .get(0)
-            .getPrice();
+        Page<Item> page = itemRepository.findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "price")));
+        if (page.hasContent()) {
+            return page.getContent().get(0).getPrice();
+        }
+        return 0.0;
     }
 
     @Override
     public Double getMaximumPriceForGames(List<String> games) {
         log.debug("Request to get maximum price for games: {}", games);
-        return itemRepository
-            .findMaxPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "price")))
-            .getContent()
-            .get(0)
-            .getPrice();
+        Page<Item> page = itemRepository.findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "price")));
+        if (page.hasContent()) {
+            return page.getContent().get(0).getPrice();
+        }
+        return 0.0;
     }
 
     @Override
-    public Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, Pageable pageable) {
-        log.debug("Request to get maximum price for games: {} price between {} and  {}", games, minPrice, maxPrice);
-        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, pageable);
+    public Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, String description, Pageable pageable) {
+        log.debug(
+            "Request to get maximum price for games: {} price between {} and  {} with text {}",
+            games,
+            minPrice,
+            maxPrice,
+            description
+        );
+        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, description, pageable);
     }
 }

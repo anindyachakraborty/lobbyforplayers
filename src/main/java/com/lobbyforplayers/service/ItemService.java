@@ -81,5 +81,5 @@ public interface ItemService {
      * @param maximum price of the user
      * @return all the items
      */
-    Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, Pageable pageable);
+    Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, String description, Pageable pageable);
 }

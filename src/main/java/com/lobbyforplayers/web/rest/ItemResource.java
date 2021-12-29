@@ -209,7 +209,7 @@ public class ItemResource {
      * @return minimum price of the game present
      *
      */
-    @GetMapping("/items/minumum/price")
+    @GetMapping("/items/minimum/price")
     public ResponseEntity<Double> getMinumumPrice(@RequestBody List<String> games) {
         log.debug("REST request to get Minumum Price for games: {}", games);
         Double price = itemService.getMinimumPriceForGames(games);
@@ -243,13 +243,14 @@ public class ItemResource {
         @RequestBody List<String> games,
         @RequestParam(name = "min", required = false, defaultValue = "0.0") Double minPrice,
         @RequestParam(name = "max", required = false, defaultValue = "0.0") Double maxPrice,
+        @RequestParam(name = "desc", required = false, defaultValue = ".") String description,
         Pageable pageable
     ) {
         if (maxPrice == 0.0) {
             maxPrice = Double.MAX_VALUE;
         }
-        log.debug("REST request to get Items with filters, games: {}, min: {}, max: {}", games, minPrice, maxPrice);
-        List<Item> items = itemService.getAllItemWithFilters(games, minPrice, maxPrice, pageable).getContent();
+        log.debug("REST request to get Items with filters, games: {}, min: {}, max: {}, desc {}", games, minPrice, maxPrice, description);
+        List<Item> items = itemService.getAllItemWithFilters(games, minPrice, maxPrice, description, pageable).getContent();
         return ResponseEntity.ok().body(items);
     }
 }

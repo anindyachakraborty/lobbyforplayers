@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IItem } from '../item.model';
 
-import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+import { ASC, DESC } from 'app/config/pagination.constants';
 import { ItemService } from '../service/item.service';
 import { ItemDeleteDialogComponent } from '../delete/item-delete-dialog.component';
 import { ParseLinks } from 'app/core/util/parse-links.service';
@@ -15,6 +15,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
   styleUrls: ['./item.component.scss'],
 })
 export class ItemComponent implements OnInit {
+  ITEM_THIS_PAGE = 9;
   items: IItem[];
   isLoading = false;
   itemsPerPage: number;
@@ -24,7 +25,11 @@ export class ItemComponent implements OnInit {
   ascending: boolean;
   toggleFilter = true;
   fullFilters = true;
-  someRange2config: any = {
+  originalPrices: { min: number | null; max: number | null } = {
+    min: null,
+    max: null,
+  };
+  priceRange: any = {
     behaviour: 'drag',
     connect: true,
     margin: 10,
@@ -33,7 +38,11 @@ export class ItemComponent implements OnInit {
       min: 0,
       max: 100,
     },
-    tooltips: true,
+    tooltips: false,
+  };
+  prices: { min: number; max: number } = {
+    min: 0,
+    max: 100,
   };
   filterText: Array<string> = [
     'Price: 20 to 80',
@@ -59,12 +68,12 @@ export class ItemComponent implements OnInit {
     'PUBG Mobile',
     'Fortnite Mobile',
   ];
-  searchGames: string[] = [];
+  searchGames: string[] = ['PUBG'];
   // gamesFilter: string;
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
-    this.itemsPerPage = ITEMS_PER_PAGE;
+    this.itemsPerPage = this.ITEM_THIS_PAGE;
     this.page = 0;
     this.links = {
       last: 0,
@@ -76,6 +85,24 @@ export class ItemComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
     this.searchGames = this.games;
+    this.itemService.minPrice(this.searchGames).subscribe(
+      (res: HttpResponse<number>) => {
+        this.isLoading = false;
+        this.originalPrices.min = res.body;
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
+    this.itemService.maxPrice(this.searchGames).subscribe(
+      (res: HttpResponse<number>) => {
+        this.isLoading = false;
+        this.originalPrices.max = res.body;
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
     this.itemService
       .query({
         page: this.page,
@@ -91,6 +118,15 @@ export class ItemComponent implements OnInit {
           this.isLoading = false;
         }
       );
+  }
+
+  createSlider(value: any): void {
+    console.error(value);
+  }
+
+  updatePrice(value: any): void {
+    this.prices.min = value[0];
+    this.prices.max = value[1];
   }
 
   reset(): void {
