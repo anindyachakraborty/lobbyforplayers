@@ -210,7 +210,7 @@ public class ItemResource {
      *
      */
     @GetMapping("/items/minimum/price")
-    public ResponseEntity<Double> getMinumumPrice(@RequestBody List<String> games) {
+    public ResponseEntity<Double> getMinumumPrice(@RequestParam(name = "games", required = true) List<String> games) {
         log.debug("REST request to get Minumum Price for games: {}", games);
         Double price = itemService.getMinimumPriceForGames(games);
         return ResponseEntity.ok().body(price);
@@ -223,7 +223,7 @@ public class ItemResource {
      *
      */
     @GetMapping("/items/maximum/price")
-    public ResponseEntity<Double> getMaximumPrice(@RequestBody List<String> games) {
+    public ResponseEntity<Double> getMaximumPrice(@RequestParam(name = "games", required = true) List<String> games) {
         log.debug("REST request to get Maximum Price");
         Double price = itemService.getMaximumPriceForGames(games);
         return ResponseEntity.ok().body(price);

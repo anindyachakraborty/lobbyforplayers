@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -25,20 +25,21 @@ export class ItemComponent implements OnInit {
   ascending: boolean;
   toggleFilter = true;
   fullFilters = true;
-  originalPrices: { min: number | null; max: number | null } = {
-    min: null,
-    max: null,
+  @ViewChild('priceSlider') priceSlider: any | undefined;
+  originalPrices: { min: number; max: number } = {
+    min: 0,
+    max: 100,
   };
   priceRange: any = {
     behaviour: 'drag',
     connect: true,
     margin: 10,
-    start: [0, 100],
+    start: [this.originalPrices.min, this.originalPrices.max],
     range: {
-      min: 0,
-      max: 100,
+      min: this.originalPrices.min,
+      max: this.originalPrices.max,
     },
-    tooltips: false,
+    tooltips: true,
   };
   prices: { min: number; max: number } = {
     min: 0,
@@ -68,8 +69,8 @@ export class ItemComponent implements OnInit {
     'PUBG Mobile',
     'Fortnite Mobile',
   ];
-  searchGames: string[] = ['PUBG'];
-  // gamesFilter: string;
+  searchGames: string[] = [];
+  gamesFilter: string[] = ['PUBG'];
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
@@ -85,24 +86,42 @@ export class ItemComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
     this.searchGames = this.games;
-    this.itemService.minPrice(this.searchGames).subscribe(
-      (res: HttpResponse<number>) => {
-        this.isLoading = false;
-        this.originalPrices.min = res.body;
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
-    this.itemService.maxPrice(this.searchGames).subscribe(
-      (res: HttpResponse<number>) => {
-        this.isLoading = false;
-        this.originalPrices.max = res.body;
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+    this.itemService
+      .minPrice({
+        games: this.searchGames,
+      })
+      .subscribe(
+        (res: HttpResponse<number>) => {
+          this.isLoading = false;
+          res.body ? (this.originalPrices.min = res.body) : (this.originalPrices.min = 0);
+          this.priceSlider.slider.updateOptions({
+            start: [this.originalPrices.min, this.originalPrices.max],
+            range: { min: this.originalPrices.min, max: this.originalPrices.max },
+          });
+          this.prices.min = this.originalPrices.min;
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+    this.itemService
+      .maxPrice({
+        games: this.searchGames,
+      })
+      .subscribe(
+        (res: HttpResponse<number>) => {
+          this.isLoading = false;
+          res.body ? (this.originalPrices.max = res.body) : (this.originalPrices.max = 100);
+          this.priceSlider.slider.updateOptions({
+            start: [this.originalPrices.min, this.originalPrices.max],
+            range: { min: this.originalPrices.min, max: this.originalPrices.max },
+          });
+          this.prices.max = this.originalPrices.max;
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
     this.itemService
       .query({
         page: this.page,
@@ -172,6 +191,28 @@ export class ItemComponent implements OnInit {
   }
   onChangeGameName(value: any): void {
     this.searchGames = this.games.filter(game => game.toLowerCase().indexOf(value.target.value.toLowerCase()) !== -1);
+  }
+
+  minPriceChanged(): void {
+    if (this.prices.min < this.originalPrices.min) {
+      this.prices.min = this.originalPrices.min;
+    }
+    this.priceSlider.slider.set([this.prices.min, null]);
+  }
+
+  maxPriceChanged(): void {
+    if (this.prices.max > this.originalPrices.max) {
+      this.prices.max = this.originalPrices.max;
+    }
+    this.priceSlider.slider.set([null, this.prices.max]);
+  }
+
+  onSelectGameName(game: string, event: any): void {
+    if (event.target.checked) {
+      this.gamesFilter.push(game);
+    } else {
+      this.gamesFilter.splice(this.gamesFilter.indexOf(game), 1);
+    }
   }
 
   protected sort(): string[] {

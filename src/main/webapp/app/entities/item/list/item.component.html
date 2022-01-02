@@ -53,14 +53,36 @@
         </h2>
         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
           <div class="accordion-body row">
-            <nouislider class="p-3 col-12" (create)="createSlider($event)" [config]="priceRange" (end)="updatePrice($event)"></nouislider>
+            <nouislider
+              class="p-3 col-12"
+              (create)="createSlider($event)"
+              [config]="priceRange"
+              #priceSlider
+              (end)="updatePrice($event)"
+            ></nouislider>
             <div class="col-6 form-group">
               <label for="minPrice">Min Price</label>
-              <input type="number" class="form-control" id="minPrice" [(ngModel)]="prices.min" />
+              <input
+                type="number"
+                class="form-control"
+                id="minPrice"
+                [(ngModel)]="prices.min"
+                max="{{ prices.max }}"
+                min="{{ originalPrices.min }}"
+                (change)="minPriceChanged()"
+              />
             </div>
             <div class="col-6 form-group">
               <label for="maxPrice">Max Price</label>
-              <input type="number" class="form-control" id="maxPrice" [(ngModel)]="prices.max" />
+              <input
+                type="number"
+                class="form-control"
+                id="maxPrice"
+                [(ngModel)]="prices.max"
+                min="{{ prices.min }}"
+                max="{{ originalPrices.max }}"
+                (change)="maxPriceChanged()"
+              />
             </div>
           </div>
         </div>
@@ -85,7 +107,14 @@
             <form>
               <div class="filterGames mt-1">
                 <div class="form-group" *ngFor="let game of searchGames">
-                  <input type="checkbox" id="{{ game }}" /> <label for="{{ game }}">{{ game }}</label>
+                  <input
+                    type="checkbox"
+                    [checked]="gamesFilter.includes(game)"
+                    name="game"
+                    (change)="onSelectGameName(game, $event)"
+                    id="{{ game }}"
+                  />
+                  <label for="{{ game }}">{{ game }}</label>
                 </div>
               </div>
             </form>
@@ -102,10 +131,32 @@
             aria-expanded="false"
             aria-controls="panelsStayOpen-collapseThree"
           >
-            Accordion Item #3
+            Platform
           </button>
         </h2>
         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
+            appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and
+            hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth
+            noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseFour"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseFour"
+          >
+            Language
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
           <div class="accordion-body">
             <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
             appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and
