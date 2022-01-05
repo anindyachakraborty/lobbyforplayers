@@ -240,7 +240,7 @@ public class ItemResource {
      */
     @GetMapping("/items/filtered")
     public ResponseEntity<List<Item>> getItemswithFilters(
-        @RequestBody List<String> games,
+        @RequestParam(name = "games", required = true) List<String> games,
         @RequestParam(name = "min", required = false, defaultValue = "0.0") Double minPrice,
         @RequestParam(name = "max", required = false, defaultValue = "0.0") Double maxPrice,
         @RequestParam(name = "desc", required = false, defaultValue = ".") String description,
@@ -252,5 +252,34 @@ public class ItemResource {
         log.debug("REST request to get Items with filters, games: {}, min: {}, max: {}, desc {}", games, minPrice, maxPrice, description);
         List<Item> items = itemService.getAllItemWithFilters(games, minPrice, maxPrice, description, pageable).getContent();
         return ResponseEntity.ok().body(items);
+    }
+
+    /**
+     * {@code GET /items/filtered/count}
+     *
+     * @input List of games
+     * @param minimum price
+     * @param maximum price
+     * @return count of items given by the filters
+     */
+    @GetMapping("/items/filtered/count")
+    public ResponseEntity<Long> getItemCountwithFilters(
+        @RequestParam(name = "games", required = true) List<String> games,
+        @RequestParam(name = "min", required = false, defaultValue = "0.0") Double minPrice,
+        @RequestParam(name = "max", required = false, defaultValue = "0.0") Double maxPrice,
+        @RequestParam(name = "desc", required = false, defaultValue = ".") String description
+    ) {
+        if (maxPrice == 0.0) {
+            maxPrice = Double.MAX_VALUE;
+        }
+        log.debug(
+            "REST request to get Item count with filters, games: {}, min: {}, max: {}, desc {}",
+            games,
+            minPrice,
+            maxPrice,
+            description
+        );
+        Long count = itemService.getAllItemCountWithFilters(games, minPrice, maxPrice, description);
+        return ResponseEntity.ok().body(count);
     }
 }

@@ -171,16 +171,20 @@
   <section class="col-lg-9 col-xl-10 col-md-12">
     <div class="container-fluid">
       <div class="d-flex flex-row">
-        <div class="text-muted m-2" id="res">Showing 44 results</div>
+        <div class="text-muted m-2">
+          <span jhiTranslate="lobbyforplayersApp.item.home.showing"></span>
+          {{ TOTAL_ITEMS }}
+          <span jhiTranslate="lobbyforplayersApp.item.home.results"></span>
+        </div>
+        <div class="ml-auto p-1 m-1 mr-lg-4">
+          <span class="text-muted">Sort by</span>
+        </div>
         <div class="ml-auto mr-lg-4">
-          <div id="sorting" class="border rounded p-1 m-1">
-            <span class="text-muted">Sort by</span>
-            <select name="sort" id="sort">
-              <option value="popularity"><b>Popularity</b></option>
-              <option value="prcie"><b>Price</b></option>
-              <option value="rating"><b>Rating</b></option>
-            </select>
-          </div>
+          <select name="sort" class="form-select">
+            <option value="popularity"><b>Popularity</b></option>
+            <option value="prcie"><b>Price</b></option>
+            <option value="rating"><b>Rating</b></option>
+          </select>
         </div>
       </div>
       <div

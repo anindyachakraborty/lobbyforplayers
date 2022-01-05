@@ -82,4 +82,13 @@ public interface ItemService {
      * @return all the items
      */
     Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, String description, Pageable pageable);
+
+    /**
+     * Get all Item Count for a given game and price range (inclusive)
+     * @param list of games
+     * @param minimum price of the user
+     * @param maximum price of the user
+     * @return all the item count
+     */
+    Long getAllItemCountWithFilters(List<String> games, Double minPrice, Double maxPrice, String description);
 }

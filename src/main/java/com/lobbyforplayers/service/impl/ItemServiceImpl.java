@@ -132,13 +132,19 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, String description, Pageable pageable) {
+        log.debug("Request to get all items for games: {} price between {} and  {} with text {}", games, minPrice, maxPrice, description);
+        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, description, pageable);
+    }
+
+    @Override
+    public Long getAllItemCountWithFilters(List<String> games, Double minPrice, Double maxPrice, String description) {
         log.debug(
-            "Request to get maximum price for games: {} price between {} and  {} with text {}",
+            "Request to get all item count for games: {} price between {} and  {} with text {}",
             games,
             minPrice,
             maxPrice,
             description
         );
-        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, description, pageable);
+        return itemRepository.findCountbyGameNameAndPriceRange(games, minPrice, maxPrice, description);
     }
 }

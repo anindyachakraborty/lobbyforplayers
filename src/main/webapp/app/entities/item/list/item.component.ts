@@ -16,6 +16,7 @@ import { ParseLinks } from 'app/core/util/parse-links.service';
 })
 export class ItemComponent implements OnInit {
   ITEM_THIS_PAGE = 9;
+  TOTAL_ITEMS = 0;
   items: IItem[];
   isLoading = false;
   itemsPerPage: number;
@@ -70,7 +71,7 @@ export class ItemComponent implements OnInit {
     'Fortnite Mobile',
   ];
   searchGames: string[] = [];
-  gamesFilter: string[] = ['PUBG'];
+  gamesFilter: string[] = ['BGMI', 'PUBG'];
 
   constructor(protected itemService: ItemService, protected modalService: NgbModal, protected parseLinks: ParseLinks) {
     this.items = [];
@@ -79,51 +80,102 @@ export class ItemComponent implements OnInit {
     this.links = {
       last: 0,
     };
-    this.predicate = 'id';
+    this.predicate = 'createdDate';
     this.ascending = true;
   }
 
   loadAll(): void {
     this.isLoading = true;
     this.searchGames = this.games;
+    const minSync = new Promise((resolve, reject) => {
+      this.itemService
+        .minPrice({
+          games: this.gamesFilter,
+        })
+        .subscribe(
+          (res: HttpResponse<number>) => {
+            this.isLoading = false;
+            res.body ? (this.originalPrices.min = res.body) : (this.originalPrices.min = 0);
+            this.priceSlider.slider.updateOptions({
+              start: [this.originalPrices.min, this.originalPrices.max],
+              range: { min: this.originalPrices.min, max: this.originalPrices.max },
+            });
+            this.prices.min = this.originalPrices.min;
+            resolve(true);
+          },
+          () => {
+            this.isLoading = false;
+            reject(false);
+          }
+        );
+    });
+    const maxSync = new Promise((resolve, reject) => {
+      this.itemService
+        .maxPrice({
+          games: this.gamesFilter,
+        })
+        .subscribe(
+          (res: HttpResponse<number>) => {
+            this.isLoading = false;
+            res.body ? (this.originalPrices.max = res.body) : (this.originalPrices.max = 100);
+            this.priceSlider.slider.updateOptions({
+              start: [this.originalPrices.min, this.originalPrices.max],
+              range: { min: this.originalPrices.min, max: this.originalPrices.max },
+            });
+            this.prices.max = this.originalPrices.max;
+            resolve(true);
+          },
+          () => {
+            this.isLoading = false;
+            reject(false);
+          }
+        );
+    });
+    Promise.allSettled([minSync, maxSync])
+      .then(() => {
+        this.loadFilteredCards();
+      })
+      .catch(reason => {
+        console.error(reason);
+      });
+
+    // this.itemService
+    //   .query({
+    //     page: this.page,
+    //     size: this.itemsPerPage,
+    //     sort: this.sort(),
+    //   })
+    //   .subscribe(
+    //     (res: HttpResponse<IItem[]>) => {
+    //       this.isLoading = false;
+    //       this.paginateItems(res.body, res.headers);
+    //     },
+    //     () => {
+    //       this.isLoading = false;
+    //     }
+    //   );
+  }
+  loadFilteredCards(): void {
     this.itemService
-      .minPrice({
-        games: this.searchGames,
+      .filterTotalCount({
+        games: this.gamesFilter,
+        min: this.prices.min,
+        max: this.prices.max,
       })
       .subscribe(
         (res: HttpResponse<number>) => {
           this.isLoading = false;
-          res.body ? (this.originalPrices.min = res.body) : (this.originalPrices.min = 0);
-          this.priceSlider.slider.updateOptions({
-            start: [this.originalPrices.min, this.originalPrices.max],
-            range: { min: this.originalPrices.min, max: this.originalPrices.max },
-          });
-          this.prices.min = this.originalPrices.min;
+          res.body != null ? (this.TOTAL_ITEMS = res.body) : (this.isLoading = false);
         },
         () => {
           this.isLoading = false;
         }
       );
     this.itemService
-      .maxPrice({
-        games: this.searchGames,
-      })
-      .subscribe(
-        (res: HttpResponse<number>) => {
-          this.isLoading = false;
-          res.body ? (this.originalPrices.max = res.body) : (this.originalPrices.max = 100);
-          this.priceSlider.slider.updateOptions({
-            start: [this.originalPrices.min, this.originalPrices.max],
-            range: { min: this.originalPrices.min, max: this.originalPrices.max },
-          });
-          this.prices.max = this.originalPrices.max;
-        },
-        () => {
-          this.isLoading = false;
-        }
-      );
-    this.itemService
-      .query({
+      .filtered({
+        games: this.gamesFilter,
+        min: this.prices.min,
+        max: this.prices.max,
         page: this.page,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -217,9 +269,9 @@ export class ItemComponent implements OnInit {
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
+    // if (this.predicate !== 'id') {
+    //   result.push('id');
+    // }
     return result;
   }
 

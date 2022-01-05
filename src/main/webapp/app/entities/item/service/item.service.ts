@@ -51,6 +51,11 @@ export class ItemService {
     return this.http.get<number>(`${this.resourceUrl}/maximum/price`, { params: options, observe: 'response' });
   }
 
+  filterTotalCount(req?: any): Observable<HttpResponse<number>> {
+    const options = createRequestOption(req);
+    return this.http.get<number>(`${this.resourceUrl}/filtered/count`, { params: options, observe: 'response' });
+  }
+
   filtered(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IItem[]>(`${this.resourceUrl}/filtered`, { params: options, observe: 'response' });

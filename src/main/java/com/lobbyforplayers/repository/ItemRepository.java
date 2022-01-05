@@ -43,4 +43,10 @@ public interface ItemRepository extends MongoRepository<Item, String> {
         String description,
         Pageable pageable
     );
+
+    @Query(
+        value = "{'game_name': {$in: ?0},'price': {$gte: ?1, $lte: ?2}, 'description' : {$regex : ?3, $options : 'i'}, 'listed_flag' : true}",
+        count = true
+    )
+    Long findCountbyGameNameAndPriceRange(List<String> gameName, Double minPrice, Double maxPrice, String description);
 }
