@@ -1,5 +1,9 @@
 {
-  "name": "Reviews",
+  "applications": "*",
+  "changelogDate": "20211104094744",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "reviews",
   "fields": [
     {
       "fieldName": "question",
@@ -21,15 +25,11 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
-  "entityTableName": "reviews",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reviews",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211104094744"
+  "relationships": [],
+  "service": "serviceImpl"
 }

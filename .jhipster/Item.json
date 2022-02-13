@@ -1,5 +1,9 @@
 {
-  "name": "Item",
+  "applications": "*",
+  "changelogDate": "20211031103451",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "item",
   "fields": [
     {
       "fieldName": "description",
@@ -61,42 +65,38 @@
       "fieldName": "language",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMinlength": "2",
-      "fieldValidateRulesMaxlength": "10"
+      "fieldValidateRulesMaxlength": "10",
+      "fieldValidateRulesMinlength": "2"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Item",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-one",
       "otherEntityName": "order",
       "otherEntityRelationshipName": "item",
+      "ownerSide": true,
       "relationshipName": "order",
-      "ownerSide": true
+      "relationshipType": "one-to-one"
     },
     {
-      "relationshipType": "one-to-many",
+      "otherEntityField": "itemId",
       "otherEntityName": "bargain",
       "otherEntityRelationshipName": "item",
       "relationshipName": "bargain",
-      "otherEntityField": "itemId"
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-many",
+      "otherEntityField": "name",
       "otherEntityName": "tags",
       "otherEntityRelationshipName": "sentry",
+      "ownerSide": true,
       "relationshipName": "tags",
-      "otherEntityField": "name",
-      "ownerSide": true
+      "relationshipType": "many-to-many"
     }
   ],
-  "entityTableName": "item",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211031103451"
+  "service": "serviceImpl"
 }

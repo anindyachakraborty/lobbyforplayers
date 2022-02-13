@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,7 +51,9 @@ public class ItemResource {
      * {@code POST  /items} : Create a new item.
      *
      * @param item the item to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new item, or with status {@code 400 (Bad Request)} if the item has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new item, or with status {@code 400 (Bad Request)} if the
+     *         item has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/items")
@@ -71,11 +72,13 @@ public class ItemResource {
     /**
      * {@code PUT  /items/:id} : Updates an existing item.
      *
-     * @param id the id of the item to save.
+     * @param id   the id of the item to save.
      * @param item the item to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated item,
-     * or with status {@code 400 (Bad Request)} if the item is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the item couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated item,
+     *         or with status {@code 400 (Bad Request)} if the item is not valid,
+     *         or with status {@code 500 (Internal Server Error)} if the item
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/items/{id}")
@@ -101,14 +104,17 @@ public class ItemResource {
     }
 
     /**
-     * {@code PATCH  /items/:id} : Partial updates given fields of an existing item, field will ignore if it is null
+     * {@code PATCH  /items/:id} : Partial updates given fields of an existing item,
+     * field will ignore if it is null
      *
-     * @param id the id of the item to save.
+     * @param id   the id of the item to save.
      * @param item the item to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated item,
-     * or with status {@code 400 (Bad Request)} if the item is not valid,
-     * or with status {@code 404 (Not Found)} if the item is not found,
-     * or with status {@code 500 (Internal Server Error)} if the item couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated item,
+     *         or with status {@code 400 (Bad Request)} if the item is not valid,
+     *         or with status {@code 404 (Not Found)} if the item is not found,
+     *         or with status {@code 500 (Internal Server Error)} if the item
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/items/{id}", consumes = { "application/json", "application/merge-patch+json" })
@@ -136,13 +142,15 @@ public class ItemResource {
     /**
      * {@code GET  /items} : get all the items.
      *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of items in body.
+     * @param pageable  the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is
+     *                  applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of items in body.
      */
     @GetMapping("/items")
     public ResponseEntity<List<Item>> getAllItems(
-        Pageable pageable,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
         @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get a page of Items");
@@ -160,7 +168,8 @@ public class ItemResource {
      * {@code GET  /items/:id} : get the "id" item.
      *
      * @param id the id of the item to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the item, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the item, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/items/{id}")
     public ResponseEntity<Item> getItem(@PathVariable String id) {
@@ -180,5 +189,97 @@ public class ItemResource {
         log.debug("REST request to delete Item : {}", id);
         itemService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+    }
+
+    /**
+     * {@code GET /list/}
+     *
+     * @return List of all the games present in the database
+     */
+    @GetMapping("/items/list/games")
+    public ResponseEntity<List<String>> getGames() {
+        log.debug("REST request to get Games");
+        List<String> games = itemService.findAllGameName();
+        return ResponseEntity.ok().body(games);
+    }
+
+    /**
+     * {@code GET /get/minumum/price}
+     *
+     * @return minimum price of the game present
+     *
+     */
+    @GetMapping("/items/minimum/price")
+    public ResponseEntity<Double> getMinumumPrice(@RequestParam(name = "games", required = true) List<String> games) {
+        log.debug("REST request to get Minumum Price for games: {}", games);
+        Double price = itemService.getMinimumPriceForGames(games);
+        return ResponseEntity.ok().body(price);
+    }
+
+    /**
+     * {@code GET /get/maximum/price}
+     *
+     * @return maximum price of the game present
+     *
+     */
+    @GetMapping("/items/maximum/price")
+    public ResponseEntity<Double> getMaximumPrice(@RequestParam(name = "games", required = true) List<String> games) {
+        log.debug("REST request to get Maximum Price");
+        Double price = itemService.getMaximumPriceForGames(games);
+        return ResponseEntity.ok().body(price);
+    }
+
+    /**
+     * {@code GET /get/items}
+     *
+     * @input List of games
+     * @param minimum price
+     * @param maximum price
+     * @return list of items given by the filters
+     *
+     */
+    @GetMapping("/items/filtered")
+    public ResponseEntity<List<Item>> getItemswithFilters(
+        @RequestParam(name = "games", required = true) List<String> games,
+        @RequestParam(name = "min", required = false, defaultValue = "0.0") Double minPrice,
+        @RequestParam(name = "max", required = false, defaultValue = "0.0") Double maxPrice,
+        @RequestParam(name = "desc", required = false, defaultValue = ".") String description,
+        Pageable pageable
+    ) {
+        if (maxPrice == 0.0) {
+            maxPrice = Double.MAX_VALUE;
+        }
+        log.debug("REST request to get Items with filters, games: {}, min: {}, max: {}, desc {}", games, minPrice, maxPrice, description);
+        List<Item> items = itemService.getAllItemWithFilters(games, minPrice, maxPrice, description, pageable).getContent();
+        return ResponseEntity.ok().body(items);
+    }
+
+    /**
+     * {@code GET /items/filtered/count}
+     *
+     * @input List of games
+     * @param minimum price
+     * @param maximum price
+     * @return count of items given by the filters
+     */
+    @GetMapping("/items/filtered/count")
+    public ResponseEntity<Long> getItemCountwithFilters(
+        @RequestParam(name = "games", required = true) List<String> games,
+        @RequestParam(name = "min", required = false, defaultValue = "0.0") Double minPrice,
+        @RequestParam(name = "max", required = false, defaultValue = "0.0") Double maxPrice,
+        @RequestParam(name = "desc", required = false, defaultValue = ".") String description
+    ) {
+        if (maxPrice == 0.0) {
+            maxPrice = Double.MAX_VALUE;
+        }
+        log.debug(
+            "REST request to get Item count with filters, games: {}, min: {}, max: {}, desc {}",
+            games,
+            minPrice,
+            maxPrice,
+            description
+        );
+        Long count = itemService.getAllItemCountWithFilters(games, minPrice, maxPrice, description);
+        return ResponseEntity.ok().body(count);
     }
 }

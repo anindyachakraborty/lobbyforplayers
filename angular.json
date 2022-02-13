@@ -23,6 +23,13 @@
             "customWebpackConfig": {
               "path": "./webpack/webpack.custom.js"
             },
+            "allowedCommonJsDependencies": [
+              "node_modules/dayjs/locale/en.js",
+              "node_modules/dayjs/locale/hi.js",
+              "node_modules/dayjs/locale/ta.js",
+              "node_modules/dayjs/locale/te.js",
+              "node_modules/@types/sockjs-client/index.ts"
+            ],
             "outputPath": "target/classes/static/",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",
@@ -125,6 +132,11 @@
   },
   "defaultProject": "lobbyforplayers",
   "cli": {
+    "cache": {
+      "enabled": true,
+      "path": "./target/",
+      "environment": "all"
+    },
     "packageManager": "npm"
   }
 }

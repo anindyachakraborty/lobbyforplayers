@@ -1,0 +1,33 @@
+.filterText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 7vh;
+  display: inline-block;
+}
+
+.filterTags {
+  max-width: 11vh;
+}
+
+.maxFilters {
+  max-height: 4em;
+  line-height: 2em;
+  overflow: hidden;
+}
+
+.filterGames {
+  max-height: 6em;
+  overflow: hidden auto;
+}
+
+.cardGameTitle {
+  // max-height: 2.4em;
+  // line-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardGameBody {
+  text-overflow: ellipsis;
+}

@@ -1,6 +1,7 @@
 package com.lobbyforplayers;
 
 import com.lobbyforplayers.LobbyforplayersApp;
+import com.lobbyforplayers.MongoDbTestContainerExtension;
 import com.lobbyforplayers.RedisTestContainerExtension;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,5 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(classes = LobbyforplayersApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
+@ExtendWith(MongoDbTestContainerExtension.class)
 public @interface IntegrationTest {
 }

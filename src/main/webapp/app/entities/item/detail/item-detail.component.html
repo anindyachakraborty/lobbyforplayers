@@ -1,5 +1,5 @@
-<div class="row justify-content-center">
-  <div class="col-8">
+<div class="container-lg justify-content-center">
+  <div class="row">
     <div *ngIf="item">
       <h2 data-cy="itemDetailsHeading"><span jhiTranslate="lobbyforplayersApp.item.detail.title">Item</span></h2>
 
@@ -9,7 +9,11 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
+      <h3>{{ item.description }}</h3>
+
+      <p>{{ item.views }}</p>
+
+      <!-- <dl class="row-md jh-entity-details">
         <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ item.id }}</span>
@@ -75,13 +79,16 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-      </dl>
+      </dl> -->
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/item', item.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+      <button type="button" [routerLink]="['/order', 'new']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

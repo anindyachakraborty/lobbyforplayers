@@ -3,11 +3,14 @@ package com.lobbyforplayers.service.impl;
 import com.lobbyforplayers.domain.Item;
 import com.lobbyforplayers.repository.ItemRepository;
 import com.lobbyforplayers.service.ItemService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -99,5 +102,49 @@ public class ItemServiceImpl implements ItemService {
     public void delete(String id) {
         log.debug("Request to delete Item : {}", id);
         itemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<String> findAllGameName() {
+        log.debug("Request to get All game names");
+        return itemRepository.findDistinctGameName();
+    }
+
+    @Override
+    public Double getMinimumPriceForGames(List<String> games) {
+        log.debug("Request to get minimum price for games : {}", games);
+        Page<Item> page = itemRepository.findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "price")));
+        if (page.hasContent()) {
+            return page.getContent().get(0).getPrice();
+        }
+        return 0.0;
+    }
+
+    @Override
+    public Double getMaximumPriceForGames(List<String> games) {
+        log.debug("Request to get maximum price for games: {}", games);
+        Page<Item> page = itemRepository.findMinPriceForGames(games, PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "price")));
+        if (page.hasContent()) {
+            return page.getContent().get(0).getPrice();
+        }
+        return 0.0;
+    }
+
+    @Override
+    public Page<Item> getAllItemWithFilters(List<String> games, Double minPrice, Double maxPrice, String description, Pageable pageable) {
+        log.debug("Request to get all items for games: {} price between {} and  {} with text {}", games, minPrice, maxPrice, description);
+        return itemRepository.findAllbyGameNameAndPriceRange(games, minPrice, maxPrice, description, pageable);
+    }
+
+    @Override
+    public Long getAllItemCountWithFilters(List<String> games, Double minPrice, Double maxPrice, String description) {
+        log.debug(
+            "Request to get all item count for games: {} price between {} and  {} with text {}",
+            games,
+            minPrice,
+            maxPrice,
+            description
+        );
+        return itemRepository.findCountbyGameNameAndPriceRange(games, minPrice, maxPrice, description);
     }
 }

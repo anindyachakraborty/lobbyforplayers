@@ -19,15 +19,15 @@ export class TagsComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.tagsService.query().subscribe(
-      (res: HttpResponse<ITags[]>) => {
+    this.tagsService.query().subscribe({
+      next: (res: HttpResponse<ITags[]>) => {
         this.isLoading = false;
         this.tags = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

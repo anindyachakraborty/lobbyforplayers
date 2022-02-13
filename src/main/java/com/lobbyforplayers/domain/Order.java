@@ -1,7 +1,6 @@
 package com.lobbyforplayers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
 import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -12,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * A Order.
  */
 @Document(collection = "order")
-public class Order implements Serializable {
+public class Order extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,6 +39,7 @@ public class Order implements Serializable {
     private Boolean completed;
 
     @DBRef
+    @JsonIgnoreProperties(value = { "order" }, allowSetters = true)
     private Item item;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

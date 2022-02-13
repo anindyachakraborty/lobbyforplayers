@@ -1,9 +1,9 @@
 <div class="container-fluid row">
   <div class="col-md-7 col-lg-8 mt-3">
-    <h1>Game Accounts</h1>
+    <h1 jhiTranslate="lobbyforplayersApp.item.home.title"></h1>
   </div>
   <div class="col-md-3 col-8 col-lg-2 mt-3">
-    <button type="button" class="btn btn-info btn-lg">
+    <button type="button" class="btn btn-info btn-lg" [routerLink]="['/item/new']">
       <fa-icon [icon]="['fas', 'hand-holding-usd']"></fa-icon>
       &nbsp;&nbsp;Sell
     </button>
@@ -18,46 +18,125 @@
 <div class="row">
   <!-- Sidebar filter section -->
   <section class="col-lg-3 col-xl-2 col-md-12 filterColumn border-primary d-none d-lg-block mt-3" [ngClass]="{ 'd-none': toggleFilter }">
-    <p>Home | <b>All Breads</b></p>
-    <div class="border-bottom pb-2 ml-2">
-      <h4 id="burgundy">Filters</h4>
+    <div class="border-bottom ml-2">
+      <h4>Filters</h4>
     </div>
-    <div class="accordion" id="accordionExample">
+    <div class="mt-2" [ngClass]="{ maxFilters: fullFilters }" #tagfilters>
+      <span
+        class="badge bg-info m-1 filterTags"
+        *ngFor="let filter of filterText; let index = index"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="{{ filter }}"
+      >
+        <span class="filterText">{{ filter }}</span>
+        <fa-icon class="mx-1 text-danger" [icon]="['fas', 'times']" (click)="removeFilter(index)"></fa-icon>
+      </span>
+    </div>
+    <div class="mt-1">
+      <a class="btn btn-link" *ngIf="fullFilters && filterText.length > 4" (click)="toggleFullFilters()"> Show More </a>
+      <a class="btn btn-link" *ngIf="!fullFilters && filterText.length > 4" (click)="toggleFullFilters()"> Show Less </a>
+    </div>
+    <div class="accordion mt-3">
       <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="false"
-            aria-controls="collapseOne"
-          >
-            Accordion Item #1
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <nouislider class="form-range" [config]="someRange2config"></nouislider>
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
           <button
             class="accordion-button"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo"
+            data-bs-target="#panelsStayOpen-collapseOne"
             aria-expanded="true"
-            aria-controls="collapseTwo"
+            aria-controls="panelsStayOpen-collapseOne"
           >
-            Accordion Item #2
+            Price
           </button>
         </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+          <div class="accordion-body row">
+            <nouislider
+              class="p-3 col-12"
+              (create)="createSlider($event)"
+              [config]="priceRange"
+              #priceSlider
+              (end)="updatePrice($event)"
+            ></nouislider>
+            <div class="col-6 form-group">
+              <label for="minPrice">Min Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="minPrice"
+                [(ngModel)]="prices.min"
+                max="{{ prices.max }}"
+                min="{{ originalPrices.min }}"
+                (change)="minPriceChanged()"
+              />
+            </div>
+            <div class="col-6 form-group">
+              <label for="maxPrice">Max Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="maxPrice"
+                [(ngModel)]="prices.max"
+                min="{{ prices.min }}"
+                max="{{ originalPrices.max }}"
+                (change)="maxPriceChanged()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseTwo"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseTwo"
+          >
+            Game
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
           <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
+            <label for="typeahead-basic">Search for a game</label>
+            <input id="typeahead-basic" type="text" class="form-control" (input)="onChangeGameName($event)" />
+            <form>
+              <div class="filterGames mt-1">
+                <div class="form-group" *ngFor="let game of searchGames">
+                  <input
+                    type="checkbox"
+                    [checked]="gamesFilter.includes(game)"
+                    name="game"
+                    (change)="onSelectGameName(game, $event)"
+                    id="{{ game }}"
+                  />
+                  <label for="{{ game }}">{{ game }}</label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseThree"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseThree"
+          >
+            Platform
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
             appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and
             hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth
             noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
@@ -65,19 +144,19 @@
         </div>
       </div>
       <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
+        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
           <button
             class="accordion-button collapsed"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#collapseThree"
+            data-bs-target="#panelsStayOpen-collapseFour"
             aria-expanded="false"
-            aria-controls="collapseThree"
+            aria-controls="panelsStayOpen-collapseFour"
           >
-            Accordion Item #3 ok
+            Language
           </button>
         </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
           <div class="accordion-body">
             <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the
             appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and
@@ -87,82 +166,49 @@
         </div>
       </div>
     </div>
-    <div class="py-2 border-bottom ml-3">
-      <h6 class="font-weight-bold">Categories</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="artisan" /> <label for="artisan">Fresh Artisan Breads</label></div>
-        <div class="form-group"><input type="checkbox" id="breakfast" /> <label for="breakfast">Breakfast Breads</label></div>
-        <div class="form-group"><input type="checkbox" id="healthy" /> <label for="healthy">Healthy Breads</label></div>
-      </form>
-    </div>
-    <div class="py-2 border-bottom ml-3">
-      <h6 class="font-weight-bold">Accompainments</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="tea" /> <label for="tea">Tea Cakes</label></div>
-        <div class="form-group"><input type="checkbox" id="cookies" /> <label for="cookies">Cookies</label></div>
-        <div class="form-group"><input type="checkbox" id="pastries" /> <label for="pastries">Pastries</label></div>
-        <div class="form-group"><input type="checkbox" id="dough" /> <label for="dough">Cookie Dough</label></div>
-        <div class="form-group"><input type="checkbox" id="choco" /> <label for="choco">Chocolates</label></div>
-      </form>
-    </div>
-    <div class="py-2 ml-3">
-      <h6 class="font-weight-bold">Top Offers</h6>
-      <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
-        <div class="form-group"><input type="checkbox" id="25off" /> <label for="25">25% off</label></div>
-        <div class="form-group"><input type="checkbox" id="5off" /> <label for="5off" id="off">5% off on artisan breads</label></div>
-      </form>
-    </div>
   </section>
   <!-- products section -->
   <section class="col-lg-9 col-xl-10 col-md-12">
     <div class="container-fluid">
       <div class="d-flex flex-row">
-        <div class="text-muted m-2" id="res">Showing 44 results</div>
+        <div class="text-muted m-2">
+          <span jhiTranslate="lobbyforplayersApp.item.home.showing"></span>
+          {{ TOTAL_ITEMS }}
+          <span jhiTranslate="lobbyforplayersApp.item.home.results"></span>
+        </div>
+        <div class="ml-auto p-1 m-1 mr-lg-4">
+          <span class="text-muted">Sort by</span>
+        </div>
         <div class="ml-auto mr-lg-4">
-          <div id="sorting" class="border rounded p-1 m-1">
-            <span class="text-muted">Sort by</span>
-            <select name="sort" id="sort">
-              <option value="popularity"><b>Popularity</b></option>
-              <option value="prcie"><b>Price</b></option>
-              <option value="rating"><b>Rating</b></option>
-            </select>
-          </div>
+          <select name="sort" class="form-select">
+            <option value="popularity"><b>Popularity</b></option>
+            <option value="prcie"><b>Price</b></option>
+            <option value="rating"><b>Rating</b></option>
+          </select>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
+      <div
+        class="row"
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <div class="col-md-6 col-lg-6 col-xl-4 mt-3" *ngFor="let item of items; trackBy: trackId">
           <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-6 col-xl-4 mt-3">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+            <div class="card-body cardGameBody">
+              <h4 class="card-title cardGameTitle" data-toggle="tooltip" data-placement="top" title="{{ item.description }}">
+                {{ item.description }}
+              </h4>
+              <h6 class="card-subtitle mb-2 text-muted">{{ item.price }}</h6>
+              <p class="card-text">{{ item.gameName }}</p>
+              <span *ngFor="let taglist of item.tags">
+                {{ taglist.tag }}
+              </span>
+              <div class="row justify-content-center">
+                <button class="btn btn-secondary col-5 ml-3" [routerLink]="['/item', item.id, 'view']">View</button>
+                <button class="btn btn-primary col-5 mx-3" [routerLink]="['/item', item.id, 'view']">Buy</button>
+              </div>
             </div>
           </div>
         </div>
