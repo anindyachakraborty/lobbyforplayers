@@ -47,14 +47,14 @@ export class ItemComponent implements OnInit {
     max: 100,
   };
   filterText: Array<string> = [
-    'Price: 20 to 80',
-    'Filter Text',
-    'Another One',
-    'Woooo hoooo',
-    'Price: 20 to 80',
-    'Filter Text',
-    'Another One',
-    'Woooo hoooo',
+    'Game: PUBG',
+    'Game: BGMI',
+    // 'Another One',
+    // 'Woooo hoooo',
+    // 'Price: 20 to 80',
+    // 'Filter Text',
+    // 'Another One',
+    // 'Woooo hoooo',
   ];
   games = [
     'PUBG',
