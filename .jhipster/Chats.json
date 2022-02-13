@@ -1,5 +1,9 @@
 {
-  "name": "Chats",
+  "applications": "*",
+  "changelogDate": "20211031103456",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "chats",
   "fields": [
     {
       "fieldName": "fromUserId",
@@ -20,26 +24,22 @@
       "fieldName": "message",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMinlength": "1",
-      "fieldValidateRulesMaxlength": "256"
+      "fieldValidateRulesMaxlength": "256",
+      "fieldValidateRulesMinlength": "1"
     },
     {
       "fieldName": "language",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMinlength": "2",
-      "fieldValidateRulesMaxlength": "10"
+      "fieldValidateRulesMaxlength": "10",
+      "fieldValidateRulesMinlength": "2"
     }
   ],
-  "relationships": [],
-  "entityTableName": "chats",
-  "dto": "no",
-  "pagination": "infinite-scroll",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Chats",
+  "pagination": "infinite-scroll",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211031103456"
+  "relationships": [],
+  "service": "serviceImpl"
 }

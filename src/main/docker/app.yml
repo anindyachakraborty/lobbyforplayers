@@ -21,7 +21,7 @@ services:
     ports:
       - 127.0.0.1:8080:8080
   lobbyforplayers-mongodb:
-    image: mongo:4.4.10
+    image: mongo:4.4.11
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -35,7 +35,7 @@ services:
     ports:
       - 127.0.0.1:6379:6379
   jhipster-registry:
-    image: jhipster/jhipster-registry:v7.1.0
+    image: jhipster/jhipster-registry:v7.2.0
     volumes:
       - ./central-server-config:/central-config
     # When run with the "dev" Spring profile, the JHipster Registry will

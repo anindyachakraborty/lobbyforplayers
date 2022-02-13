@@ -19,15 +19,15 @@ export class ReviewsComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.reviewsService.query().subscribe(
-      (res: HttpResponse<IReviews[]>) => {
+    this.reviewsService.query().subscribe({
+      next: (res: HttpResponse<IReviews[]>) => {
         this.isLoading = false;
         this.reviews = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

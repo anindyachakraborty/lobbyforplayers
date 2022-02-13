@@ -1,5 +1,9 @@
 {
-  "name": "Payments",
+  "applications": "*",
+  "changelogDate": "20211104094745",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "payments",
   "fields": [
     {
       "fieldName": "buyerUserId",
@@ -49,15 +53,11 @@
       "fieldValidateRules": ["required"]
     }
   ],
-  "relationships": [],
-  "entityTableName": "payments",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Payments",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211104094745"
+  "relationships": [],
+  "service": "serviceImpl"
 }

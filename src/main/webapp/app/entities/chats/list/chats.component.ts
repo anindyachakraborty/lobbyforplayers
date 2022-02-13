@@ -42,15 +42,15 @@ export class ChatsComponent implements OnInit {
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe(
-        (res: HttpResponse<IChats[]>) => {
+      .subscribe({
+        next: (res: HttpResponse<IChats[]>) => {
           this.isLoading = false;
           this.paginateChats(res.body, res.headers);
         },
-        () => {
+        error: () => {
           this.isLoading = false;
-        }
-      );
+        },
+      });
   }
 
   reset(): void {

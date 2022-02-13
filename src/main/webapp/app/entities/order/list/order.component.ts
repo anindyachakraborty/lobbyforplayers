@@ -19,15 +19,15 @@ export class OrderComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.orderService.query().subscribe(
-      (res: HttpResponse<IOrder[]>) => {
+    this.orderService.query().subscribe({
+      next: (res: HttpResponse<IOrder[]>) => {
         this.isLoading = false;
         this.orders = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

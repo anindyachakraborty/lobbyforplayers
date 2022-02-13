@@ -19,15 +19,15 @@ export class BargainComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.bargainService.query().subscribe(
-      (res: HttpResponse<IBargain[]>) => {
+    this.bargainService.query().subscribe({
+      next: (res: HttpResponse<IBargain[]>) => {
         this.isLoading = false;
         this.bargains = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

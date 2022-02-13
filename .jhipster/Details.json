@@ -1,5 +1,9 @@
 {
-  "name": "Details",
+  "applications": "*",
+  "changelogDate": "20211031103454",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "details",
   "fields": [
     {
       "fieldName": "loginName",
@@ -49,15 +53,11 @@
       "fieldType": "LocalDate"
     }
   ],
-  "relationships": [],
-  "entityTableName": "details",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Details",
+  "pagination": "no",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211031103454"
+  "relationships": [],
+  "service": "serviceImpl"
 }

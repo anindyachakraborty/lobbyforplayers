@@ -19,15 +19,15 @@ export class QuestionaryComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.questionaryService.query().subscribe(
-      (res: HttpResponse<IQuestionary[]>) => {
+    this.questionaryService.query().subscribe({
+      next: (res: HttpResponse<IQuestionary[]>) => {
         this.isLoading = false;
         this.questionaries = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

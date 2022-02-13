@@ -19,15 +19,15 @@ export class DetailsComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.detailsService.query().subscribe(
-      (res: HttpResponse<IDetails[]>) => {
+    this.detailsService.query().subscribe({
+      next: (res: HttpResponse<IDetails[]>) => {
         this.isLoading = false;
         this.details = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {

@@ -19,15 +19,15 @@ export class PaymentsComponent implements OnInit {
   loadAll(): void {
     this.isLoading = true;
 
-    this.paymentsService.query().subscribe(
-      (res: HttpResponse<IPayments[]>) => {
+    this.paymentsService.query().subscribe({
+      next: (res: HttpResponse<IPayments[]>) => {
         this.isLoading = false;
         this.payments = res.body ?? [];
       },
-      () => {
+      error: () => {
         this.isLoading = false;
-      }
-    );
+      },
+    });
   }
 
   ngOnInit(): void {
