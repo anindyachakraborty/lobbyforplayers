@@ -1,5 +1,9 @@
 {
-  "name": "Order",
+  "applications": "*",
+  "changelogDate": "20211031103452",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "order",
   "fields": [
     {
       "fieldName": "sellerName",
@@ -27,23 +31,19 @@
       "fieldValidateRules": ["required"]
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Order",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-one",
       "otherEntityName": "item",
       "otherEntityRelationshipName": "order",
+      "ownerSide": false,
       "relationshipName": "item",
-      "ownerSide": false
+      "relationshipType": "one-to-one"
     }
   ],
-  "entityTableName": "order",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211031103452"
+  "service": "serviceImpl"
 }

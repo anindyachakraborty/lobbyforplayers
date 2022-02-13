@@ -42,15 +42,15 @@ export class ItemComponent implements OnInit {
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe(
-        (res: HttpResponse<IItem[]>) => {
+      .subscribe({
+        next: (res: HttpResponse<IItem[]>) => {
           this.isLoading = false;
           this.paginateItems(res.body, res.headers);
         },
-        () => {
+        error: () => {
           this.isLoading = false;
-        }
-      );
+        },
+      });
   }
 
   reset(): void {

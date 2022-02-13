@@ -142,7 +142,7 @@ public class ChatsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of chats in body.
      */
     @GetMapping("/chats")
-    public ResponseEntity<List<Chats>> getAllChats(Pageable pageable) {
+    public ResponseEntity<List<Chats>> getAllChats(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Chats");
         Page<Chats> page = chatsService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);

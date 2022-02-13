@@ -1,5 +1,9 @@
 {
-  "name": "Bargain",
+  "applications": "*",
+  "changelogDate": "20211031103453",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "bargain",
   "fields": [
     {
       "fieldName": "bargainPrice",
@@ -32,22 +36,18 @@
       "fieldValidateRules": ["required"]
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Bargain",
+  "pagination": "no",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "item",
       "otherEntityRelationshipName": "bargain",
-      "relationshipName": "item"
+      "relationshipName": "item",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "bargain",
-  "dto": "no",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20211031103453"
+  "service": "serviceImpl"
 }
